@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Business Investment Calculator for Sri Dungargarh entrepreneurs. Calculate startup investments for 13+ business types.">
+    <meta name="keywords" content="business calculator, investment planning, Sri Dungargarh, startup">
+    <title>BizCalc - Business Investment Calculator | Sri Dungargarh</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+        /* ===== PREMIUM COLORFUL DESIGN SYSTEM ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Vibrant Colors */
+            --primary: #0891b2;
+            --primary-dark: #0e7490;
+            --secondary: #f97316;
+            --accent: #a855f7;
+            --accent-2: #ec4899;
+            --accent-3: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+
+            --bg: #f0f9ff;
+            --bg-card: #ffffff;
+            --text-primary: #0c2340;
+            --text-secondary: #475569;
+            --border: #e0f2fe;
+
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #06b6d4;
+                --secondary: #fb923c;
+                --accent: #d946ef;
+                --bg: #0f172a;
+                --bg-card: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --border: #0e7490;
+                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+                --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+                --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --primary: #06b6d4;
+            --secondary: #fb923c;
+            --accent: #d946ef;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #0e7490;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+            color-scheme: dark;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-brand {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fbbf24;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            font-weight: 700;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.9) 0%, rgba(168, 85, 247, 0.8) 50%, rgba(249, 115, 22, 0.9) 100%);
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(8, 145, 178, 0) 0%, rgba(8, 145, 178, 0.4) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            display: flex;
+        }
+
+        .hero-text {
+            flex: 0 0 45%;
+            padding: 4rem 2rem;
+            color: white;
+            animation: slideInLeft 0.8s ease;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fbbf24;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.6s ease 0.2s backwards;
+        }
+
+        .hero h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.6s ease 0.3s backwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.6s ease 0.4s backwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 1.5rem;
+            animation: fadeInUp 0.6s ease 0.5s backwards;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #0c2340;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(251, 191, 36, 0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(251, 191, 36, 0.4);
+        }
+
+        .cta-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid white;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== STATISTICS SECTION ===== */
+        .stats-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(8, 145, 178, 0.2) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(249, 115, 22, 0.2) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            animation: fadeInUp 0.6s ease backwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            transform: scaleX(0);
+            animation: scaleInX 0.6s ease 0.3s forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-number {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes scaleInX {
+            to { transform: scaleX(1); }
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05) 0%, rgba(168, 85, 247, 0.05) 50%, rgba(249, 115, 22, 0.05) 100%);
+            padding: 5rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-md);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; background: linear-gradient(135deg, rgba(8, 145, 178, 0.05), rgba(8, 145, 178, 0.02)); }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(249, 115, 22, 0.02)); }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(168, 85, 247, 0.02)); }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ===== TESTIMONIALS SECTION ===== */
+        .testimonials-section {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+            padding: 5rem 2rem;
+        }
+
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+            border-top: 4px solid var(--primary);
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .testimonial-card:nth-child(2) {
+            border-top-color: var(--secondary);
+            animation-delay: 0.1s;
+        }
+
+        .testimonial-card:nth-child(3) {
+            border-top-color: var(--accent);
+            animation-delay: 0.2s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-role {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 50%, #0e7490 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 20% 0%, rgba(249, 115, 22, 0.15) 0%, transparent 50%), radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fbbf24;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #fbbf24;
+            transform: translateX(4px);
+        }
+
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-bottom {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-credit {
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .footer-credit a {
+            color: #fbbf24;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-credit a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .hero-text {
+                flex: 0 0 100%;
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-overlay {
+                display: none;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 0.8rem;
+            }
+
+            .hero {
+                min-height: 450px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">💼 BizCalc</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="signin.html" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1rem;">Sign In</a>
+                <a href="signup.html" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border-radius: 6px;">Sign Up</a>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-eyebrow">Welcome to BizCalc</div>
+                <h1>Build Your Business Empire</h1>
+                <p>Calculate precise investment requirements for 13+ business types in Sri Dungargarh with real market data.</p>
+                <div class="hero-cta">
+                    <a href="calculator.html" class="cta-primary">Start Calculator →</a>
+                    <a href="features.html" class="cta-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Businesses Calculated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹50Cr+</div>
+                    <div class="stat-label">Investments Estimated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.8/5</div>
+                    <div class="stat-label">Customer Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">13+</div>
+                    <div class="stat-label">Business Types</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Preview Section -->
+    <section class="features-section">
+        <div class="section-header">
+            <h2>Powerful Features</h2>
+            <p>Everything you need to plan your business investment accurately</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h3>Land Price Calculator</h3>
+                <p>Real-time highway and market area pricing for Sri Dungargarh with accurate sq ft calculations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>13+ Business Types</h3>
+                <p>Pre-configured templates for diverse businesses from retail to restaurants with industry-specific costs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Detailed Breakdown</h3>
+                <p>Comprehensive cost analysis including land, setup, stock, equipment, labor, and operating expenses.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="section-header">
+                <h2>Success Stories</h2>
+                <p>What entrepreneurs in Sri Dungargarh are saying about BizCalc</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"BizCalc ने मेरे बिल्डिंग मैटेरियल बिजनेस की सटीक कैलकुलेशन दी। शानदार टूल!"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RK</div>
+                        <div class="author-info">
+                            <h4>Raj Kumar</h4>
+                            <div class="author-role">Builder & Contractor</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"मेरी कैफे के लिए सही इन्वेस्टमेंट प्लान बनाने में BizCalc बहुत मदद किया।"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PS</div>
+                        <div class="author-info">
+                            <h4>Priya Sharma</h4>
+                            <div class="author-role">Entrepreneur</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"इस टूल की मदद से मेरी रेस्टोरेंट की सारी कॉस्ट डिटेल्स साफ़ हो गईं।"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AV</div>
+                        <div class="author-info">
+                            <h4>Amit Verma</h4>
+                            <div class="author-role">Restaurant Owner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>💼 BizCalc</h4>
+                    <p class="footer-desc">Professional business investment calculator for Sri Dungargarh entrepreneurs. Plan your startup with real market data.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Business Types</h4>
+                    <ul>
+                        <li><a href="calculator.html">Retail Shops</a></li>
+                        <li><a href="calculator.html">Restaurants</a></li>
+                        <li><a href="calculator.html">Service Centers</a></li>
+                        <li><a href="calculator.html">Specialty Stores</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="contact.html">FAQ</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 BizCalc - Business Investment Calculator. All rights reserved.</p>
+                <p class="footer-credit">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank">Sparsh Portfolio</a></p>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem;">Made for entrepreneurs in Sri Dungargarh, India 🇮🇳</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Authentication Check - Redirect unauthenticated users to auth-gate
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const isGuest = localStorage.getItem('isGuest');
+
+            // If user is not logged in and not a guest, redirect to auth-gate
+            if (!isLoggedIn && !isGuest) {
+                window.location.href = 'auth-gate.html';
+            }
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        } else if (prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Active nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+
+    <!-- Chatbot Widget -->
+    <script src="chatbot.js"></script>
+</body>
+</html>

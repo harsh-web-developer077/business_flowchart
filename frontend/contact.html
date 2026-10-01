@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact BizCalc - Get in touch with Sri Dungargarh's premier business investment calculator">
+    <title>Contact - BizCalc</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #0891b2;
+            --secondary: #f97316;
+            --accent: #a855f7;
+            --bg: #f0f9ff;
+            --bg-card: #ffffff;
+            --text-primary: #0c2340;
+            --text-secondary: #475569;
+            --border: #e0f2fe;
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #06b6d4;
+                --secondary: #fb923c;
+                --accent: #d946ef;
+                --bg: #0f172a;
+                --bg-card: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --border: #0e7490;
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --primary: #06b6d4;
+            --secondary: #fb923c;
+            --accent: #d946ef;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #0e7490;
+            color-scheme: dark;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-brand {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fbbf24;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at 100% 0%, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .page-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            flex: 0 0 50%;
+        }
+
+        .page-header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .contact-section h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(8, 145, 178, 0.3);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .info-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .info-card a:hover {
+            text-decoration: underline;
+        }
+
+        .faq-section {
+            margin-top: 4rem;
+        }
+
+        .faq-section h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .faq-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .faq-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05) 0%, rgba(249, 115, 22, 0.05) 100%);
+            border-bottom: 2px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-item.active .faq-header {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+            border-bottom-color: var(--primary);
+        }
+
+        .faq-header h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+            font-weight: 700;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 300px;
+        }
+
+        .faq-text {
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 50%, #0e7490 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fbbf24;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #fbbf24;
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-credit a {
+            color: #fbbf24;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .footer-credit a:hover {
+            text-decoration: underline;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+            animation: slideInDown 0.3s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">💼 BizCalc</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1>Get In Touch</h1>
+            <p>Questions about your business investment? We're here to help!</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-grid">
+            <div class="contact-section">
+                <h2>Send us a Message</h2>
+                <div class="success-message" id="successMessage">
+                    ✓ Thank you! Your message has been received. We'll get back to you soon.
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject...</option>
+                            <option value="calculator">Calculator Help</option>
+                            <option value="investment">Investment Questions</option>
+                            <option value="feedback">General Feedback</option>
+                            <option value="partnership">Business Partnership</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+
+            <div class="contact-section">
+                <h2>Contact Information</h2>
+                <div class="contact-info">
+                    <div class="info-card">
+                        <h3>📧 Email</h3>
+                        <p><a href="mailto:info@bizcalc.com">info@bizcalc.com</a></p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">We respond within 24 hours</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>📱 Phone</h3>
+                        <p><a href="tel:+918899901234">+91 8899 901234</a></p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Mon-Fri, 9 AM - 6 PM IST</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>📍 Location</h3>
+                        <p>Sri Dungargarh Business Center<br>Rajasthan, India</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>⏰ Response Time</h3>
+                        <p>Average response time: 4-6 hours during business days</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h3>How accurate are the calculations?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">
+                            Our calculations are based on real market data from Sri Dungargarh, updated regularly to reflect current prices and costs. We source data from local suppliers, real estate agents, and business owners. However, actual costs may vary based on your specific location and circumstances.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h3>Is BizCalc completely free?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">
+                            Yes! BizCalc is completely free for all entrepreneurs in Sri Dungargarh. We don't charge any subscription fees, hidden charges, or premium versions. All features are available to everyone.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h3>Can I export my calculations?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">
+                            Currently, you can view and take screenshots of your calculations. You can also use the detailed breakdown directly for your bank applications and business plans. We're working on PDF export functionality.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h3>Do banks accept BizCalc reports?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">
+                            Yes! Our detailed, itemized breakdowns are prepared in the format that banks and financial institutions expect. Many entrepreneurs have successfully used BizCalc calculations in their loan applications.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h3>How many business types do you support?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">
+                            We currently support 13+ popular business types including retail shops, restaurants, cafes, pharmacies, electronics stores, jewelry shops, and more. If you need calculations for a business type we don't cover, please contact us.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h3>Can I save my calculations?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">
+                            Your calculations are computed instantly. Take screenshots or use your browser's print function to save the results. We're developing cloud-save functionality for registered users in the future.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h3>What if land prices change?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">
+                            We update our land price database regularly as market conditions change. You can always recalculate with current prices, and we recommend using the most recent calculations for loan applications and business planning.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h3>Is my data secure?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-text">
+                            We don't store any of your personal or calculation data on our servers. All calculations are done locally in your browser. Your data stays completely with you, and we maintain strict privacy standards.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>💼 BizCalc</h4>
+                    <p style="color: rgba(255,255,255,0.75); line-height: 1.8;">Professional calculator for Sri Dungargarh entrepreneurs.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="contact.html">FAQ</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 BizCalc. All rights reserved.</p>
+                <p class="footer-credit" style="margin: 0.5rem 0;">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank">Sparsh Portfolio</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Authentication Check - Redirect unauthenticated users to auth-gate
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const isGuest = localStorage.getItem('isGuest');
+
+            if (!isLoggedIn && !isGuest) {
+                window.location.href = 'auth-gate.html';
+            }
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Contact form handling
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Show success message
+            successMessage.classList.add('show');
+
+            // Reset form
+            contactForm.reset();
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        });
+
+        // FAQ accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.querySelector('.faq-header').addEventListener('click', () => {
+                item.classList.toggle('active');
+
+                // Close other items if desired (uncomment for single-open behavior)
+                // faqItems.forEach(otherItem => {
+                //     if (otherItem !== item) otherItem.classList.remove('active');
+                // });
+            });
+        });
+    </script>
+    <!-- Chatbot Widget -->
+    <script src="chatbot.js"></script>
+
+</body>
+</html>
