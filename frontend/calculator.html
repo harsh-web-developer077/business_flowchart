@@ -136,7 +136,6 @@
             transform: scale(1.1);
         }
 
-        /* Page Header */
         .page-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
@@ -176,7 +175,6 @@
             opacity: 0.95;
         }
 
-        /* Main Content */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -291,6 +289,52 @@
             font-size: 1.1rem;
         }
 
+        .save-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        .save-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .save-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .success-msg {
+            color: #10b981;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 6px;
+            display: none;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
         @keyframes slideInDown {
             from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -348,16 +392,6 @@
             padding-top: 2rem;
             text-align: center;
             color: rgba(255, 255, 255, 0.8);
-        }
-
-        .footer-credit a {
-            color: #fbbf24;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .footer-credit a:hover {
-            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -473,6 +507,11 @@
                     <span class="result-label">✨ Total Investment Required</span>
                     <span class="result-value" id="totalCost">₹0</span>
                 </div>
+
+                <div class="save-section">
+                    <button class="save-btn" onclick="saveAndNotify()">💾 Save & Send Email</button>
+                    <div class="success-msg" id="successMsg">✅ Calculation saved! Email sent to harshjaju07@gmail.com</div>
+                </div>
             </div>
         </div>
     </div>
@@ -506,7 +545,7 @@
 
             <div class="footer-bottom">
                 <p>© 2026 BizCalc. All rights reserved.</p>
-                <p class="footer-credit" style="margin: 0.5rem 0;">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank">Sparsh Portfolio</a></p>
+                <p style="margin: 0.5rem 0;">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank" style="color: #fbbf24; text-decoration: none;">Sparsh Portfolio</a></p>
             </div>
         </div>
     </footer>
@@ -529,6 +568,7 @@
         };
 
         const landPrices = { 'highway': 6000, 'market': 10000 };
+        let lastCalculation = null;
 
         function calculateInvestment() {
             const business = document.getElementById('business').value;
@@ -566,8 +606,92 @@
             document.getElementById('operatingCost').textContent = formatCurrency(operatingCost);
             document.getElementById('totalCost').textContent = formatCurrency(totalCost);
 
+            lastCalculation = {
+                business_type: business,
+                location: location,
+                area: area,
+                employees: employees,
+                additional: additional,
+                landCost: landCost,
+                setupCost: setupCost,
+                stockCost: stockCost,
+                equipmentCost: equipmentCost,
+                salaryCost: salaryCost,
+                operatingCost: operatingCost,
+                totalCost: totalCost,
+                timestamp: new Date().toISOString()
+            };
+
             document.getElementById('results').classList.add('active');
+            document.getElementById('successMsg').classList.remove('show');
             setTimeout(() => document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        }
+
+        async function saveAndNotify() {
+            if (!lastCalculation) {
+                alert('Please calculate first');
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Processing...';
+
+            try {
+                // Step 1: Save to backend
+                const saveResponse = await fetch('https://business-flowchart.onrender.com/api/calculations/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: user.id || 'guest_' + Date.now(),
+                        business_type: lastCalculation.business_type,
+                        investment_amount: lastCalculation.totalCost,
+                        timeline_months: 12,
+                        calculation_data: lastCalculation
+                    })
+                });
+
+                // Step 2: Send email via FormSubmit
+                const formData = new FormData();
+                formData.append('_to', 'harshjaju07@gmail.com');
+                formData.append('_subject', '🎉 BizCalc: ' + businessData[lastCalculation.business_type].name);
+                formData.append('_captcha', 'false');
+                formData.append('Business Type', businessData[lastCalculation.business_type].name);
+                formData.append('Location', lastCalculation.location);
+                formData.append('Area (sq ft)', lastCalculation.area);
+                formData.append('Employees', lastCalculation.employees);
+                formData.append('Land Cost', formatCurrency(lastCalculation.landCost));
+                formData.append('Setup Cost', formatCurrency(lastCalculation.setupCost));
+                formData.append('Stock Cost', formatCurrency(lastCalculation.stockCost));
+                formData.append('Equipment Cost', formatCurrency(lastCalculation.equipmentCost));
+                formData.append('Salary Cost', formatCurrency(lastCalculation.salaryCost));
+                formData.append('Operating Cost', formatCurrency(lastCalculation.operatingCost));
+                formData.append('Total Investment', formatCurrency(lastCalculation.totalCost));
+                formData.append('User Email', user.email || 'guest@bizcalc.com');
+                formData.append('User Name', user.name || 'Guest User');
+
+                const emailResponse = await fetch('https://formsubmit.co/harshjaju07@gmail.com', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (saveResponse.ok && emailResponse.ok) {
+                    document.getElementById('successMsg').classList.add('show');
+                    btn.textContent = '✅ Saved!';
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.textContent = '💾 Save & Send Email';
+                    }, 3000);
+                } else {
+                    throw new Error('Save or email failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+                btn.disabled = false;
+                btn.textContent = '💾 Save & Send Email';
+            }
         }
 
         function formatCurrency(amount) {
@@ -576,7 +700,7 @@
             return '₹' + Math.round(amount).toLocaleString('en-IN');
         }
 
-        // Authentication Check - Allow both logged-in and guest users
+        // Authentication Check
         window.addEventListener('load', () => {
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const isGuest = localStorage.getItem('isGuest');
