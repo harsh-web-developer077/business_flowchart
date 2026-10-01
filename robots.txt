@@ -1,0 +1,38 @@
+# robots.txt - BizCalc Business Investment Calculator
+# Last updated: 2026-10-01
+
+# Allow all search engines
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /calculator.html
+Allow: /features.html
+Allow: /about.html
+Allow: /contact.html
+Allow: /sitemap.xml
+
+# Specific rules for Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Specific rules for Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Disallow aggressive crawlers
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Point to sitemap
+Sitemap: https://business-flowchart.onrender.com/sitemap.xml
+
+# Cache policy
+Request-rate: 30/60 (requests per 60 seconds)
