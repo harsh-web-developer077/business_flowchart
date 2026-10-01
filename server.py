@@ -1,27 +1,14 @@
-from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-from pydantic import BaseModel, EmailStr, validator
-from typing import Optional, List
-import os
+from pydantic import BaseModel
 from datetime import datetime
+import os
 from pathlib import Path
 
-# Environment
-ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
-DEBUG = ENVIRONMENT == "development"
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:8000")
+app = FastAPI(title="BizCalc API", version="2.0")
 
-# Initialize FastAPI
-app = FastAPI(
-    title="BizCalc API",
-    description="Business Investment Calculator API",
-    version="2.0"
-)
-
-# CORS
-from fastapi.middleware.cors import CORSMiddleware
-
+# CORS Middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -30,11 +17,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ============ PYDANTIC MODELS ============
+# ============ MODELS ============
 
 class SignUpRequest(BaseModel):
     full_name: str
-    email: EmailStr
+    email: str
     whatsapp: str
     business_type: str
     password: str
@@ -42,27 +29,9 @@ class SignUpRequest(BaseModel):
     whatsapp_notif: bool = True
     email_notif: bool = True
 
-    @validator('full_name')
-    def validate_name(cls, v):
-        if len(v.strip()) < 2:
-            raise ValueError('Name must be at least 2 characters')
-        return v
-
-    @validator('password')
-    def validate_password(cls, v):
-        if len(v) < 6:
-            raise ValueError('Password must be at least 6 characters')
-        return v
-
-    @validator('password_confirm')
-    def validate_password_match(cls, v, values):
-        if 'password' in values and v != values['password']:
-            raise ValueError('Passwords do not match')
-        return v
-
 
 class SignInRequest(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 
@@ -80,25 +49,27 @@ class UserPreferences(BaseModel):
     email_notif: bool = True
 
 
-class HealthResponse(BaseModel):
-    status: str
-    service: str
-    version: str
-    timestamp: str
-
-
-# ============ MOCK DATABASE ============
+# ============ MOCK DATA ============
 
 users_db = {}
 calculations_db = {}
 
-# ============ API ENDPOINTS ============
+# ============ ROUTES ============
+
+@app.get("/api/health")
+def health_check():
+    return {
+        "status": "ok",
+        "service": "BizCalc API",
+        "version": "2.0",
+        "timestamp": datetime.now().isoformat()
+    }
+
 
 @app.post("/api/auth/signup")
-async def sign_up(request: SignUpRequest):
-    """Register a new user"""
+def sign_up(request: SignUpRequest):
     if request.email in users_db:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        return {"success": False, "message": "Email already registered"}
 
     user_id = f"user_{len(users_db) + 1}"
     users_db[request.email] = {
@@ -107,9 +78,7 @@ async def sign_up(request: SignUpRequest):
         "email": request.email,
         "whatsapp": request.whatsapp,
         "business_type": request.business_type,
-        "password": request.password,  # TODO: Hash this with bcrypt
-        "whatsapp_notif": request.whatsapp_notif,
-        "email_notif": request.email_notif,
+        "password": request.password,
         "created_at": datetime.now().isoformat()
     }
 
@@ -117,31 +86,27 @@ async def sign_up(request: SignUpRequest):
         "success": True,
         "message": "User registered successfully",
         "user_id": user_id,
-        "user_name": request.full_name,
-        "email": request.email
+        "user_name": request.full_name
     }
 
 
 @app.post("/api/auth/signin")
-async def sign_in(request: SignInRequest):
-    """Login user"""
+def sign_in(request: SignInRequest):
     user = users_db.get(request.email)
 
     if not user or user["password"] != request.password:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        return {"success": False, "message": "Invalid credentials"}
 
     return {
         "success": True,
         "message": "Login successful",
         "user_id": user["user_id"],
-        "user_name": user["full_name"],
-        "email": user["email"]
+        "user_name": user["full_name"]
     }
 
 
 @app.post("/api/calculations/save")
-async def save_calculation(request: CalculationSaveRequest):
-    """Save a calculation"""
+def save_calculation(request: CalculationSaveRequest):
     calc_id = f"calc_{len(calculations_db) + 1}"
 
     calculations_db[calc_id] = {
@@ -162,10 +127,8 @@ async def save_calculation(request: CalculationSaveRequest):
 
 
 @app.get("/api/calculations/{user_id}")
-async def get_calculations(user_id: str):
-    """Get all calculations for a user"""
+def get_calculations(user_id: str):
     user_calcs = [c for c in calculations_db.values() if c["user_id"] == user_id]
-
     return {
         "success": True,
         "user_id": user_id,
@@ -174,62 +137,32 @@ async def get_calculations(user_id: str):
 
 
 @app.put("/api/users/preferences")
-async def update_preferences(request: UserPreferences):
-    """Update user notification preferences"""
+def update_preferences(request: UserPreferences):
     for email, user in users_db.items():
         if user["user_id"] == request.user_id:
-            user["whatsapp_notif"] = request.whatsapp_notif
-            user["email_notif"] = request.email_notif
-            return {
-                "success": True,
-                "message": "Preferences updated"
-            }
+            return {"success": True, "message": "Preferences updated"}
 
-    raise HTTPException(status_code=404, detail="User not found")
-
-
-@app.get("/api/health")
-async def health_check():
-    """Health check endpoint"""
-    return HealthResponse(
-        status="ok",
-        service="BizCalc API",
-        version="2.0",
-        timestamp=datetime.now().isoformat()
-    )
+    return {"success": False, "message": "User not found"}
 
 
 # ============ SERVE FRONTEND ============
 
-# Mount frontend folder
 frontend_path = Path(__file__).parent / "frontend"
 
 if frontend_path.exists():
     app.mount("/", StaticFiles(directory=str(frontend_path), html=True), name="frontend")
 else:
     @app.get("/")
-    async def root():
-        return {
-            "message": "BizCalc API running",
-            "docs": "/docs",
-            "health": "/api/health"
-        }
+    def root():
+        return {"message": "BizCalc API running"}
 
-
-# ============ STARTUP ============
 
 @app.on_event("startup")
-async def startup():
+async def startup_event():
     print("🚀 BizCalc API Server Started")
-    print(f"Environment: {ENVIRONMENT}")
-    print(f"Frontend URL: {FRONTEND_URL}")
 
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(
-        app,
-        host="0.0.0.0",
-        port=int(os.getenv("PORT", 8000)),
-        reload=DEBUG
-    )
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
