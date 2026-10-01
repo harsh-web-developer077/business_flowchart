@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Investment Calculator - Sri Dungargarh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Calculator */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            padding: 60px 20px;
+            background: #f8f9fa;
+        }
+
+        .calculator-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .calculator-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Results Section */
+        .results {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(102,126,234,0.05) 0%, rgba(118,75,162,0.05) 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .result-label {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .total-investment {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .total-investment .result-label {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .total-investment .result-value {
+            color: white;
+            -webkit-text-fill-color: white;
+            font-size: 2.5em;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .breakdown-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .breakdown-item-label {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .breakdown-item-value {
+            color: white;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .footer-credit {
+            font-size: 0.9em;
+            opacity: 0.9;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .footer-credit a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .nav-links {
+                gap: 15px;
+                font-size: 0.9em;
+            }
+
+            .breakdown-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">💼 BizCalc</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Business Investment Calculator</h1>
+            <p>Get accurate investment estimates for your startup in Sri Dungargarh</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-wrapper">
+                <!-- Form -->
+                <div class="calculator-form">
+                    <h2 style="color: #667eea; margin-bottom: 30px;">Calculate Your Investment</h2>
+
+                    <form id="calculatorForm">
+                        <div class="form-group">
+                            <label for="businessType">Business Type</label>
+                            <select id="businessType" required>
+                                <option value="">-- Select a Business Type --</option>
+                                <option value="building-materials">Building Materials Shop</option>
+                                <option value="kirana">Kirana General Shop</option>
+                                <option value="cafe">Cafe/Restaurant</option>
+                                <option value="clothing">Clothing Store</option>
+                                <option value="electronics">Electronics Store</option>
+                                <option value="hardware">Hardware Store</option>
+                                <option value="pharmacy">Pharmacy/Medical Store</option>
+                                <option value="furniture">Furniture Store</option>
+                                <option value="jewelry">Jewelry Store</option>
+                                <option value="cosmetics">Cosmetics/Beauty Store</option>
+                                <option value="bookstore">Bookstore/Stationery</option>
+                                <option value="mobile">Mobile/Phone Shop</option>
+                                <option value="grocery">Grocery Store (Modern)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="areaType">Land Location</label>
+                            <select id="areaType" required>
+                                <option value="">-- Select Area Type --</option>
+                                <option value="highway">Highway Area (₹6,000/sq ft)</option>
+                                <option value="market">Market Area (₹10,000/sq ft)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="landArea">Land Area (sq ft)</label>
+                                <input type="number" id="landArea" placeholder="e.g., 1000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="employees">Number of Employees</label>
+                                <input type="number" id="employees" placeholder="e.g., 5" value="2" min="1">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="additionalCapital">Additional Capital Needed (₹)</label>
+                            <input type="number" id="additionalCapital" placeholder="0" value="0" min="0">
+                        </div>
+
+                        <button type="button" class="calculate-btn" onclick="calculateInvestment()">Calculate Investment</button>
+                    </form>
+                </div>
+
+                <!-- Results -->
+                <div class="results" id="results">
+                    <h2 style="color: #667eea; margin-bottom: 30px;">Investment Breakdown</h2>
+
+                    <div class="result-card">
+                        <div class="result-label">Land Cost</div>
+                        <div class="result-value" id="landCostResult">₹0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Business Setup Cost</div>
+                        <div class="result-value" id="businessCostResult">₹0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Initial Stock/Inventory</div>
+                        <div class="result-value" id="stockCostResult">₹0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Equipment & Fixtures</div>
+                        <div class="result-value" id="equipmentCostResult">₹0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Monthly Salary (All Employees)</div>
+                        <div class="result-value" id="salaryCostResult">₹0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label">Operating Expenses (First Month)</div>
+                        <div class="result-value" id="operatingCostResult">₹0</div>
+                    </div>
+
+                    <div class="total-investment">
+                        <div class="result-label">TOTAL RECOMMENDED INVESTMENT</div>
+                        <div class="result-value" id="totalInvestmentResult">₹0</div>
+                        <div class="breakdown-grid">
+                            <div class="breakdown-item">
+                                <div class="breakdown-item-label">Fixed Costs</div>
+                                <div class="breakdown-item-value" id="fixedCosts">₹0</div>
+                            </div>
+                            <div class="breakdown-item">
+                                <div class="breakdown-item-label">First Month Operating</div>
+                                <div class="breakdown-item-value" id="firstMonthOperating">₹0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="calculator.html">Calculator</a>
+                <a href="features.html">Features</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-credit">
+                <p>© 2026 Business Investment Calculator. All rights reserved.</p>
+                <p>💻 Designed & Developed by <a href="#">Sparsh Portfolio</a></p>
+                <p>Empowering Entrepreneurs | Sri Dungargarh, India</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Business data for Sri Dungargarh
+        const businessData = {
+            'building-materials': {
+                name: 'Building Materials Shop',
+                defaultArea: 10000,
+                setup: 2000000, // ₹20L
+                stock: 8000000, // ₹80L
+                equipment: 450000, // ₹4.5L
+                salaryPerPerson: 70000,
+                operatingCosts: 150000
+            },
+            'kirana': {
+                name: 'Kirana General Shop',
+                defaultArea: 200,
+                setup: 300000, // ₹3L
+                stock: 400000, // ₹4L
+                equipment: 100000, // ₹1L
+                salaryPerPerson: 50000,
+                operatingCosts: 50000
+            },
+            'cafe': {
+                name: 'Cafe/Restaurant',
+                defaultArea: 600,
+                setup: 1000000, // ₹10L
+                stock: 500000, // ₹5L
+                equipment: 850000, // ₹8.5L
+                salaryPerPerson: 80000,
+                operatingCosts: 200000
+            },
+            'clothing': {
+                name: 'Clothing Store',
+                defaultArea: 1200,
+                setup: 800000, // ₹8L
+                stock: 1500000, // ₹15L
+                equipment: 300000, // ₹3L
+                salaryPerPerson: 50000,
+                operatingCosts: 100000
+            },
+            'electronics': {
+                name: 'Electronics Store',
+                defaultArea: 1500,
+                setup: 1200000, // ₹12L
+                stock: 3000000, // ₹30L
+                equipment: 500000, // ₹5L
+                salaryPerPerson: 55000,
+                operatingCosts: 150000
+            },
+            'hardware': {
+                name: 'Hardware Store',
+                defaultArea: 2000,
+                setup: 1000000, // ₹10L
+                stock: 2000000, // ₹20L
+                equipment: 400000, // ₹4L
+                salaryPerPerson: 50000,
+                operatingCosts: 120000
+            },
+            'pharmacy': {
+                name: 'Pharmacy/Medical Store',
+                defaultArea: 800,
+                setup: 600000, // ₹6L
+                stock: 1500000, // ₹15L
+                equipment: 300000, // ₹3L
+                salaryPerPerson: 60000,
+                operatingCosts: 100000
+            },
+            'furniture': {
+                name: 'Furniture Store',
+                defaultArea: 5000,
+                setup: 1500000, // ₹15L
+                stock: 2500000, // ₹25L
+                equipment: 600000, // ₹6L
+                salaryPerPerson: 50000,
+                operatingCosts: 150000
+            },
+            'jewelry': {
+                name: 'Jewelry Store',
+                defaultArea: 600,
+                setup: 800000, // ₹8L
+                stock: 5000000, // ₹50L
+                equipment: 400000, // ₹4L
+                salaryPerPerson: 70000,
+                operatingCosts: 150000
+            },
+            'cosmetics': {
+                name: 'Cosmetics/Beauty Store',
+                defaultArea: 500,
+                setup: 500000, // ₹5L
+                stock: 800000, // ₹8L
+                equipment: 200000, // ₹2L
+                salaryPerPerson: 40000,
+                operatingCosts: 80000
+            },
+            'bookstore': {
+                name: 'Bookstore/Stationery',
+                defaultArea: 1000,
+                setup: 400000, // ₹4L
+                stock: 800000, // ₹8L
+                equipment: 150000, // ₹1.5L
+                salaryPerPerson: 35000,
+                operatingCosts: 70000
+            },
+            'mobile': {
+                name: 'Mobile/Phone Shop',
+                defaultArea: 600,
+                setup: 500000, // ₹5L
+                stock: 2000000, // ₹20L
+                equipment: 300000, // ₹3L
+                salaryPerPerson: 45000,
+                operatingCosts: 100000
+            },
+            'grocery': {
+                name: 'Grocery Store (Modern)',
+                defaultArea: 3000,
+                setup: 1200000, // ₹12L
+                stock: 2000000, // ₹20L
+                equipment: 800000, // ₹8L
+                salaryPerPerson: 50000,
+                operatingCosts: 200000
+            }
+        };
+
+        // Land prices in Sri Dungargarh
+        const landPrices = {
+            'highway': 6000, // ₹6,000 per sq ft
+            'market': 10000  // ₹10,000 per sq ft
+        };
+
+        function formatCurrency(amount) {
+            return '₹' + amount.toLocaleString('en-IN');
+        }
+
+        function calculateInvestment() {
+            const businessType = document.getElementById('businessType').value;
+            const areaType = document.getElementById('areaType').value;
+            const landArea = parseFloat(document.getElementById('landArea').value);
+            const employees = parseInt(document.getElementById('employees').value);
+            const additionalCapital = parseFloat(document.getElementById('additionalCapital').value);
+
+            if (!businessType || !areaType || !landArea) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            const business = businessData[businessType];
+            const landPrice = landPrices[areaType];
+
+            // Calculations
+            const landCost = landArea * landPrice;
+            const businessCost = business.setup;
+            const stockCost = business.stock;
+            const equipmentCost = business.equipment;
+            const monthlySalary = business.salaryPerPerson * employees;
+            const operatingCost = business.operatingCosts;
+
+            // Fixed costs (land + setup + stock + equipment)
+            const fixedCosts = landCost + businessCost + stockCost + equipmentCost;
+
+            // First month operating costs + salaries
+            const firstMonthOperating = monthlySalary + operatingCost;
+
+            // Total investment (fixed + first month + additional)
+            const totalInvestment = fixedCosts + firstMonthOperating + additionalCapital;
+
+            // Display results
+            document.getElementById('landCostResult').textContent = formatCurrency(landCost);
+            document.getElementById('businessCostResult').textContent = formatCurrency(businessCost);
+            document.getElementById('stockCostResult').textContent = formatCurrency(stockCost);
+            document.getElementById('equipmentCostResult').textContent = formatCurrency(equipmentCost);
+            document.getElementById('salaryCostResult').textContent = formatCurrency(monthlySalary);
+            document.getElementById('operatingCostResult').textContent = formatCurrency(operatingCost);
+            document.getElementById('totalInvestmentResult').textContent = formatCurrency(totalInvestment);
+            document.getElementById('fixedCosts').textContent = formatCurrency(fixedCosts);
+            document.getElementById('firstMonthOperating').textContent = formatCurrency(firstMonthOperating);
+
+            // Show results
+            document.getElementById('results').classList.add('show');
+
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Allow Enter key to calculate
+        document.getElementById('calculatorForm').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateInvestment();
+            }
+        });
+    </script>
+</body>
+</html>
