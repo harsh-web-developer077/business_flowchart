@@ -1,33 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Home Page -->
     <url>
         <loc>https://business-flowchart.onrender.com/index.html</loc>
         <lastmod>2026-10-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
+
+    <!-- Calculator Page -->
     <url>
         <loc>https://business-flowchart.onrender.com/calculator.html</loc>
         <lastmod>2026-10-01</lastmod>
-        <changefreq>weekly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
+
+    <!-- Dashboard Page -->
+    <url>
+        <loc>https://business-flowchart.onrender.com/dashboard.html</loc>
+        <lastmod>2026-10-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Features Page -->
     <url>
         <loc>https://business-flowchart.onrender.com/features.html</loc>
         <lastmod>2026-10-01</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
+
+    <!-- About Page -->
     <url>
         <loc>https://business-flowchart.onrender.com/about.html</loc>
         <lastmod>2026-10-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <!-- Contact Page -->
     <url>
         <loc>https://business-flowchart.onrender.com/contact.html</loc>
         <lastmod>2026-10-01</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
-</urlset>
+
+    <!-- Privacy Policy -->
+    <url>
+        <loc>https://business-flowchart.onrender.com/privacy-policy.html</loc>
+        <lastmod>2026-10-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Auth Gate -->
+    <url>
+        <loc>https://business-flowchart.onrender.com/auth-gate.html</loc>
+        <lastmod>2026-10-01</lastmod>
