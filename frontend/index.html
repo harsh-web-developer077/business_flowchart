@@ -874,7 +874,7 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div style="display: flex; gap: 1rem; align-items: center;">
+            <div data-auth-container style="display: flex; gap: 1rem; align-items: center;">
                 <a href="signin.html" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1rem;">Sign In</a>
                 <a href="signup.html" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border-radius: 6px;">Sign Up</a>
                 <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
@@ -1067,18 +1067,7 @@
     </footer>
 
     <script>
-        // Authentication Check - Redirect unauthenticated users to auth-gate
-        window.addEventListener('load', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const isGuest = localStorage.getItem('isGuest');
-
-            // If user is not logged in and not a guest, redirect to auth-gate
-            if (!isLoggedIn && !isGuest) {
-                window.location.href = 'auth-gate.html';
-            }
-        });
-
-        // Dark Mode Toggle
+        // Dark Mode Toggle (local)
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1091,14 +1080,6 @@
             themeToggle.textContent = '☀️';
         }
 
-        themeToggle.addEventListener('click', () => {
-            let currentTheme = document.documentElement.getAttribute('data-theme');
-            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-        });
-
         // Active nav link
         document.querySelectorAll('.nav-links a').forEach(link => {
             if (link.href === window.location.href) {
@@ -1106,6 +1087,9 @@
             }
         });
     </script>
+
+    <!-- Navbar Manager -->
+    <script src="navbar-manager.js"></script>
 
     <!-- Chatbot Widget -->
     <script src="chatbot.js"></script>
