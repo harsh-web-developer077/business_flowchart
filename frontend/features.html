@@ -334,9 +334,168 @@
             text-decoration: underline;
         }
 
+        /* ===== HAMBURGER MENU ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            width: 28px;
+            height: 24px;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
         @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.4em;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(8, 145, 178, 0.98) 0%, rgba(249, 115, 22, 0.98) 100%);
+                flex-direction: column;
+                gap: 0;
+                z-index: 1000;
+                padding: 1rem 0;
+                border-bottom: 3px solid #fbbf24;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                font-size: 0.95rem;
+            }
+
+            .hamburger {
+                display: flex;
+                order: 3;
+            }
+
+            [data-auth-container] {
+                order: 2;
+                gap: 0.5rem;
+            }
+
             .page-header h1 {
                 font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+
+            .business-type-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .business-type-icon {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .business-type-name {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 0;
+            }
+
+            .nav-container {
+                padding: 0.8rem;
+                gap: 0.5rem;
+            }
+
+            .nav-brand {
+                font-size: 1.2em;
+            }
+
+            .nav-links {
+                top: 60px;
+            }
+
+            .nav-links a {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .page-header p {
+                font-size: 0.9rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0 0.8rem;
+            }
+
+            .business-type-card {
+                padding: 1.2rem 1rem;
+                text-align: center;
+            }
+
+            .business-type-icon {
+                font-size: 2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .business-type-name {
+                font-size: 0.95rem;
+                font-weight: 600;
+            }
+
+            .container {
+                padding: 1rem 0;
             }
         }
     </style>
@@ -345,7 +504,7 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">💼 BizCalc</a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="calculator.html">Calculator</a></li>
                 <li><a href="features.html" class="active">Features</a></li>
@@ -354,6 +513,11 @@
             </ul>
             <div data-auth-container style="display: flex; gap: 1rem; align-items: center;">
                 <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
@@ -537,6 +701,33 @@
                 window.location.href = 'auth-gate.html';
             }
         });
+
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close menu when link is clicked
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('nav')) {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
 
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
