@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Loan & EMI Calculator - Calculate EMI and minimum profit target for your business loan">
+    <title>Loan Calculator - BizCalc</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #0891b2;
+            --secondary: #f97316;
+            --accent: #a855f7;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f0f9ff;
+            --bg-card: #ffffff;
+            --text-primary: #0c2340;
+            --text-secondary: #475569;
+            --border: #e0f2fe;
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #06b6d4;
+                --secondary: #fb923c;
+                --accent: #d946ef;
+                --success: #34d399;
+                --danger: #f87171;
+                --bg: #0f172a;
+                --bg-card: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --border: #0e7490;
+                --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --primary: #06b6d4;
+            --secondary: #fb923c;
+            --accent: #d946ef;
+            --success: #34d399;
+            --danger: #f87171;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #0e7490;
+            color-scheme: dark;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-brand {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fbbf24;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: left;
+        }
+
+        .page-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .calculator-form {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(8, 145, 178, 0.3);
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(8, 145, 178, 0.4);
+        }
+
+        .results-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            display: none;
+        }
+
+        .results-container.active {
+            display: block;
+            animation: slideInDown 0.5s ease;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .result-item:last-of-type {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .result-value {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .profit-loss-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.1));
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .profit-loss-card.loss {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.1));
+            border-left-color: var(--danger);
+        }
+
+        .profit-loss-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .profit-loss-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .profit-loss-card.loss .profit-loss-value {
+            color: var(--danger);
+        }
+
+        .profit-loss-message {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .input-helper {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 50%, #0e7490 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fbbf24;
+        }
+
+        .footer-bottom {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">💼 BizCalc</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="loan-calculator.html" class="active">Loan Calculator</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1>💰 Loan & EMI Calculator</h1>
+            <p>Calculate your monthly EMI and find the minimum profit target needed to break even</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="calculator-grid">
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="loanAmount">Loan Amount (₹) *</label>
+                    <input type="number" id="loanAmount" placeholder="Enter loan amount" required>
+                    <div class="input-helper">Example: 1000000</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="interestRate">Annual Interest Rate (%) *</label>
+                    <input type="number" id="interestRate" placeholder="Enter interest rate" step="0.01" required>
+                    <div class="input-helper">Example: 12 (for 12% per annum)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loanTenure">Loan Tenure (Months) *</label>
+                    <input type="number" id="loanTenure" placeholder="Enter loan tenure" required>
+                    <div class="input-helper">Example: 12 (for 1 year), 60 (for 5 years)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="monthlyProfit">Your Expected Monthly Profit (₹)</label>
+                    <input type="number" id="monthlyProfit" placeholder="Optional - Enter for profit/loss analysis">
+                    <div class="input-helper">Optional: Leave blank or enter 0 to see only EMI</div>
+                </div>
+
+                <button class="calculate-btn" onclick="calculateEMI()">💹 Calculate EMI</button>
+            </div>
+
+            <div class="results-container" id="results">
+                <h3 style="margin-bottom: 1.5rem; color: var(--primary);">📊 Loan Breakdown</h3>
+
+                <div class="result-item">
+                    <span class="result-label">💵 Loan Amount</span>
+                    <span class="result-value" id="resultLoanAmount">₹0</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">📈 Annual Interest Rate</span>
+                    <span class="result-value" id="resultInterestRate">0%</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">⏱️ Loan Tenure</span>
+                    <span class="result-value" id="resultTenure">0 months</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">💰 Monthly EMI</span>
+                    <span class="result-value" id="monthlyEMI">₹0</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">💸 Total Amount Payable</span>
+                    <span class="result-value" id="totalPayable">₹0</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">📊 Total Interest</span>
+                    <span class="result-value" id="totalInterest">₹0</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">🎯 Minimum Monthly Profit (to break even)</span>
+                    <span class="result-value" id="minProfitTarget">₹0</span>
+                </div>
+
+                <div class="profit-loss-card" id="profitLossCard" style="display: none;">
+                    <div class="profit-loss-label">Your Profit/Loss Position</div>
+                    <div class="profit-loss-value" id="profitLossAmount">₹0</div>
+                    <div class="profit-loss-message" id="profitLossMessage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>💼 BizCalc</h4>
+                    <p style="color: rgba(255,255,255,0.75); line-height: 1.8;">Professional calculators for Sri Dungargarh entrepreneurs.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.8rem;"><a href="index.html" style="color: rgba(255,255,255,0.85); text-decoration: none;">Home</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="calculator.html" style="color: rgba(255,255,255,0.85); text-decoration: none;">Calculator</a></li>
+                        <li><a href="loan-calculator.html" style="color: rgba(255,255,255,0.85); text-decoration: none;">Loan Calculator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.8rem;"><a href="contact.html" style="color: rgba(255,255,255,0.85); text-decoration: none;">Contact Us</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="privacy-policy.html" style="color: rgba(255,255,255,0.85); text-decoration: none;">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 BizCalc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function calculateEMI() {
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTenure = parseInt(document.getElementById('loanTenure').value);
+            const monthlyProfit = parseFloat(document.getElementById('monthlyProfit').value) || 0;
+
+            if (!loanAmount || !interestRate || !loanTenure) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            if (loanAmount <= 0 || interestRate < 0 || loanTenure <= 0) {
+                alert('Please enter valid values');
+                return;
+            }
+
+            // EMI Calculation Formula: EMI = P * r * (1+r)^n / ((1+r)^n - 1)
+            // Where P = Principal, r = monthly interest rate, n = tenure in months
+            const monthlyRate = interestRate / 100 / 12;
+            const numerator = loanAmount * monthlyRate * Math.pow(1 + monthlyRate, loanTenure);
+            const denominator = Math.pow(1 + monthlyRate, loanTenure) - 1;
+            const monthlyEMI = numerator / denominator;
+
+            const totalPayable = monthlyEMI * loanTenure;
+            const totalInterest = totalPayable - loanAmount;
+
+            // Display results
+            document.getElementById('resultLoanAmount').textContent = formatCurrency(loanAmount);
+            document.getElementById('resultInterestRate').textContent = interestRate.toFixed(2) + '%';
+            document.getElementById('resultTenure').textContent = loanTenure + ' months';
+            document.getElementById('monthlyEMI').textContent = formatCurrency(monthlyEMI);
+            document.getElementById('totalPayable').textContent = formatCurrency(totalPayable);
+            document.getElementById('totalInterest').textContent = formatCurrency(totalInterest);
+            document.getElementById('minProfitTarget').textContent = formatCurrency(monthlyEMI);
+
+            // Profit/Loss Analysis
+            if (monthlyProfit > 0) {
+                const profitLoss = monthlyProfit - monthlyEMI;
+                const profitLossCard = document.getElementById('profitLossCard');
+                const profitLossAmount = document.getElementById('profitLossAmount');
+                const profitLossMessage = document.getElementById('profitLossMessage');
+
+                profitLossCard.style.display = 'block';
+
+                if (profitLoss >= 0) {
+                    profitLossCard.classList.remove('loss');
+                    profitLossAmount.textContent = formatCurrency(profitLoss);
+                    profitLossMessage.textContent = '✅ You have surplus profit! Your business can cover EMI + additional profit.';
+                } else {
+                    profitLossCard.classList.add('loss');
+                    profitLossAmount.textContent = formatCurrency(Math.abs(profitLoss));
+                    profitLossMessage.textContent = '⚠️ Monthly loss of ' + formatCurrency(Math.abs(profitLoss)) + '. Your profit is below the EMI requirement.';
+                }
+            }
+
+            document.getElementById('results').classList.add('active');
+
+            // Save to localStorage
+            const loanData = {
+                loanAmount,
+                interestRate,
+                loanTenure,
+                monthlyProfit,
+                monthlyEMI,
+                totalPayable,
+                totalInterest,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('lastLoanCalculation', JSON.stringify(loanData));
+        }
+
+        function formatCurrency(amount) {
+            if (amount >= 10000000) return '₹' + (amount / 10000000).toFixed(1) + 'Cr';
+            if (amount >= 100000) return '₹' + (amount / 100000).toFixed(1) + 'L';
+            return '₹' + Math.round(amount).toLocaleString('en-IN');
+        }
+
+        // Load previous data on page load
+        window.addEventListener('load', () => {
+            const savedData = localStorage.getItem('lastLoanCalculation');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('loanAmount').value = data.loanAmount;
+                document.getElementById('interestRate').value = data.interestRate;
+                document.getElementById('loanTenure').value = data.loanTenure;
+                document.getElementById('monthlyProfit').value = data.monthlyProfit || '';
+                calculateEMI();
+            }
+
+            // Authentication Check
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const isGuest = localStorage.getItem('isGuest');
+
+            if (!isLoggedIn && !isGuest) {
+                window.location.href = 'auth-gate.html';
+            }
+        });
+
+        // Dark Mode
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Allow Enter key to calculate
+        document.getElementById('loanTenure').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') calculateEMI();
+        });
+    </script>
+    <script src="chatbot.js"></script>
+</body>
+</html>
