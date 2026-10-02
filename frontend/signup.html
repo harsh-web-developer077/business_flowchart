@@ -562,6 +562,11 @@
                 // For now, show success and store in localStorage (development)
                 localStorage.setItem('user', JSON.stringify(formData));
 
+                // Track user signup
+                if (typeof trackUserSignup === 'function') {
+                    trackUserSignup(formData.email, formData.name);
+                }
+
                 successMsg.textContent = '✅ Account बन गया! अब आप sign in कर सकते हैं।';
                 successMsg.classList.add('show');
 
@@ -575,6 +580,10 @@
             }
         });
     </script>
+
+    <!-- Navbar Manager -->
+    <script src="navbar-manager.js"></script>
+
     <!-- Chatbot Widget -->
     <script src="chatbot.js"></script>
 
