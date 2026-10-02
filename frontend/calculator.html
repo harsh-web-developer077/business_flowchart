@@ -6,6 +6,7 @@
     <meta name="description" content="Business Investment Calculator - Calculate your startup investment for 13+ business types in Sri Dungargarh">
     <title>Calculator - BizCalc</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -289,6 +290,49 @@
             font-size: 1.1rem;
         }
 
+        .timeline-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .timeline-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .timeline-btn {
+            padding: 0.7rem 1.2rem;
+            background: var(--border);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .timeline-btn:hover, .timeline-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .graph-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .graph-container.active {
+            display: block;
+        }
+
         .save-section {
             margin-top: 2rem;
             padding-top: 1.5rem;
@@ -312,11 +356,6 @@
         .save-btn:hover {
             background: var(--secondary);
             transform: translateY(-2px);
-        }
-
-        .save-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
         }
 
         .success-msg {
@@ -402,6 +441,19 @@
             .page-header h1 {
                 font-size: 2rem;
             }
+
+            .timeline-options {
+                gap: 0.5rem;
+            }
+
+            .timeline-btn {
+                padding: 0.6rem 0.9rem;
+                font-size: 0.8rem;
+            }
+
+            .graph-container {
+                height: 300px;
+            }
         }
     </style>
 </head>
@@ -412,6 +464,7 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="calculator.html" class="active">Calculator</a></li>
+                <li><a href="loan-calculator.html">Loan Calculator</a></li>
                 <li><a href="features.html">Features</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
@@ -508,6 +561,19 @@
                     <span class="result-value" id="totalCost">₹0</span>
                 </div>
 
+                <div class="timeline-section">
+                    <h4 style="margin-bottom: 1rem; color: var(--primary);">📈 Investment Timeline</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">Select timeline to see monthly breakdown:</p>
+                    <div class="timeline-options">
+                        <button class="timeline-btn" onclick="generateTimeline(3)">3 Months</button>
+                        <button class="timeline-btn" onclick="generateTimeline(6)">6 Months</button>
+                        <button class="timeline-btn active" onclick="generateTimeline(12)">12 Months</button>
+                    </div>
+                    <div class="graph-container active" id="graphContainer">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+
                 <div class="save-section">
                     <button class="save-btn" onclick="saveAndNotify()">💾 Save & Send Email</button>
                     <div class="success-msg" id="successMsg">✅ Calculation saved! Email sent to harshjaju07@gmail.com</div>
@@ -528,8 +594,8 @@
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="loan-calculator.html">Loan Calculator</a></li>
                         <li><a href="features.html">Features</a></li>
-                        <li><a href="about.html">About</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -569,6 +635,7 @@
 
         const landPrices = { 'highway': 6000, 'market': 10000 };
         let lastCalculation = null;
+        let timelineChart = null;
 
         function calculateInvestment() {
             const business = document.getElementById('business').value;
@@ -624,7 +691,155 @@
 
             document.getElementById('results').classList.add('active');
             document.getElementById('successMsg').classList.remove('show');
+
+            // Generate default 12-month timeline
+            generateTimeline(12);
+
+            // Save to localStorage
+            localStorage.setItem('lastCalculation', JSON.stringify(lastCalculation));
+
             setTimeout(() => document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        }
+
+        function generateTimeline(months) {
+            if (!lastCalculation) return;
+
+            // Update active button
+            document.querySelectorAll('.timeline-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const monthLabels = [];
+            const landData = [];
+            const setupData = [];
+            const stockData = [];
+            const equipmentData = [];
+            const salaryData = [];
+            const operatingData = [];
+
+            for (let i = 1; i <= months; i++) {
+                monthLabels.push(`Month ${i}`);
+
+                // Distribute costs across months
+                landData.push(lastCalculation.landCost / months);
+                setupData.push(lastCalculation.setupCost / months);
+                stockData.push(lastCalculation.stockCost / months);
+                equipmentData.push(lastCalculation.equipmentCost / months);
+                salaryData.push(lastCalculation.salaryCost);
+                operatingData.push(lastCalculation.operatingCost);
+            }
+
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+
+            if (timelineChart) {
+                timelineChart.destroy();
+            }
+
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+                           (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.documentElement.getAttribute('data-theme'));
+
+            const textColor = isDark ? '#f1f5f9' : '#0c2340';
+            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+
+            timelineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: monthLabels,
+                    datasets: [
+                        {
+                            label: 'Land Cost',
+                            data: landData,
+                            borderColor: '#0891b2',
+                            backgroundColor: 'rgba(8, 145, 178, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Setup Cost',
+                            data: setupData,
+                            borderColor: '#f97316',
+                            backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'Stock Cost',
+                            data: stockData,
+                            borderColor: '#a855f7',
+                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'Equipment Cost',
+                            data: equipmentData,
+                            borderColor: '#06b6d4',
+                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'Monthly Salary',
+                            data: salaryData,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'Operating Cost',
+                            data: operatingData,
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor,
+                                font: {
+                                    weight: '600',
+                                    size: 11
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: textColor,
+                                callback: function(value) {
+                                    if (value >= 100000) return '₹' + (value / 100000).toFixed(0) + 'L';
+                                    return '₹' + Math.round(value).toLocaleString('en-IN');
+                                }
+                            },
+                            grid: {
+                                color: gridColor
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: textColor
+                            },
+                            grid: {
+                                color: gridColor
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         async function saveAndNotify() {
@@ -708,6 +923,13 @@
             if (!isLoggedIn && !isGuest) {
                 window.location.href = 'auth-gate.html';
             }
+
+            // Load last calculation if exists
+            const saved = localStorage.getItem('lastCalculation');
+            if (saved) {
+                lastCalculation = JSON.parse(saved);
+                // Auto-populate form if needed
+            }
         });
 
         // Dark Mode
@@ -725,6 +947,11 @@
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+
+            // Redraw chart if it exists
+            if (lastCalculation && timelineChart) {
+                setTimeout(() => generateTimeline(12), 100);
+            }
         });
     </script>
     <!-- Chatbot Widget -->
