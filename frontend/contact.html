@@ -458,7 +458,58 @@
             }
         }
 
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
         @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none !important;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-container {
+                gap: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.5em;
+            }
+
             .page-header h1 {
                 font-size: 2rem;
             }
@@ -469,6 +520,18 @@
 
             .faq-container {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-brand {
+                font-size: 1.2em;
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1em;
             }
         }
     </style>
@@ -484,6 +547,11 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
             </ul>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <button class="theme-toggle" id="themeToggle">🌙</button>
         </div>
     </nav>
@@ -539,12 +607,12 @@
                 <div class="contact-info">
                     <div class="info-card">
                         <h3>📧 Email</h3>
-                        <p><a href="mailto:info@bizcalc.com">info@bizcalc.com</a></p>
+                        <p><a href="mailto:harshjaju07@gmail.com">harshjaju07@gmail.com </a></p>
                         <p style="font-size: 0.85rem; margin-top: 0.5rem;">We respond within 24 hours</p>
                     </div>
                     <div class="info-card">
                         <h3>📱 Phone</h3>
-                        <p><a href="tel:+918899901234">+91 8899 901234</a></p>
+                        <p><a href="tel:+918302491321">+91 8302491321</a></p>
                         <p style="font-size: 0.85rem; margin-top: 0.5rem;">Mon-Fri, 9 AM - 6 PM IST</p>
                     </div>
                     <div class="info-card">
@@ -696,6 +764,13 @@
     </footer>
 
     <script>
+        const hamburger = document.getElementById('hamburger');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+            });
+        }
+
         // Authentication Check - Redirect unauthenticated users to auth-gate
         window.addEventListener('load', () => {
             const isLoggedIn = localStorage.getItem('isLoggedIn');
