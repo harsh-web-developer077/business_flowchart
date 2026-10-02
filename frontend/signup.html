@@ -370,13 +370,199 @@
             }
         }
 
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
         @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-container {
+                gap: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.5em;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
             .auth-card {
-                padding: 2rem;
+                padding: 1.5rem;
+                margin: 1rem;
+                max-width: 95%;
             }
 
             .auth-header h1 {
                 font-size: 1.5rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+
+            .submit-btn {
+                padding: 0.9rem;
+                font-size: 1rem;
+            }
+
+            .auth-container {
+                padding: 1rem;
+            }
+
+            .checkbox-group {
+                gap: 0.5rem;
+            }
+
+            .notification-preferences {
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.75rem;
+            }
+
+            .nav-brand {
+                font-size: 1.2em;
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1em;
+            }
+
+            .auth-card {
+                padding: 1.25rem;
+                margin: 0.5rem;
+                border-radius: 12px;
+                max-width: 98%;
+            }
+
+            .auth-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .auth-header h1 {
+                font-size: 1.3rem;
+            }
+
+            .auth-header p {
+                font-size: 0.85rem;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.85rem;
+                margin-bottom: 0.35rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 0.75rem;
+                font-size: 16px;
+            }
+
+            .submit-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+                margin-top: 0.75rem;
+            }
+
+            .checkbox-group {
+                gap: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .checkbox-group input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                margin-top: 0.15rem;
+            }
+
+            .checkbox-group label {
+                font-size: 0.8rem;
+            }
+
+            .notification-preferences {
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .notification-preferences h3 {
+                font-size: 0.85rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .notification-option {
+                gap: 0.4rem;
+            }
+
+            .notification-option input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                flex-shrink: 0;
+            }
+
+            .notification-option label {
+                font-size: 0.8rem;
+            }
+
+            .error-message,
+            .success-message {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+
+            .auth-footer p {
+                font-size: 0.85rem;
+            }
+
+            .auth-container {
+                padding: 0.5rem;
             }
         }
     </style>
@@ -386,6 +572,11 @@
         <div class="nav-container">
             <a href="index.html" class="nav-brand">💼 BizCalc</a>
             <div style="flex: 1;"></div>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <button class="theme-toggle" id="themeToggle">🌙</button>
         </div>
     </nav>
@@ -481,6 +672,12 @@
     </div>
 
     <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+        });
+
         // Theme toggle
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
