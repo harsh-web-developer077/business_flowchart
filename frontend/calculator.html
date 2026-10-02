@@ -530,6 +530,13 @@
                         <option value="bookstore">Bookstore/Stationery</option>
                         <option value="mobile">Mobile/Phone Shop</option>
                         <option value="grocery">Grocery Store (Modern)</option>
+                        <option value="gym">Fitness Center/Gym</option>
+                        <option value="school">School/Coaching Center</option>
+                        <option value="hospital">Clinic/Diagnostic Center</option>
+                        <option value="laundry">Laundry Service</option>
+                        <option value="petshop">Pet Shop & Grooming</option>
+                        <option value="photography">Photography Studio</option>
+                        <option value="car-rental">Car Rental Service</option>
                     </select>
                 </div>
 
@@ -666,12 +673,43 @@
             'cosmetics': { name: 'Cosmetics/Beauty Store', setup: 400000, stock: 600000, equipment: 150000, salaryPerPerson: 55000, operatingCosts: 70000 },
             'bookstore': { name: 'Bookstore/Stationery', setup: 350000, stock: 800000, equipment: 100000, salaryPerPerson: 45000, operatingCosts: 60000 },
             'mobile': { name: 'Mobile/Phone Shop', setup: 700000, stock: 1500000, equipment: 200000, salaryPerPerson: 65000, operatingCosts: 85000 },
-            'grocery': { name: 'Grocery Store (Modern)', setup: 1200000, stock: 1800000, equipment: 350000, salaryPerPerson: 60000, operatingCosts: 140000 }
+            'grocery': { name: 'Grocery Store (Modern)', setup: 1200000, stock: 1800000, equipment: 350000, salaryPerPerson: 60000, operatingCosts: 140000 },
+            'gym': { name: 'Fitness Center/Gym', setup: 2500000, stock: 300000, equipment: 1200000, salaryPerPerson: 85000, operatingCosts: 250000 },
+            'school': { name: 'School/Coaching Center', setup: 1800000, stock: 200000, equipment: 500000, salaryPerPerson: 75000, operatingCosts: 180000 },
+            'hospital': { name: 'Clinic/Diagnostic Center', setup: 1500000, stock: 800000, equipment: 2000000, salaryPerPerson: 90000, operatingCosts: 220000 },
+            'laundry': { name: 'Laundry Service', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 50000, operatingCosts: 120000 },
+            'petshop': { name: 'Pet Shop & Grooming', setup: 600000, stock: 400000, equipment: 300000, salaryPerPerson: 65000, operatingCosts: 100000 },
+            'photography': { name: 'Photography Studio', setup: 700000, stock: 100000, equipment: 1500000, salaryPerPerson: 70000, operatingCosts: 90000 },
+            'car-rental': { name: 'Car Rental Service', setup: 500000, stock: 0, equipment: 0, salaryPerPerson: 40000, operatingCosts: 150000 }
         };
 
         const landPrices = { 'highway': 6000, 'market': 10000 };
         let lastCalculation = null;
         let timelineChart = null;
+
+        // URL parameter to business code mapping
+        const urlParamMapping = {
+            'building-materials': 'building',
+            'kirana-shop': 'kirana',
+            'cafe-restaurant': 'cafe',
+            'clothing-store': 'clothing',
+            'electronics-store': 'electronics',
+            'hardware-store': 'hardware',
+            'pharmacy': 'pharmacy',
+            'furniture-store': 'furniture',
+            'jewelry-store': 'jewelry',
+            'beauty-salon': 'cosmetics',
+            'bookstore': 'bookstore',
+            'mobile-shop': 'mobile',
+            'grocery-store': 'grocery',
+            'gym': 'gym',
+            'school': 'school',
+            'hospital-clinic': 'hospital',
+            'laundry': 'laundry',
+            'petshop': 'petshop',
+            'photography': 'photography',
+            'car-rental': 'car-rental'
+        };
 
         function calculateInvestment() {
             const business = document.getElementById('business').value;
@@ -940,6 +978,21 @@
 
             if (!isLoggedIn && !isGuest) {
                 window.location.href = 'auth-gate.html';
+            }
+
+            // Check URL parameters for pre-selected business type
+            const urlParams = new URLSearchParams(window.location.search);
+            const businessTypeParam = urlParams.get('businessType');
+
+            if (businessTypeParam) {
+                // Map URL parameter to business code
+                const businessCode = urlParamMapping[businessTypeParam] || businessTypeParam;
+                const businessSelect = document.getElementById('business');
+
+                // Check if the business code exists in our data
+                if (businessCode in businessData) {
+                    businessSelect.value = businessCode;
+                }
             }
 
             // Load last calculation if exists
