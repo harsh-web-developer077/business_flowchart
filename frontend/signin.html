@@ -451,6 +451,12 @@
                 if (user.email === email || user.phone === email) {
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('currentUser', JSON.stringify(user));
+
+                    // Track user login
+                    if (typeof trackUserSignup === 'function') {
+                        trackUserSignup(user.email, user.name);
+                    }
+
                     window.location.href = 'dashboard.html';
                 } else {
                     errorMsg.textContent = '❌ Email या password गलत है';
@@ -469,6 +475,10 @@
             window.location.href = 'calculator.html';
         }
     </script>
+
+    <!-- Navbar Manager -->
+    <script src="navbar-manager.js"></script>
+
     <!-- Chatbot Widget -->
     <script src="chatbot.js"></script>
 
