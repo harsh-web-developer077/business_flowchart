@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin
 
-Sitemap: https://business-flowchart.com/sitemap.xml
+Sitemap: https://business-flowchart.onrender.com/sitemap.xml

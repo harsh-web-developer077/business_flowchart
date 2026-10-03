@@ -24,7 +24,7 @@ const chatbotQA = {
         {
             id: 5,
             question: "कितने business types support हैं?",
-            answer: "हम 28+ popular business types को support करते हैं जो विभिन्न categories में organized हैं:\n• Retail & Shopping\n• Food & Beverage\n• Repair & Maintenance\n• Personal Care\n• Education & Fitness\n• Healthcare & Wellness\n• Transportation & Auto\n• Other Services\n\nअगर आपका business type नहीं है तो हमें contact करें।"
+            answer: "हम 13+ popular business types को support करते हैं:\n• Kirana Shop\n• Cafe/Restaurant\n• Clothing Store\n• Electronics Store\n• Pharmacy\n• Furniture Store\n• और भी बहुत कुछ!\n\nअगर आपका business type नहीं है तो हमें contact करें।"
         },
         {
             id: 6,
@@ -54,85 +54,22 @@ const chatbotQA = {
     ]
 };
 
-// Floating Button HTML
-function createFloatingButton() {
-    const floatingButton = `
-    <button id="chatbot-floating-btn" class="chatbot-floating-btn" title="Open BizCalc Helper" aria-label="Open chat">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+// Circular Chatbot Button & Widget
+function initializeChatbot() {
+    // Create circular button
+    const chatbotButtonHTML = `
+    <button id="chatbot-button" title="Open Chat Assistant">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
         </svg>
     </button>
     `;
 
-    const floatingButtonCSS = `
-    <style>
-        .chatbot-floating-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            cursor: pointer;
-            z-index: 9998;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(8, 145, 178, 0.4);
-            transition: all 0.3s ease;
-            font-size: 0;
-            padding: 0;
-        }
-
-        .chatbot-floating-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(8, 145, 178, 0.6);
-        }
-
-        .chatbot-floating-btn:active {
-            transform: scale(0.95);
-        }
-
-        .chatbot-floating-btn svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .chatbot-floating-btn {
-                width: 48px;
-                height: 48px;
-                bottom: 16px;
-                right: 16px;
-            }
-
-            .chatbot-floating-btn svg {
-                width: 20px;
-                height: 20px;
-            }
-        }
-
-        /* Hide floating button when chatbot is open */
-        .chatbot-floating-btn.hidden {
-            display: none;
-        }
-    </style>
-    `;
-
-    return floatingButton + floatingButtonCSS;
-}
-
-// Chatbot Widget HTML & CSS
-function initializeChatbot() {
     const chatbotHTML = `
-    <div id="chatbot-widget">
+    <div id="chatbot-widget" style="display: none;">
         <div id="chatbot-header">
             <span>💬 BizCalc Helper</span>
-            <button id="chatbot-close" aria-label="Close chat" title="Close">✕</button>
+            <button id="chatbot-minimize">_</button>
         </div>
         <div id="chatbot-messages">
             <div class="chatbot-message bot-message">
@@ -156,6 +93,41 @@ function initializeChatbot() {
 
     const chatbotCSS = `
     <style>
+        /* Circular Chat Button */
+        #chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(8, 145, 178, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9998;
+            padding: 0;
+            line-height: 1;
+        }
+
+        #chatbot-button:hover {
+            transform: scale(1.12) translateY(-4px);
+            box-shadow: 0 8px 24px rgba(8, 145, 178, 0.6);
+        }
+
+        #chatbot-button:active {
+            transform: scale(0.96);
+        }
+
+        #chatbot-button.hidden {
+            display: none;
+        }
+
         #chatbot-widget {
             position: fixed;
             bottom: 20px;
@@ -164,19 +136,12 @@ function initializeChatbot() {
             height: 550px;
             background: var(--bg-card);
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             z-index: 9999;
             border: 1px solid var(--border);
             animation: slideInRight 0.3s ease;
-            max-height: 90vh;
-            overflow: hidden;
-        }
-
-        /* Hidden by default */
-        #chatbot-widget.hidden {
-            display: none;
         }
 
         @keyframes slideInRight {
@@ -190,6 +155,17 @@ function initializeChatbot() {
             }
         }
 
+        #chatbot-widget.minimized {
+            height: 60px;
+            width: 350px;
+        }
+
+        #chatbot-widget.minimized #chatbot-messages,
+        #chatbot-widget.minimized #chatbot-suggestions,
+        #chatbot-widget.minimized #chatbot-input-area {
+            display: none;
+        }
+
         #chatbot-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -200,10 +176,9 @@ function initializeChatbot() {
             align-items: center;
             font-weight: 700;
             cursor: pointer;
-            flex-shrink: 0;
         }
 
-        #chatbot-close {
+        #chatbot-minimize {
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
@@ -213,13 +188,9 @@ function initializeChatbot() {
             cursor: pointer;
             font-weight: 700;
             transition: all 0.2s;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        #chatbot-close:hover {
+        #chatbot-minimize:hover {
             background: rgba(255,255,255,0.3);
         }
 
@@ -251,8 +222,6 @@ function initializeChatbot() {
         .chatbot-message p {
             margin: 0;
             line-height: 1.5;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
         .bot-message {
@@ -280,69 +249,64 @@ function initializeChatbot() {
         }
 
         #chatbot-suggestions {
-            padding: 0.75rem 1rem;
+            padding: 0.75rem;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
             border-top: 1px solid var(--border);
-            flex-shrink: 0;
-            max-height: 200px;
-            overflow-y: auto;
         }
 
         .suggestion-btn {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(249, 115, 22, 0.08) 100%);
+            background: transparent;
             border: 1px solid var(--border);
-            padding: 0.5rem 0.75rem;
+            color: var(--text-secondary);
+            padding: 0.6rem 0.75rem;
             border-radius: 6px;
-            color: var(--text-primary);
             cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
+            font-size: 0.8rem;
             text-align: left;
-            white-space: normal;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
         }
 
         .suggestion-btn:hover {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.15) 0%, rgba(249, 115, 22, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05) 0%, rgba(249, 115, 22, 0.05) 100%);
             border-color: var(--primary);
+            color: var(--primary);
         }
 
         #chatbot-input-area {
-            padding: 1rem;
+            padding: 0.75rem;
             border-top: 1px solid var(--border);
             display: flex;
             gap: 0.5rem;
-            flex-shrink: 0;
         }
 
         #chatbot-input {
             flex: 1;
-            padding: 0.75rem;
+            padding: 0.6rem;
             border: 1px solid var(--border);
             border-radius: 6px;
-            font-family: inherit;
-            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
             color: var(--text-primary);
-            background: var(--bg-card);
+            font-size: 0.9rem;
         }
 
         #chatbot-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
         }
 
         #chatbot-send {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             border: none;
-            padding: 0.75rem 1rem;
+            width: 36px;
+            height: 36px;
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
             transition: all 0.2s;
         }
 
@@ -351,170 +315,205 @@ function initializeChatbot() {
             box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
         }
 
-        #chatbot-send:active {
-            transform: translateY(0);
-        }
-
-        /* Mobile Responsive */
         @media (max-width: 768px) {
+            #chatbot-button {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+            }
+
             #chatbot-widget {
-                width: 90vw;
-                height: 80vh;
-                max-width: 100%;
-                right: 5vw;
+                width: calc(100vw - 20px);
+                height: 70vh;
                 bottom: 80px;
-                border-radius: 16px;
+                right: 10px;
+                left: 10px;
+                max-height: 600px;
             }
 
-            .suggestion-btn {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.6rem;
-            }
-
-            #chatbot-input {
-                padding: 0.6rem;
-                font-size: 16px;
-            }
-
-            #chatbot-send {
-                padding: 0.6rem 0.8rem;
-                font-size: 0.9rem;
-            }
-
-            .bot-message p,
-            .user-message p {
-                max-width: 90%;
+            #chatbot-widget.minimized {
+                width: calc(100vw - 20px);
             }
         }
 
         @media (max-width: 480px) {
+            #chatbot-button {
+                width: 48px;
+                height: 48px;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            #chatbot-button svg {
+                width: 24px;
+                height: 24px;
+            }
+
             #chatbot-widget {
-                width: 95vw;
-                height: 75vh;
-                right: 2.5vw;
-                bottom: 70px;
+                width: calc(100vw - 16px);
+                height: 60vh;
+                bottom: 72px;
+                right: 8px;
+                left: 8px;
             }
+        }
 
-            #chatbot-header {
-                padding: 0.75rem;
-            }
+        /* Scrollbar styling */
+        #chatbot-messages::-webkit-scrollbar {
+            width: 6px;
+        }
 
-            #chatbot-messages {
-                padding: 0.75rem;
-            }
+        #chatbot-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
 
-            #chatbot-input-area {
-                padding: 0.75rem;
-                gap: 0.3rem;
-            }
+        #chatbot-messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
 
-            .suggestion-btn {
-                font-size: 0.75rem;
-                padding: 0.35rem 0.5rem;
-            }
+        #chatbot-messages::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
     </style>
     `;
 
-    return floatingButton + chatbotHTML + chatbotCSS;
+    // Inject CSS and HTML
+    document.head.insertAdjacentHTML('beforeend', chatbotCSS);
+    document.body.insertAdjacentHTML('beforeend', chatbotButtonHTML);
+    document.body.insertAdjacentHTML('beforeend', chatbotHTML);
+
+    // Setup event listeners
+    setupChatbotListeners();
 }
 
-// Initialize Chatbot on Page Load
-document.addEventListener('DOMContentLoaded', function() {
-    // Add floating button and chatbot widget to page
-    const chatbotContainer = document.createElement('div');
-    chatbotContainer.id = 'chatbot-container';
-    chatbotContainer.innerHTML = createFloatingButton() + initializeChatbot();
-    document.body.appendChild(chatbotContainer);
-
-    // Get elements
-    const floatingBtn = document.getElementById('chatbot-floating-btn');
+function setupChatbotListeners() {
+    const input = document.getElementById('chatbot-input');
+    const sendBtn = document.getElementById('chatbot-send');
+    const minimizeBtn = document.getElementById('chatbot-minimize');
+    const header = document.getElementById('chatbot-header');
+    const chatbotButton = document.getElementById('chatbot-button');
     const chatbotWidget = document.getElementById('chatbot-widget');
-    const closeBtn = document.getElementById('chatbot-close');
-    const chatInput = document.getElementById('chatbot-input');
 
-    // Make chatbot hidden by default
-    chatbotWidget.classList.add('hidden');
-
-    // Toggle chatbot on floating button click
-    floatingBtn.addEventListener('click', function() {
-        chatbotWidget.classList.toggle('hidden');
-        floatingBtn.classList.toggle('hidden');
-        if (!chatbotWidget.classList.contains('hidden')) {
-            chatInput.focus();
-        }
+    // Button to toggle widget visibility
+    chatbotButton.addEventListener('click', () => {
+        const isVisible = chatbotWidget.style.display !== 'none';
+        chatbotWidget.style.display = isVisible ? 'none' : 'flex';
+        chatbotButton.classList.toggle('active');
     });
 
-    // Close chatbot
-    closeBtn.addEventListener('click', function() {
-        chatbotWidget.classList.add('hidden');
-        floatingBtn.classList.remove('hidden');
-    });
-
-    // Allow Enter key to send message
-    chatInput.addEventListener('keypress', function(e) {
+    sendBtn.addEventListener('click', sendChatMessage);
+    input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             sendChatMessage();
         }
     });
-});
 
-// Select a predefined question
+    minimizeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('chatbot-widget').classList.toggle('minimized');
+    });
+
+    header.addEventListener('click', () => {
+        const widget = document.getElementById('chatbot-widget');
+        if (widget.classList.contains('minimized')) {
+            widget.classList.remove('minimized');
+        }
+    });
+
+    // Close chatbot when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#chatbot-button') && !e.target.closest('#chatbot-widget')) {
+            chatbotWidget.style.display = 'none';
+            chatbotButton.classList.remove('active');
+        }
+    });
+}
+
 function selectChatQuestion(questionId) {
-    const question = chatbotQA.queries.find(q => q.id === questionId);
-    if (question) {
-        displayUserMessage(question.question);
-        displayBotMessage(question.answer);
-        document.getElementById('chatbot-input').value = '';
+    const qa = chatbotQA.queries.find(q => q.id === questionId);
+    if (qa) {
+        document.getElementById('chatbot-input').value = qa.question;
+        sendChatMessage(qa.id);
     }
 }
 
-// Send custom message
-function sendChatMessage() {
+function sendChatMessage(predefinedId = null) {
     const input = document.getElementById('chatbot-input');
-    const message = input.value.trim();
+    const messagesDiv = document.getElementById('chatbot-messages');
+    const suggestionsDiv = document.getElementById('chatbot-suggestions');
 
-    if (message === '') return;
+    let userQuery = input.value.trim();
 
-    displayUserMessage(message);
-    input.value = '';
+    if (!userQuery && !predefinedId) return;
 
-    // Find matching question
-    let found = false;
-    for (let query of chatbotQA.queries) {
-        if (query.question.toLowerCase().includes(message.toLowerCase()) ||
-            message.toLowerCase().includes(query.question.toLowerCase())) {
-            displayBotMessage(query.answer);
-            found = true;
-            break;
+    let answer = null;
+    let matchedId = null;
+
+    if (predefinedId) {
+        answer = chatbotQA.queries.find(q => q.id === predefinedId);
+    } else {
+        // Search for matching question
+        const query = userQuery.toLowerCase();
+        answer = chatbotQA.queries.find(q =>
+            q.question.toLowerCase().includes(query) ||
+            q.answer.toLowerCase().includes(query)
+        );
+
+        // Fuzzy match if exact match not found
+        if (!answer) {
+            const words = query.split(' ');
+            answer = chatbotQA.queries.find(q =>
+                words.some(word =>
+                    q.question.toLowerCase().includes(word) ||
+                    q.answer.toLowerCase().includes(word)
+                )
+            );
         }
     }
 
-    if (!found) {
-        const response = "माफ कीजिए, मुझे इस सवाल का सटीक जवाब नहीं पता। कृपया हमारे predefined questions से चुनें या contact page पर हमसे संपर्क करें। 😊";
-        displayBotMessage(response);
+    // Display user message
+    if (!predefinedId) {
+        const userMsg = document.createElement('div');
+        userMsg.className = 'chatbot-message user-message';
+        userMsg.innerHTML = `<p>${escapeHtml(userQuery)}</p>`;
+        messagesDiv.appendChild(userMsg);
+        input.value = '';
     }
+
+    // Display bot response
+    const botMsg = document.createElement('div');
+    botMsg.className = 'chatbot-message bot-message';
+
+    if (answer) {
+        botMsg.innerHTML = `<p>${answer.answer}</p>`;
+        matchedId = answer.id;
+    } else {
+        botMsg.innerHTML = `<p>मुझे सटीक जवाब नहीं मिला। कृपया हमसे <a href="contact.html" style="color: var(--primary); font-weight: 600;">contact करें</a> या नीचे दिए suggestions से चुनें। 😊</p>`;
+    }
+
+    messagesDiv.appendChild(botMsg);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+    // Update suggestions
+    const otherSuggestions = chatbotQA.queries.filter(q => q.id !== matchedId).slice(0, 3);
+    suggestionsDiv.innerHTML = otherSuggestions.map(q => `
+        <button class="suggestion-btn" onclick="selectChatQuestion(${q.id})" title="${q.question}">
+            ${q.question.length > 30 ? q.question.substring(0, 27) + '...' : q.question}
+        </button>
+    `).join('');
 }
 
-// Display user message
-function displayUserMessage(message) {
-    const messagesContainer = document.getElementById('chatbot-messages');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'chatbot-message user-message';
-    messageDiv.innerHTML = `<p>${message}</p>`;
-    messagesContainer.appendChild(messageDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
-// Display bot message
-function displayBotMessage(message) {
-    const messagesContainer = document.getElementById('chatbot-messages');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'chatbot-message bot-message';
-
-    // Handle line breaks
-    const formattedMessage = message.replace(/\n/g, '<br>');
-    messageDiv.innerHTML = `<p>${formattedMessage}</p>`;
-    messagesContainer.appendChild(messageDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+// Initialize chatbot when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeChatbot);
+} else {
+    initializeChatbot();
 }
