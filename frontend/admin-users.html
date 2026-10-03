@@ -6,6 +6,7 @@
     <meta name="description" content="Admin - User Tracking Panel">
     <title>Admin - Registered Users</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
+    <script src="auth-check.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -422,7 +423,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Signup Date</th>
-                        <th>Last Login</th>
+                        <th>Business Type</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -472,37 +473,47 @@
 
         function loadUsers() {
             try {
-                const users = JSON.parse(localStorage.getItem('bizcalc_registered_users') || '[]');
-                const tableBody = document.getElementById('tableBody');
+                // Fetch users from backend API
+                fetch('/api/admin/users')
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.getElementById('tableBody');
 
-                if (users.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="5" class="empty-state">❌ No registered users yet</td></tr>';
-                    updateStats([]);
-                    return;
-                }
+                        if (!data.success || data.users.length === 0) {
+                            tableBody.innerHTML = '<tr><td colspan="5" class="empty-state">❌ No registered users yet</td></tr>';
+                            updateStats([]);
+                            return;
+                        }
 
-                // Sort by signup date (newest first)
-                users.sort((a, b) => new Date(b.signupDate) - new Date(a.signupDate));
+                        const users = data.users;
 
-                let html = '';
-                users.forEach((user, index) => {
-                    const signupDate = new Date(user.signupDate).toLocaleString('en-IN');
-                    const lastLogin = new Date(user.lastLogin).toLocaleString('en-IN');
-                    html += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><strong>${user.name || 'N/A'}</strong></td>
-                            <td>${user.email}</td>
-                            <td>${signupDate}</td>
-                            <td>${lastLogin}</td>
-                        </tr>
-                    `;
-                });
+                        // Sort by signup date (newest first)
+                        users.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-                tableBody.innerHTML = html;
-                updateStats(users);
+                        let html = '';
+                        users.forEach((user, index) => {
+                            const signupDate = new Date(user.created_at).toLocaleString('en-IN');
+                            const businessType = user.business_type || 'Not specified';
+                            html += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td><strong>${user.full_name}</strong></td>
+                                    <td>${user.email}</td>
+                                    <td>${signupDate}</td>
+                                    <td>${businessType}</td>
+                                </tr>
+                            `;
+                        });
+
+                        tableBody.innerHTML = html;
+                        updateStats(users);
+                    })
+                    .catch(error => {
+                        console.error('Error loading users:', error);
+                        document.getElementById('tableBody').innerHTML = '<tr><td colspan="5" class="empty-state">❌ Error loading data from server</td></tr>';
+                    });
             } catch (e) {
-                console.error('Error loading users:', e);
+                console.error('Error in loadUsers:', e);
                 document.getElementById('tableBody').innerHTML = '<tr><td colspan="5" class="empty-state">❌ Error loading data</td></tr>';
             }
         }
@@ -513,9 +524,9 @@
             const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
             const monthAgo = new Date(now.getFullYear(), now.getMonth(), 1);
 
-            const todayCount = users.filter(u => new Date(u.signupDate) >= today).length;
-            const weekCount = users.filter(u => new Date(u.signupDate) >= weekAgo).length;
-            const monthCount = users.filter(u => new Date(u.signupDate) >= monthAgo).length;
+            const todayCount = users.filter(u => new Date(u.created_at) >= today).length;
+            const weekCount = users.filter(u => new Date(u.created_at) >= weekAgo).length;
+            const monthCount = users.filter(u => new Date(u.created_at) >= monthAgo).length;
 
             document.getElementById('totalUsers').textContent = users.length;
             document.getElementById('todayUsers').textContent = todayCount;
@@ -525,27 +536,37 @@
 
         function exportData() {
             try {
-                const users = JSON.parse(localStorage.getItem('bizcalc_registered_users') || '[]');
+                fetch('/api/admin/users')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.success || data.users.length === 0) {
+                            alert('No users to export');
+                            return;
+                        }
 
-                if (users.length === 0) {
-                    alert('No users to export');
-                    return;
-                }
+                        const users = data.users;
 
-                // Create CSV
-                let csv = 'Name,Email,Signup Date,Last Login\n';
-                users.forEach(user => {
-                    const signupDate = new Date(user.signupDate).toLocaleString('en-IN');
-                    const lastLogin = new Date(user.lastLogin).toLocaleString('en-IN');
-                    csv += `"${user.name || 'N/A'}","${user.email}","${signupDate}","${lastLogin}"\n`;
-                });
+                        // Create CSV
+                        let csv = 'Name,Email,Signup Date,Business Type,WhatsApp\n';
+                        users.forEach(user => {
+                            const signupDate = new Date(user.created_at).toLocaleString('en-IN');
+                            const businessType = user.business_type || 'Not specified';
+                            const whatsapp = user.whatsapp || 'N/A';
+                            csv += `"${user.full_name}","${user.email}","${signupDate}","${businessType}","${whatsapp}"\n`;
+                        });
 
-                // Copy to clipboard
-                navigator.clipboard.writeText(csv).then(() => {
-                    const msg = document.getElementById('successMsg');
-                    msg.classList.add('show');
-                    setTimeout(() => msg.classList.remove('show'), 2000);
-                });
+                        // Copy to clipboard
+                        navigator.clipboard.writeText(csv).then(() => {
+                            const msg = document.getElementById('successMsg');
+                            msg.classList.add('show');
+                            setTimeout(() => msg.classList.remove('show'), 2000);
+                        }).catch(err => {
+                            alert('Error copying to clipboard: ' + err.message);
+                        });
+                    })
+                    .catch(error => {
+                        alert('Error exporting data: ' + error.message);
+                    });
             } catch (e) {
                 alert('Error exporting data: ' + e.message);
             }
