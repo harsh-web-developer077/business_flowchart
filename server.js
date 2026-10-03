@@ -161,11 +161,32 @@ app.get('/api/admin/calculations', (req, res) => {
 const frontendPath = path.join(__dirname, 'frontend');
 
 if (fs.existsSync(frontendPath)) {
-  app.use(express.static(frontendPath));
+  // Serve static files (including sitemap.xml and robots.txt)
+  app.use(express.static(frontendPath, {
+    maxAge: '1d',
+    setHeaders: (res, path) => {
+      if (path.endsWith('.xml')) {
+        res.setHeader('Content-Type', 'application/xml');
+      } else if (path.endsWith('.txt')) {
+        res.setHeader('Content-Type', 'text/plain');
+      }
+    }
+  }));
 
-  // SPA fallback
+  // Explicit routes for SEO files (before SPA fallback)
+  app.get('/sitemap.xml', (req, res) => {
+    res.type('application/xml');
+    res.sendFile(path.join(frontendPath, 'sitemap.xml'));
+  });
+
+  app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.sendFile(path.join(frontendPath, 'robots.txt'));
+  });
+
+  // SPA fallback (only for non-API, non-file requests)
   app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api/')) {
+    if (!req.path.startsWith('/api/') && !req.path.includes('.')) {
       res.sendFile(path.join(frontendPath, 'index.html'));
     }
   });
