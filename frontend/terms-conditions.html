@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terms and Conditions - BizCalc Business Investment Calculator">
+    <title>Terms & Conditions - BizCalc</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
+    <script src="auth-check.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #0891b2;
+            --secondary: #f97316;
+            --accent: #a855f7;
+            --accent-2: #ec4899;
+            --accent-3: #06b6d4;
+            --bg: #f0f9ff;
+            --bg-card: #ffffff;
+            --text-primary: #0c2340;
+            --text-secondary: #475569;
+            --border: #e0f2fe;
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #06b6d4;
+                --secondary: #fb923c;
+                --accent: #d946ef;
+                --bg: #0f172a;
+                --bg-card: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --border: #0e7490;
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --primary: #06b6d4;
+            --secondary: #fb923c;
+            --accent: #d946ef;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #0e7490;
+            color-scheme: dark;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-brand {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fbbf24;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent-2) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at 100% 0%, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .page-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .content-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--primary);
+        }
+
+        .content-section h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .content-section h3 {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .content-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .content-section li {
+            margin-bottom: 0.8rem;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            margin: 1.5rem 0;
+        }
+
+        .highlight strong {
+            color: var(--primary);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 50%, #0e7490 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fbbf24;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #fbbf24;
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            width: 28px;
+            height: 24px;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.4em;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(8, 145, 178, 0.98) 0%, rgba(249, 115, 22, 0.98) 100%);
+                flex-direction: column;
+                gap: 0;
+                z-index: 1000;
+                padding: 1rem 0;
+                border-bottom: 3px solid #fbbf24;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                font-size: 0.95rem;
+            }
+
+            .hamburger {
+                display: flex;
+                order: 3;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 0;
+            }
+
+            .nav-container {
+                padding: 0.8rem;
+                gap: 0.5rem;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+
+            .content-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">💼 BizCalc</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="loan-calculator.html">Loan Calculator</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div data-auth-container style="display: flex; gap: 1rem; align-items: center;">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1>Terms & Conditions</h1>
+            <p>Please read these terms carefully before using BizCalc</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using BizCalc ("Service"), you acknowledge that you have read, understood, and agree to be bound by all the terms and conditions outlined in this document. If you do not agree with any part of these terms, you must not use the Service.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>2. Service Description</h2>
+            <p>BizCalc is a business investment calculator tool designed to help entrepreneurs in Sri Dungargarh estimate startup costs and investment requirements for various types of businesses. The Service provides:</p>
+            <ul>
+                <li>Investment calculation for 50+ business types</li>
+                <li>Cost estimation for land, equipment, and labor</li>
+                <li>Loan calculation assistance</li>
+                <li>Data storage and retrieval of calculations</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>3. User Accounts & Authentication</h2>
+            <h3>3.1 Account Creation</h3>
+            <p>To use BizCalc, you must create an account by providing accurate, complete, and current information. You are responsible for:</p>
+            <ul>
+                <li>Maintaining the confidentiality of your account credentials</li>
+                <li>All activities that occur under your account</li>
+                <li>Notifying us immediately of any unauthorized access</li>
+            </ul>
+            <h3>3.2 Account Security</h3>
+            <p>You agree to keep your password secure and not share it with others. BizCalc is not responsible for unauthorized access resulting from your failure to secure your credentials.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>4. Limitation of Liability</h2>
+            <div class="highlight">
+                <strong>Important:</strong> The calculations and estimates provided by BizCalc are for informational purposes only and should not be considered as professional financial or investment advice. We do not guarantee the accuracy of any calculations or data provided.
+            </div>
+            <p>BizCalc and its creators are not responsible for:</p>
+            <ul>
+                <li>Any direct or indirect financial losses resulting from use of the Service</li>
+                <li>Accuracy or completeness of calculations and estimates</li>
+                <li>Business decisions made based on our estimates</li>
+                <li>Market fluctuations or changes in local pricing</li>
+                <li>Any errors in data entry or calculations</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>5. Disclaimer of Warranties</h2>
+            <p>BizCalc is provided on an "AS IS" and "AS AVAILABLE" basis without any warranties, express or implied. We do not warrant that:</p>
+            <ul>
+                <li>The Service will be uninterrupted or error-free</li>
+                <li>All defects will be corrected</li>
+                <li>The results will meet your expectations</li>
+                <li>The Service is free from viruses or harmful components</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>6. User Responsibilities</h2>
+            <p>As a user of BizCalc, you agree to:</p>
+            <ul>
+                <li>Use the Service only for lawful purposes</li>
+                <li>Not attempt to gain unauthorized access to the Service</li>
+                <li>Not use the Service to harm, threaten, or harass others</li>
+                <li>Provide accurate information when creating your account</li>
+                <li>Not reverse-engineer or attempt to bypass security measures</li>
+                <li>Comply with all applicable laws and regulations</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>7. Intellectual Property Rights</h2>
+            <p>All content, features, and functionality of BizCalc (including but not limited to software, design, text, graphics, and logos) are owned by BizCalc, its creators, or its content providers and are protected by international copyright, trademark, and other intellectual property laws.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>8. Data & Privacy</h2>
+            <p>Your use of BizCalc is also governed by our Privacy Policy. By using the Service, you consent to our collection and use of information as outlined in the Privacy Policy. We take reasonable measures to protect your data, but cannot guarantee absolute security.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>9. Modification of Service</h2>
+            <p>We reserve the right to modify, suspend, or discontinue the Service at any time with or without notice. We are not liable for any modification, suspension, or discontinuation of the Service.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>10. Limitation of Damages</h2>
+            <p>To the maximum extent permitted by law, in no event shall BizCalc, its creators, or its affiliates be liable for any indirect, incidental, special, consequential, or punitive damages arising from or related to your use of the Service.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>11. Indemnification</h2>
+            <p>You agree to indemnify and hold harmless BizCalc and its creators from any claims, damages, losses, or expenses (including legal fees) arising from:</p>
+            <ul>
+                <li>Your violation of these Terms & Conditions</li>
+                <li>Your use of the Service</li>
+                <li>Your violation of any law or third-party rights</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>12. Professional Advice Disclaimer</h2>
+            <div class="highlight">
+                <strong>Note:</strong> BizCalc is not a substitute for professional financial, legal, or business advice. Before making any business investment decisions, please consult with qualified professionals including accountants, lawyers, and business consultants.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>13. Governing Law</h2>
+            <p>These Terms & Conditions are governed by and construed in accordance with the laws of India, and you irrevocably submit to the exclusive jurisdiction of the courts in India.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>14. Contact Information</h2>
+            <p>If you have any questions about these Terms & Conditions, please contact us at:</p>
+            <p><strong>Email:</strong> support@bizcalc.com<br>
+            <strong>Address:</strong> Sri Dungargarh, Rajasthan, India</p>
+        </div>
+
+        <div class="content-section">
+            <h2>15. Changes to Terms</h2>
+            <p>We reserve the right to modify these Terms & Conditions at any time. Changes will be effective immediately upon posting to the Service. Your continued use of BizCalc after any changes indicates your acceptance of the new terms.</p>
+            <p><strong>Last Updated:</strong> October 3, 2026</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>💼 BizCalc</h4>
+                    <p style="color: rgba(255,255,255,0.75); line-height: 1.8;">Professional calculator for Sri Dungargarh entrepreneurs.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 BizCalc. All rights reserved.</p>
+                <p class="footer-credit" style="margin: 0.5rem 0;">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank">Sparsh Portfolio</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('nav')) {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+    </script>
+
+    <!-- Navbar Manager -->
+    <script src="navbar-manager.js"></script>
+
+    <!-- Chatbot Widget -->
+    <script src="chatbot.js"></script>
+
+</body>
+</html>
