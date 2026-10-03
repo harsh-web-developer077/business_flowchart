@@ -536,10 +536,23 @@
 
                     showMessage('✓ Sign in successful! Redirecting...', 'success');
 
-                    // Redirect to dashboard after 1 second
+                    // Redirect to dashboard after ensuring sessionStorage is persisted
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1000);
+                        // Verify sessionStorage has the data before redirecting
+                        if (sessionStorage.getItem('isLoggedIn') === 'true' && sessionStorage.getItem('userId')) {
+                            window.location.href = 'dashboard.html';
+                        } else {
+                            // Data not found in sessionStorage, retry
+                            showMessage('⚠️ Auth data not persisted. Retrying...', 'error');
+                            setTimeout(() => {
+                                if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                                    window.location.href = 'dashboard.html';
+                                } else {
+                                    window.location.href = 'signin.html';
+                                }
+                            }, 1500);
+                        }
+                    }, 800);
                 } else {
                     showMessage(result.message || 'Invalid email or password', 'error');
                     signinBtn.disabled = false;

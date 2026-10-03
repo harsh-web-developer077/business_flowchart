@@ -988,26 +988,31 @@
 
     <script>
         const businessData = {
+            // Research-based data from Google (Tier-2 Indian cities like Sri Dungargarh)
             'building': { name: 'Building Materials Shop', setup: 2000000, stock: 8000000, equipment: 450000, salaryPerPerson: 70000, operatingCosts: 150000 },
             'kirana': { name: 'Kirana General Shop', setup: 300000, stock: 400000, equipment: 100000, salaryPerPerson: 50000, operatingCosts: 50000 },
-            'cafe': { name: 'Cafe/Restaurant', setup: 1000000, stock: 500000, equipment: 850000, salaryPerPerson: 80000, operatingCosts: 200000 },
-            'clothing': { name: 'Clothing Store', setup: 600000, stock: 1500000, equipment: 200000, salaryPerPerson: 60000, operatingCosts: 80000 },
-            'electronics': { name: 'Electronics Store', setup: 1200000, stock: 2000000, equipment: 300000, salaryPerPerson: 75000, operatingCosts: 120000 },
-            'hardware': { name: 'Hardware Store', setup: 700000, stock: 1200000, equipment: 150000, salaryPerPerson: 65000, operatingCosts: 100000 },
-            'pharmacy': { name: 'Pharmacy/Medical Store', setup: 500000, stock: 1000000, equipment: 400000, salaryPerPerson: 70000, operatingCosts: 90000 },
-            'furniture': { name: 'Furniture Store', setup: 1500000, stock: 2500000, equipment: 500000, salaryPerPerson: 65000, operatingCosts: 180000 },
-            'jewelry': { name: 'Jewelry Store', setup: 800000, stock: 3000000, equipment: 250000, salaryPerPerson: 90000, operatingCosts: 130000 },
-            'cosmetics': { name: 'Cosmetics/Beauty Store', setup: 400000, stock: 600000, equipment: 150000, salaryPerPerson: 55000, operatingCosts: 70000 },
-            'bookstore': { name: 'Bookstore/Stationery', setup: 350000, stock: 800000, equipment: 100000, salaryPerPerson: 45000, operatingCosts: 60000 },
-            'mobile': { name: 'Mobile/Phone Shop', setup: 700000, stock: 1500000, equipment: 200000, salaryPerPerson: 65000, operatingCosts: 85000 },
-            'grocery': { name: 'Grocery Store (Modern)', setup: 1200000, stock: 1800000, equipment: 350000, salaryPerPerson: 60000, operatingCosts: 140000 },
-            'gym': { name: 'Fitness Center/Gym', setup: 2500000, stock: 300000, equipment: 1200000, salaryPerPerson: 85000, operatingCosts: 250000 },
-            'school': { name: 'School/Coaching Center', setup: 1800000, stock: 200000, equipment: 500000, salaryPerPerson: 75000, operatingCosts: 180000 },
-            'hospital': { name: 'Clinic/Diagnostic Center', setup: 1500000, stock: 800000, equipment: 2000000, salaryPerPerson: 90000, operatingCosts: 220000 },
-            'laundry': { name: 'Laundry Service', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 50000, operatingCosts: 120000 },
-            'petshop': { name: 'Pet Shop & Grooming', setup: 600000, stock: 400000, equipment: 300000, salaryPerPerson: 65000, operatingCosts: 100000 },
-            'photography': { name: 'Photography Studio', setup: 700000, stock: 100000, equipment: 1500000, salaryPerPerson: 70000, operatingCosts: 90000 },
-            'car-rental': { name: 'Car Rental Service', setup: 500000, stock: 0, equipment: 0, salaryPerPerson: 40000, operatingCosts: 150000 }
+            'cafe': { name: 'Cafe/Restaurant', setup: 800000, stock: 500000, equipment: 850000, salaryPerPerson: 20000, operatingCosts: 200000 },
+            // Clothing: Updated from Google research - ₹3-12 lakh typical
+            'clothing': { name: 'Clothing Store', setup: 500000, stock: 1200000, equipment: 150000, salaryPerPerson: 18000, operatingCosts: 70000 },
+            // Electronics: Updated from Google - ₹40-100 lakh for proper store, adjusted mid-range
+            'electronics': { name: 'Electronics Store', setup: 1500000, stock: 2500000, equipment: 350000, salaryPerPerson: 22000, operatingCosts: 140000 },
+            'hardware': { name: 'Hardware Store', setup: 600000, stock: 1000000, equipment: 120000, salaryPerPerson: 18000, operatingCosts: 80000 },
+            'pharmacy': { name: 'Pharmacy/Medical Store', setup: 500000, stock: 1000000, equipment: 400000, salaryPerPerson: 20000, operatingCosts: 90000 },
+            'furniture': { name: 'Furniture Store', setup: 1500000, stock: 2500000, equipment: 500000, salaryPerPerson: 19000, operatingCosts: 180000 },
+            'jewelry': { name: 'Jewelry Store', setup: 800000, stock: 3000000, equipment: 250000, salaryPerPerson: 25000, operatingCosts: 130000 },
+            'cosmetics': { name: 'Cosmetics/Beauty Store', setup: 400000, stock: 600000, equipment: 150000, salaryPerPerson: 16000, operatingCosts: 70000 },
+            'bookstore': { name: 'Bookstore/Stationery', setup: 350000, stock: 800000, equipment: 100000, salaryPerPerson: 14000, operatingCosts: 60000 },
+            'mobile': { name: 'Mobile/Phone Shop', setup: 700000, stock: 1500000, equipment: 200000, salaryPerPerson: 20000, operatingCosts: 85000 },
+            'grocery': { name: 'Grocery Store (Modern)', setup: 1200000, stock: 1800000, equipment: 350000, salaryPerPerson: 18000, operatingCosts: 140000 },
+            // Gym: Updated from Google research - ₹15-25 lakh mid-range
+            'gym': { name: 'Fitness Center/Gym', setup: 2000000, stock: 300000, equipment: 1200000, salaryPerPerson: 25000, operatingCosts: 250000 },
+            'school': { name: 'School/Coaching Center', setup: 1800000, stock: 200000, equipment: 500000, salaryPerPerson: 22000, operatingCosts: 180000 },
+            // Clinic: Updated from Google research - ₹10-50 lakh, using small clinic mid-range
+            'hospital': { name: 'Clinic/Diagnostic Center', setup: 1500000, stock: 800000, equipment: 2000000, salaryPerPerson: 27000, operatingCosts: 220000 },
+            'laundry': { name: 'Laundry Service', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 15000, operatingCosts: 120000 },
+            'petshop': { name: 'Pet Shop & Grooming', setup: 600000, stock: 400000, equipment: 300000, salaryPerPerson: 18000, operatingCosts: 100000 },
+            'photography': { name: 'Photography Studio', setup: 700000, stock: 100000, equipment: 1500000, salaryPerPerson: 20000, operatingCosts: 90000 },
+            'car-rental': { name: 'Car Rental Service', setup: 500000, stock: 0, equipment: 0, salaryPerPerson: 12000, operatingCosts: 150000 }
         };
 
         const landPrices = { 'highway': 6000, 'market': 10000 };
@@ -1302,15 +1307,9 @@
             return '₹' + Math.round(amount).toLocaleString('en-IN');
         }
 
-        // Authentication Check (secondary - auth-check.js handles primary check)
+        // Additional initialization after auth-check.js verifies user
         window.addEventListener('load', () => {
-            // Check if user is authenticated via sessionStorage
-            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-
-            if (!isLoggedIn || isLoggedIn !== 'true') {
-                // auth-check.js should have already redirected, but this is a fallback
-                window.location.href = 'signin.html';
-            }
+            // auth-check.js already verified authentication, just proceed with initialization
 
             // Check URL parameters for pre-selected business type
             const urlParams = new URLSearchParams(window.location.search);
