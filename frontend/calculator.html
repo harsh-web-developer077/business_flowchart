@@ -3,24 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Business Investment Calculator - Calculate exact startup investment for 53+ business types in Sri Dungargarh. Get detailed cost breakdown for agriculture, cafe, pharmacy, retail and more.">
-    <meta name="keywords" content="business investment calculator, startup cost calculator, business expense calculator, investment breakdown, agricultural business cost, cafe business investment, pharmacy startup cost, retail business investment, Sri Dungargarh business">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Business Investment Calculator - Calculate Your Startup Costs">
-    <meta property="og:description" content="Get accurate startup investment estimates for 53+ business types">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://business-flowchart.onrender.com/calculator.html">
-    <title>Business Investment Calculator - Startup Cost Estimator | BizCalc</title>
+    <meta name="description" content="Business Investment Calculator - Calculate your startup investment for 13+ business types in Sri Dungargarh">
+    <title>Calculator - BizCalc</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "CalculatorWeb",
-      "name": "Business Investment Calculator",
-      "description": "Calculate startup investment costs for 53+ business types",
-      "url": "https://business-flowchart.onrender.com/calculator.html"
-    }
-    </script>
     <script src="auth-check.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
@@ -117,10 +102,6 @@
             position: relative;
         }
 
-        .nav-links a.active {
-            color: #fbbf24;
-        }
-
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -160,170 +141,616 @@
         .page-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
-            padding: 3rem 2rem;
-            text-align: center;
+            padding: 4rem 2rem;
+            text-align: left;
             position: relative;
             overflow: hidden;
         }
 
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at 100% 0%, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .page-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            flex: 0 0 50%;
+        }
+
         .page-header h1 {
             font-family: 'Sora', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
         .page-header p {
-            font-size: 1rem;
+            font-size: 1.1rem;
             opacity: 0.95;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
         }
 
         .calculator-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 3rem;
             align-items: start;
         }
 
         .calculator-form {
             background: var(--bg-card);
-            border-radius: 12px;
-            padding: 2rem;
+            border-radius: 16px;
+            padding: 2.5rem;
             box-shadow: var(--shadow-lg);
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
 
         .form-group label {
             display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
             color: var(--text-primary);
+            font-size: 0.95rem;
         }
 
-        .form-group select, .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.9rem;
             border: 2px solid var(--border);
             border-radius: 8px;
             font-size: 1rem;
-            background: var(--bg);
+            font-family: inherit;
+            transition: all 0.3s;
+            background: var(--bg-card);
             color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
         }
 
-        .form-group select:focus, .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+            box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1);
         }
 
         .calculate-btn {
             width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border: none;
             border-radius: 8px;
+            font-weight: 700;
             font-size: 1rem;
-            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 1rem;
+            box-shadow: 0 8px 20px rgba(8, 145, 178, 0.3);
         }
 
         .calculate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(8, 145, 178, 0.4);
         }
 
-        .results-section {
+        .results-container {
             background: var(--bg-card);
-            border-radius: 12px;
-            padding: 2rem;
+            border-radius: 16px;
+            padding: 2.5rem;
             box-shadow: var(--shadow-lg);
             display: none;
         }
 
-        .results-section.show {
+        .results-container.active {
             display: block;
+            animation: slideInDown 0.5s ease;
         }
 
-        .result-card {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
-            padding: 1.5rem;
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05), rgba(249, 115, 22, 0.05));
             border-radius: 8px;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
         .result-label {
-            font-size: 0.9rem;
             color: var(--text-secondary);
-            text-transform: uppercase;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         .result-value {
-            font-size: 2rem;
-            font-weight: 700;
             color: var(--primary);
-            margin-top: 0.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
-        .breakdown-list {
-            margin-top: 1.5rem;
-            border-top: 2px solid var(--border);
+        .timeline-section {
+            margin-top: 2rem;
             padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
         }
 
-        .breakdown-item {
+        .timeline-options {
             display: flex;
-            justify-content: space-between;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .breakdown-label {
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        .breakdown-amount {
+        .timeline-btn {
+            padding: 0.7rem 1.2rem;
+            background: var(--border);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
             font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .timeline-btn:hover, .timeline-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .timeline-input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-input-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .timeline-input-group input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            background: var(--bg-card);
             color: var(--text-primary);
         }
 
-        .chart-container {
-            position: relative;
-            height: 300px;
-            margin-top: 2rem;
+        .timeline-input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1);
         }
 
-        @media (max-width: 768px) {
-            .calculator-grid {
-                grid-template-columns: 1fr;
-            }
+        .graph-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-top: 1.5rem;
+            display: none;
+        }
 
-            .page-header h1 {
-                font-size: 2rem;
-            }
+        .graph-container.active {
+            display: block;
+        }
+
+        .save-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        .save-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .success-msg {
+            color: #10b981;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 6px;
+            display: none;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         footer {
-            background: #0c2340;
+            background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 50%, #0e7490 100%);
             color: white;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fbbf24;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #fbbf24;
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
             text-align: center;
-            margin-top: 4rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ===== HAMBURGER MENU ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            width: 28px;
+            height: 24px;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.4em;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(8, 145, 178, 0.98) 0%, rgba(249, 115, 22, 0.98) 100%);
+                flex-direction: column;
+                gap: 0;
+                z-index: 1000;
+                padding: 1rem 0;
+                border-bottom: 3px solid #fbbf24;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                font-size: 0.95rem;
+            }
+
+            .hamburger {
+                display: flex;
+                order: 3;
+            }
+
+            [data-auth-container] {
+                order: 2;
+                gap: 0.5rem;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.2rem;
+            }
+
+            .form-group label {
+                font-size: 0.95rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+
+            .calculate-btn {
+                padding: 0.9rem;
+                font-size: 1rem;
+                width: 100%;
+            }
+
+            .timeline-options {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .timeline-btn {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+                flex: 1;
+                min-width: 80px;
+            }
+
+            .graph-container {
+                height: 300px;
+            }
+
+            .result-item {
+                padding: 1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .result-label {
+                font-size: 0.9rem;
+            }
+
+            .result-value {
+                font-size: 1.3rem;
+            }
+
+            .save-btn {
+                padding: 0.9rem;
+                font-size: 1rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 0;
+            }
+
+            .nav-container {
+                padding: 0.8rem;
+                gap: 0.5rem;
+            }
+
+            .nav-brand {
+                font-size: 1.2em;
+            }
+
+            .nav-links {
+                top: 60px;
+            }
+
+            .nav-links a {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .container {
+                padding: 1rem 0;
+            }
+
+            .calculator-grid {
+                padding: 0 0.8rem;
+            }
+
+            .page-header {
+                padding: 1.5rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .page-header p {
+                font-size: 0.9rem;
+            }
+
+            .calculator-form {
+                padding: 1rem 0;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+                font-weight: 600;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 0.75rem;
+                font-size: 1rem;
+                border-radius: 6px;
+            }
+
+            .calculate-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+
+            .results-container {
+                padding: 1rem 0;
+            }
+
+            .timeline-options {
+                gap: 0.4rem;
+            }
+
+            .timeline-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+                flex: 1;
+                min-width: 70px;
+            }
+
+            .timeline-btn.active {
+                font-weight: 700;
+            }
+
+            .graph-container {
+                height: 280px;
+                margin: 1rem 0;
+            }
+
+            .result-item {
+                padding: 0.8rem;
+                margin-bottom: 0.6rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .result-label {
+                font-size: 0.85rem;
+                flex: 1;
+            }
+
+            .result-value {
+                font-size: 1.1rem;
+                font-weight: 700;
+                text-align: right;
+            }
+
+            .save-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+                width: 100%;
+            }
+
+            footer {
+                padding: 2rem 1rem 1rem;
+            }
+
+            .footer-grid {
+                gap: 1.5rem;
+            }
+
+            .footer-section h4 {
+                font-size: 1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -331,328 +758,688 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">💼 BizCalc</a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="calculator.html" class="active">Calculator</a></li>
+                <li><a href="loan-calculator.html">Loan Calculator</a></li>
                 <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
-            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <div data-auth-container style="display: flex; gap: 1rem; align-items: center;">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
     <div class="page-header">
-        <h1>💰 Investment Calculator</h1>
-        <p>Calculate your exact business investment requirement in seconds</p>
+        <div class="page-header-content">
+            <h1>Investment Calculator</h1>
+            <p>Calculate your exact business investment requirement in seconds</p>
+        </div>
     </div>
 
     <div class="container">
         <div class="calculator-grid">
             <div class="calculator-form">
                 <div class="form-group">
-                    <label for="business">🏢 Select Business Type *</label>
-                    <select id="business" required onchange="updateCalculator()">
+                    <label for="business">Select Business Type *</label>
+                    <select id="business" required>
                         <option value="">-- Choose Business Type --</option>
 
-                        <optgroup label="🌾 Agriculture & Farming">
-                            <option value="agriculture">Agriculture/Farming</option>
-                            <option value="dairy">Dairy Business</option>
-                            <option value="poultry">Poultry Farming</option>
-                            <option value="fishery">Fish Farming</option>
-                            <option value="greenhouse">Greenhouse Farming</option>
-                            <option value="beekeeping">Beekeeping</option>
-                            <option value="floriculture">Floriculture</option>
-                        </optgroup>
-
-                        <optgroup label="☕ Food & Beverage">
-                            <option value="cafe">Cafe/Coffee Shop</option>
-                            <option value="restaurant">Restaurant</option>
-                            <option value="bakery">Bakery</option>
-                            <option value="juice">Juice Bar</option>
-                            <option value="ice_cream">Ice Cream Parlor</option>
-                            <option value="sweet_shop">Sweet/Candy Shop</option>
-                            <option value="fast_food">Fast Food Corner</option>
-                            <option value="food_truck">Food Truck</option>
-                        </optgroup>
-
-                        <optgroup label="💊 Healthcare">
-                            <option value="pharmacy">Pharmacy</option>
-                            <option value="clinic">Medical Clinic</option>
-                            <option value="diagnostic">Diagnostic Center</option>
-                            <option value="dental">Dental Clinic</option>
-                            <option value="ayurveda">Ayurveda Center</option>
-                            <option value="physiotherapy">Physiotherapy Clinic</option>
-                        </optgroup>
-
+                        <!-- Retail & Shopping -->
                         <optgroup label="🛍️ Retail & Shopping">
+                            <option value="building">Building Materials Shop</option>
                             <option value="kirana">Kirana General Shop</option>
                             <option value="clothing">Clothing Store</option>
                             <option value="electronics">Electronics Store</option>
-                            <option value="books">Book Store</option>
-                            <option value="footwear">Footwear Shop</option>
-                            <option value="jewelry">Jewelry Store</option>
-                            <option value="mobile">Mobile Phone Store</option>
-                            <option value="stationery">Stationery Shop</option>
+                            <option value="hardware">Hardware Store</option>
+                            <option value="pharmacy">Pharmacy/Medical Store</option>
                             <option value="furniture">Furniture Store</option>
+                            <option value="jewelry">Jewelry Store</option>
+                            <option value="cosmetics">Cosmetics/Beauty Store</option>
+                            <option value="bookstore">Bookstore/Stationery</option>
+                            <option value="mobile">Mobile/Phone Shop</option>
+                            <option value="grocery">Grocery Store (Modern)</option>
+                            <option value="vegetable">Vegetable/Fruit Shop</option>
                         </optgroup>
 
-                        <optgroup label="✂️ Services">
-                            <option value="salon">Beauty Salon</option>
-                            <option value="gym">Fitness Gym</option>
-                            <option value="tuition">Coaching/Tuition Center</option>
-                            <option value="tailoring">Tailoring Shop</option>
+                        <!-- Food & Beverage -->
+                        <optgroup label="🍽️ Food & Beverage">
+                            <option value="cafe">Cafe/Restaurant</option>
+                            <option value="tea-stall">Tea Stall/Chai Shop</option>
+                            <option value="food-delivery">Food Delivery Service</option>
+                            <option value="bakery">Bakery/Pastry Shop</option>
+                        </optgroup>
+
+                        <!-- Repair & Maintenance -->
+                        <optgroup label="🔧 Repair & Maintenance">
+                            <option value="bicycle-repair">Bicycle Repair Shop</option>
+                            <option value="motorcycle-repair">Motorcycle/Scooter Repair</option>
+                            <option value="vehicle-repair">Vehicle/Car Repair Shop</option>
                             <option value="laundry">Laundry Service</option>
-                            <option value="repair">Electronics Repair</option>
-                            <option value="pest_control">Pest Control Service</option>
-                            <option value="plumbing">Plumbing Service</option>
                         </optgroup>
 
-                        <optgroup label="🏠 Real Estate & Construction">
-                            <option value="real_estate">Real Estate Agency</option>
-                            <option value="construction">Construction Company</option>
-                            <option value="interior_design">Interior Design Studio</option>
+                        <!-- Personal Care -->
+                        <optgroup label="💇 Personal Care & Grooming">
+                            <option value="barber">Barber Shop/Salon</option>
+                            <option value="beauty-salon">Beauty & Nail Salon</option>
+                            <option value="tailoring">Tailoring Shop</option>
                         </optgroup>
 
-                        <optgroup label="🚗 Transportation">
-                            <option value="cab">Cab/Auto Service</option>
-                            <option value="delivery">Delivery Service</option>
-                            <option value="car_rental">Car Rental Service</option>
-                            <option value="travel_agency">Travel Agency</option>
+                        <!-- Education & Fitness -->
+                        <optgroup label="📚 Education & Fitness">
+                            <option value="gym">Fitness Center/Gym</option>
+                            <option value="school">School/Coaching Center</option>
+                            <option value="computer-training">Computer Training Center</option>
                         </optgroup>
 
-                        <optgroup label="🎓 Education & Training">
-                            <option value="coding_class">Coding Classes</option>
-                            <option value="language_class">Language Classes</option>
-                            <option value="music_class">Music Classes</option>
-                            <option value="dance_class">Dance Classes</option>
+                        <!-- Healthcare & Wellness -->
+                        <optgroup label="🏥 Healthcare & Wellness">
+                            <option value="hospital">Clinic/Diagnostic Center</option>
+                            <option value="dental">Dental Clinic</option>
+                            <option value="ayurveda">Ayurveda/Wellness Center</option>
                         </optgroup>
 
-                        <optgroup label="🎨 Creative & Media">
+                        <!-- Transportation & Auto -->
+                        <optgroup label="🚗 Transportation & Auto">
+                            <option value="car-rental">Car Rental Service</option>
+                            <option value="vehicle-showroom">Vehicle Showroom</option>
+                            <option value="petrol-pump">Petrol Pump/Gas Station</option>
+                            <option value="transport">Transport/Logistics Business</option>
+                            <option value="auto-rental">Auto Rental Service</option>
+                        </optgroup>
+
+                        <!-- Other Services -->
+                        <optgroup label="✨ Other Services">
                             <option value="photography">Photography Studio</option>
-                            <option value="graphic_design">Graphic Design Studio</option>
-                            <option value="digital_marketing">Digital Marketing Agency</option>
-                            <option value="video_production">Video Production</option>
-                        </optgroup>
-
-                        <optgroup label="💼 Business Services">
-                            <option value="accounting">Accounting Firm</option>
-                            <option value="consulting">Consulting Services</option>
-                            <option value="legal">Legal Services</option>
-                            <option value="hr_recruitment">HR/Recruitment Agency</option>
-                        </optgroup>
-
-                        <optgroup label="🏋️ Fitness & Wellness">
-                            <option value="yoga_studio">Yoga Studio</option>
-                            <option value="spa">Spa/Wellness Center</option>
-                            <option value="swimming_pool">Swimming Pool</option>
-                        </optgroup>
-
-                        <optgroup label="🏪 Specialty Retail">
-                            <option value="gift_shop">Gift Shop</option>
-                            <option value="toy_store">Toy Store</option>
-                            <option value="pet_shop">Pet Shop</option>
-                            <option value="plants_nursery">Plants Nursery</option>
+                            <option value="petshop">Pet Shop & Grooming</option>
+                            <option value="dairy">Dairy/Milk Parlor</option>
+                            <option value="wedding-service">Wedding Decoration Service</option>
+                            <option value="real-estate">Real Estate/Property</option>
+                            <option value="agriculture">Agricultural Business</option>
                         </optgroup>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="timeline">📅 Timeline (Months) *</label>
-                    <input type="number" id="timeline" min="1" max="60" value="12" required onchange="updateCalculator()">
+                    <label for="location">Location Type *</label>
+                    <select id="location" required>
+                        <option value="">-- Choose Location --</option>
+                        <option value="highway">Highway Area (₹6,000/sq ft)</option>
+                        <option value="market">Market Area (₹10,000/sq ft)</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="investment">💵 Initial Investment Budget *</label>
-                    <input type="number" id="investment" placeholder="Enter amount in INR" value="500000" required onchange="updateCalculator()">
+                    <label for="area">Land Area (sq ft) *</label>
+                    <input type="number" id="area" placeholder="Enter area in square feet" required>
                 </div>
 
-                <button class="calculate-btn" onclick="calculateInvestment()">📊 Calculate Investment</button>
+                <div class="form-group">
+                    <label for="employees">Number of Employees *</label>
+                    <input type="number" id="employees" placeholder="How many employees?" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="additional">Additional Capital (₹)</label>
+                    <input type="number" id="additional" placeholder="Optional additional investment" min="0">
+                </div>
+
+                <button class="calculate-btn" onclick="calculateInvestment()">Calculate Investment</button>
             </div>
 
-            <div class="results-section" id="results">
-                <div class="result-card">
-                    <div class="result-label">Total Investment Required</div>
-                    <div class="result-value" id="totalInvestment">₹0</div>
+            <div class="results-container" id="results">
+                <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Investment Breakdown</h3>
+                <div class="result-item">
+                    <span class="result-label">Land Cost</span>
+                    <span class="result-value" id="landCost">₹0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Business Setup</span>
+                    <span class="result-value" id="setupCost">₹0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Initial Stock</span>
+                    <span class="result-value" id="stockCost">₹0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Equipment</span>
+                    <span class="result-value" id="equipmentCost">₹0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Monthly Salary (1 month)</span>
+                    <span class="result-value" id="salaryCost">₹0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Operating Costs</span>
+                    <span class="result-value" id="operatingCost">₹0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">✨ Total Investment Required</span>
+                    <span class="result-value" id="totalCost">₹0</span>
                 </div>
 
-                <div class="result-card">
-                    <div class="result-label">Monthly Operating Cost</div>
-                    <div class="result-value" id="monthlyCost">₹0</div>
+                <div class="timeline-section">
+                    <h4 style="margin-bottom: 1rem; color: var(--primary);">📈 Investment Timeline</h4>
+
+                    <div class="timeline-input-group">
+                        <label for="monthlyNetProfit">Your Expected Monthly Net Profit/Loss (₹)</label>
+                        <input type="number" id="monthlyNetProfit" placeholder="Enter monthly net profit or loss" value="0">
+                    </div>
+
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">Select timeline to see monthly breakdown:</p>
+                    <div class="timeline-options">
+                        <button class="timeline-btn" onclick="generateTimeline(3)">3 Months</button>
+                        <button class="timeline-btn" onclick="generateTimeline(6)">6 Months</button>
+                        <button class="timeline-btn active" onclick="generateTimeline(12)">12 Months</button>
+                    </div>
+                    <div class="graph-container active" id="graphContainer">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
                 </div>
 
-                <div class="breakdown-list" id="breakdownList"></div>
-
-                <div class="chart-container">
-                    <canvas id="investmentChart"></canvas>
+                <div class="save-section">
+                    <button class="save-btn" onclick="saveAndNotify()">💾 Save & Send Email</button>
+                    <div class="success-msg" id="successMsg">✅ Calculation saved! Email sent to harshjaju07@gmail.com</div>
                 </div>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 BizCalc - Business Investment Calculator | Sri Dungargarh</p>
-        <p>Calculate startup investments for 53+ business types</p>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>💼 BizCalc</h4>
+                    <p style="color: rgba(255,255,255,0.75); line-height: 1.8;">Professional calculator for Sri Dungargarh entrepreneurs.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="loan-calculator.html">Loan Calculator</a></li>
+                        <li><a href="features.html">Features</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="contact.html">FAQ</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 BizCalc. All rights reserved.</p>
+                <p style="margin: 0.5rem 0;">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank" style="color: #fbbf24; text-decoration: none;">Sparsh Portfolio</a></p>
+            </div>
+        </div>
     </footer>
 
     <script>
         const businessData = {
-            agriculture: { setup: 800000, monthly: 50000, label: "Agriculture" },
-            dairy: { setup: 500000, monthly: 40000, label: "Dairy Business" },
-            poultry: { setup: 300000, monthly: 30000, label: "Poultry" },
-            fishery: { setup: 400000, monthly: 35000, label: "Fish Farming" },
-            greenhouse: { setup: 350000, monthly: 28000, label: "Greenhouse" },
-            beekeeping: { setup: 200000, monthly: 15000, label: "Beekeeping" },
-            floriculture: { setup: 250000, monthly: 20000, label: "Floriculture" },
-            cafe: { setup: 600000, monthly: 45000, label: "Cafe" },
-            restaurant: { setup: 1500000, monthly: 100000, label: "Restaurant" },
-            bakery: { setup: 400000, monthly: 35000, label: "Bakery" },
-            juice: { setup: 250000, monthly: 20000, label: "Juice Bar" },
-            ice_cream: { setup: 300000, monthly: 25000, label: "Ice Cream Parlor" },
-            sweet_shop: { setup: 200000, monthly: 18000, label: "Sweet Shop" },
-            fast_food: { setup: 500000, monthly: 40000, label: "Fast Food" },
-            food_truck: { setup: 350000, monthly: 28000, label: "Food Truck" },
-            pharmacy: { setup: 700000, monthly: 50000, label: "Pharmacy" },
-            clinic: { setup: 1000000, monthly: 60000, label: "Clinic" },
-            diagnostic: { setup: 2000000, monthly: 80000, label: "Diagnostic" },
-            dental: { setup: 800000, monthly: 55000, label: "Dental Clinic" },
-            ayurveda: { setup: 400000, monthly: 30000, label: "Ayurveda Center" },
-            physiotherapy: { setup: 500000, monthly: 40000, label: "Physiotherapy" },
-            kirana: { setup: 300000, monthly: 25000, label: "Kirana Store" },
-            clothing: { setup: 500000, monthly: 40000, label: "Clothing" },
-            electronics: { setup: 800000, monthly: 55000, label: "Electronics" },
-            books: { setup: 400000, monthly: 30000, label: "Book Store" },
-            footwear: { setup: 450000, monthly: 35000, label: "Footwear Shop" },
-            jewelry: { setup: 600000, monthly: 45000, label: "Jewelry Store" },
-            mobile: { setup: 500000, monthly: 38000, label: "Mobile Phone Store" },
-            stationery: { setup: 250000, monthly: 20000, label: "Stationery Shop" },
-            furniture: { setup: 1000000, monthly: 60000, label: "Furniture Store" },
-            salon: { setup: 300000, monthly: 25000, label: "Salon" },
-            gym: { setup: 1200000, monthly: 70000, label: "Gym" },
-            tuition: { setup: 250000, monthly: 20000, label: "Tuition Center" },
-            tailoring: { setup: 150000, monthly: 12000, label: "Tailoring Shop" },
-            laundry: { setup: 300000, monthly: 25000, label: "Laundry Service" },
-            repair: { setup: 200000, monthly: 18000, label: "Electronics Repair" },
-            pest_control: { setup: 250000, monthly: 20000, label: "Pest Control" },
-            plumbing: { setup: 100000, monthly: 10000, label: "Plumbing Service" },
-            real_estate: { setup: 500000, monthly: 35000, label: "Real Estate" },
-            construction: { setup: 2500000, monthly: 150000, label: "Construction" },
-            interior_design: { setup: 300000, monthly: 25000, label: "Interior Design" },
-            cab: { setup: 1000000, monthly: 60000, label: "Cab Service" },
-            delivery: { setup: 400000, monthly: 30000, label: "Delivery Service" },
-            car_rental: { setup: 1500000, monthly: 75000, label: "Car Rental" },
-            travel_agency: { setup: 350000, monthly: 28000, label: "Travel Agency" },
-            coding_class: { setup: 200000, monthly: 18000, label: "Coding Classes" },
-            language_class: { setup: 150000, monthly: 15000, label: "Language Classes" },
-            music_class: { setup: 200000, monthly: 18000, label: "Music Classes" },
-            dance_class: { setup: 150000, monthly: 12000, label: "Dance Classes" },
-            photography: { setup: 400000, monthly: 30000, label: "Photography Studio" },
-            graphic_design: { setup: 200000, monthly: 18000, label: "Graphic Design" },
-            digital_marketing: { setup: 300000, monthly: 25000, label: "Digital Marketing" },
-            video_production: { setup: 500000, monthly: 40000, label: "Video Production" },
-            accounting: { setup: 300000, monthly: 25000, label: "Accounting Firm" },
-            consulting: { setup: 250000, monthly: 20000, label: "Consulting" },
-            legal: { setup: 400000, monthly: 30000, label: "Legal Services" },
-            hr_recruitment: { setup: 350000, monthly: 28000, label: "HR/Recruitment" },
-            yoga_studio: { setup: 350000, monthly: 28000, label: "Yoga Studio" },
-            spa: { setup: 600000, monthly: 45000, label: "Spa/Wellness" },
-            swimming_pool: { setup: 2000000, monthly: 100000, label: "Swimming Pool" },
-            gift_shop: { setup: 250000, monthly: 20000, label: "Gift Shop" },
-            toy_store: { setup: 300000, monthly: 25000, label: "Toy Store" },
-            pet_shop: { setup: 350000, monthly: 28000, label: "Pet Shop" },
-            plants_nursery: { setup: 300000, monthly: 25000, label: "Plants Nursery" }
+            // Research-based data from Google (Tier-2 Indian cities like Sri Dungargarh)
+            'building': { name: 'Building Materials Shop', setup: 2000000, stock: 8000000, equipment: 450000, salaryPerPerson: 70000, operatingCosts: 150000 },
+            'kirana': { name: 'Kirana General Shop', setup: 300000, stock: 400000, equipment: 100000, salaryPerPerson: 50000, operatingCosts: 50000 },
+            'cafe': { name: 'Cafe/Restaurant', setup: 800000, stock: 500000, equipment: 850000, salaryPerPerson: 20000, operatingCosts: 200000 },
+            // Clothing: Updated from Google research - ₹3-12 lakh typical
+            'clothing': { name: 'Clothing Store', setup: 500000, stock: 1200000, equipment: 150000, salaryPerPerson: 18000, operatingCosts: 70000 },
+            // Electronics: Updated from Google - ₹40-100 lakh for proper store, adjusted mid-range
+            'electronics': { name: 'Electronics Store', setup: 1500000, stock: 2500000, equipment: 350000, salaryPerPerson: 22000, operatingCosts: 140000 },
+            'hardware': { name: 'Hardware Store', setup: 600000, stock: 1000000, equipment: 120000, salaryPerPerson: 18000, operatingCosts: 80000 },
+            'pharmacy': { name: 'Pharmacy/Medical Store', setup: 500000, stock: 1000000, equipment: 400000, salaryPerPerson: 20000, operatingCosts: 90000 },
+            'furniture': { name: 'Furniture Store', setup: 1500000, stock: 2500000, equipment: 500000, salaryPerPerson: 19000, operatingCosts: 180000 },
+            'jewelry': { name: 'Jewelry Store', setup: 800000, stock: 3000000, equipment: 250000, salaryPerPerson: 25000, operatingCosts: 130000 },
+            'cosmetics': { name: 'Cosmetics/Beauty Store', setup: 400000, stock: 600000, equipment: 150000, salaryPerPerson: 16000, operatingCosts: 70000 },
+            'bookstore': { name: 'Bookstore/Stationery', setup: 350000, stock: 800000, equipment: 100000, salaryPerPerson: 14000, operatingCosts: 60000 },
+            'mobile': { name: 'Mobile/Phone Shop', setup: 700000, stock: 1500000, equipment: 200000, salaryPerPerson: 20000, operatingCosts: 85000 },
+            'grocery': { name: 'Grocery Store (Modern)', setup: 1200000, stock: 1800000, equipment: 350000, salaryPerPerson: 18000, operatingCosts: 140000 },
+            // Gym: Updated from Google research - ₹15-25 lakh mid-range
+            'gym': { name: 'Fitness Center/Gym', setup: 2000000, stock: 300000, equipment: 1200000, salaryPerPerson: 25000, operatingCosts: 250000 },
+            'school': { name: 'School/Coaching Center', setup: 1800000, stock: 200000, equipment: 500000, salaryPerPerson: 22000, operatingCosts: 180000 },
+            // Clinic: Updated from Google research - ₹10-50 lakh, using small clinic mid-range
+            'hospital': { name: 'Clinic/Diagnostic Center', setup: 1500000, stock: 800000, equipment: 2000000, salaryPerPerson: 27000, operatingCosts: 220000 },
+            'laundry': { name: 'Laundry Service', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 15000, operatingCosts: 120000 },
+            'petshop': { name: 'Pet Shop & Grooming', setup: 600000, stock: 400000, equipment: 300000, salaryPerPerson: 18000, operatingCosts: 100000 },
+            'photography': { name: 'Photography Studio', setup: 700000, stock: 100000, equipment: 1500000, salaryPerPerson: 20000, operatingCosts: 90000 },
+            'car-rental': { name: 'Car Rental Service', setup: 500000, stock: 0, equipment: 0, salaryPerPerson: 12000, operatingCosts: 150000 },
+            // Additional businesses for Tier-2 cities
+            'teashop': { name: 'Tea Shop/Chai Stand', setup: 150000, stock: 80000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 40000 },
+            'bakery': { name: 'Bakery/Bread Shop', setup: 400000, stock: 200000, equipment: 600000, salaryPerPerson: 15000, operatingCosts: 90000 },
+            'ricemill': { name: 'Rice Mill/Grain Processing', setup: 2500000, stock: 500000, equipment: 3500000, salaryPerPerson: 18000, operatingCosts: 200000 },
+            'dairy': { name: 'Dairy/Milk Booth', setup: 250000, stock: 150000, equipment: 300000, salaryPerPerson: 13000, operatingCosts: 60000 },
+            'tailor': { name: 'Tailor Shop/Stitching', setup: 200000, stock: 250000, equipment: 150000, salaryPerPerson: 12000, operatingCosts: 35000 },
+            'salon': { name: 'Salon/Barber Shop', setup: 300000, stock: 100000, equipment: 200000, salaryPerPerson: 10000, operatingCosts: 50000 },
+            'vegetable': { name: 'Vegetable Market Stall', setup: 100000, stock: 50000, equipment: 80000, salaryPerPerson: 8000, operatingCosts: 25000 },
+            'catering': { name: 'Wedding Catering Service', setup: 600000, stock: 200000, equipment: 400000, salaryPerPerson: 18000, operatingCosts: 100000 },
+            'agrorental': { name: 'Agricultural Equipment Rental', setup: 1500000, stock: 100000, equipment: 800000, salaryPerPerson: 15000, operatingCosts: 80000 },
+            'dhaba': { name: 'Small Hotel/Dhaba', setup: 700000, stock: 400000, equipment: 600000, salaryPerPerson: 15000, operatingCosts: 150000 },
+            'agroinput': { name: 'Agro-input Store (Seeds/Fertilizer)', setup: 400000, stock: 1000000, equipment: 100000, salaryPerPerson: 13000, operatingCosts: 60000 },
+            'spareparts': { name: 'Spare Parts Shop', setup: 500000, stock: 1200000, equipment: 150000, salaryPerPerson: 15000, operatingCosts: 70000 },
+            'printing': { name: 'Printing Press', setup: 800000, stock: 300000, equipment: 1200000, salaryPerPerson: 16000, operatingCosts: 110000 },
+            'coldstorage': { name: 'Cold Storage Facility', setup: 3000000, stock: 500000, equipment: 2500000, salaryPerPerson: 18000, operatingCosts: 300000 },
+            'welding': { name: 'Welding/Metal Work Shop', setup: 600000, stock: 400000, equipment: 800000, salaryPerPerson: 14000, operatingCosts: 90000 },
+            'bicycle': { name: 'Bicycle/Auto Repair Shop', setup: 400000, stock: 500000, equipment: 400000, salaryPerPerson: 12000, operatingCosts: 60000 },
+            'paint': { name: 'Paint/Construction Materials', setup: 600000, stock: 2000000, equipment: 150000, salaryPerPerson: 16000, operatingCosts: 80000 },
+            'transformer': { name: 'Electrical Transformer Shop', setup: 800000, stock: 1500000, equipment: 200000, salaryPerPerson: 15000, operatingCosts: 100000 },
+            'warehouse': { name: 'Warehouse/Storage Space', setup: 1000000, stock: 100000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 120000 },
+            // Additional options from dropdown that need data
+            'tea-stall': { name: 'Tea Stall/Chai Shop', setup: 150000, stock: 80000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 40000 },
+            'food-delivery': { name: 'Food Delivery Service', setup: 500000, stock: 100000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 80000 },
+            'motorcycle-repair': { name: 'Motorcycle/Scooter Repair', setup: 400000, stock: 600000, equipment: 500000, salaryPerPerson: 14000, operatingCosts: 70000 },
+            'vehicle-repair': { name: 'Vehicle/Car Repair Shop', setup: 1000000, stock: 800000, equipment: 1200000, salaryPerPerson: 16000, operatingCosts: 120000 },
+            'barber': { name: 'Barber Shop', setup: 250000, stock: 80000, equipment: 150000, salaryPerPerson: 10000, operatingCosts: 40000 },
+            'beauty-salon': { name: 'Beauty & Nail Salon', setup: 400000, stock: 150000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 60000 },
+            'computer-training': { name: 'Computer Training Center', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 18000, operatingCosts: 100000 },
+            'dental': { name: 'Dental Clinic', setup: 1200000, stock: 400000, equipment: 1500000, salaryPerPerson: 25000, operatingCosts: 150000 },
+            'ayurveda': { name: 'Ayurveda/Wellness Center', setup: 800000, stock: 300000, equipment: 400000, salaryPerPerson: 18000, operatingCosts: 100000 },
+            'vehicle-showroom': { name: 'Vehicle Showroom', setup: 2000000, stock: 100000, equipment: 300000, salaryPerPerson: 18000, operatingCosts: 150000 },
+            'petrol-pump': { name: 'Petrol Pump/Gas Station', setup: 5000000, stock: 500000, equipment: 1000000, salaryPerPerson: 16000, operatingCosts: 300000 },
+            'transport': { name: 'Transport/Logistics Business', setup: 2000000, stock: 200000, equipment: 1500000, salaryPerPerson: 15000, operatingCosts: 200000 },
+            'auto-rental': { name: 'Auto Rickshaw Rental', setup: 800000, stock: 100000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 100000 },
+            'wedding-service': { name: 'Wedding Decoration/Event Service', setup: 600000, stock: 300000, equipment: 200000, salaryPerPerson: 14000, operatingCosts: 80000 },
+            'real-estate': { name: 'Real Estate/Property Business', setup: 1500000, stock: 200000, equipment: 300000, salaryPerPerson: 15000, operatingCosts: 100000 },
+            'agriculture': { name: 'Agricultural Business', setup: 3000000, stock: 500000, equipment: 2000000, salaryPerPerson: 15000, operatingCosts: 150000 },
+            'tailoring': { name: 'Tailoring Shop', setup: 200000, stock: 250000, equipment: 150000, salaryPerPerson: 12000, operatingCosts: 35000 }
         };
 
-        let chart = null;
+        const landPrices = { 'highway': 6000, 'market': 10000 };
+        let lastCalculation = null;
+        let timelineChart = null;
+
+        // URL parameter to business code mapping
+        const urlParamMapping = {
+            'building-materials': 'building',
+            'kirana-shop': 'kirana',
+            'cafe-restaurant': 'cafe',
+            'clothing-store': 'clothing',
+            'electronics-store': 'electronics',
+            'hardware-store': 'hardware',
+            'pharmacy': 'pharmacy',
+            'furniture-store': 'furniture',
+            'jewelry-store': 'jewelry',
+            'beauty-salon': 'cosmetics',
+            'bookstore': 'bookstore',
+            'mobile-shop': 'mobile',
+            'grocery-store': 'grocery',
+            'gym': 'gym',
+            'school': 'school',
+            'hospital-clinic': 'hospital',
+            'laundry': 'laundry',
+            'petshop': 'petshop',
+            'photography': 'photography',
+            'car-rental': 'car-rental',
+            'tea-shop': 'teashop',
+            'bakery': 'bakery',
+            'rice-mill': 'ricemill',
+            'dairy': 'dairy',
+            'tailor': 'tailor',
+            'salon': 'salon',
+            'vegetable-stall': 'vegetable',
+            'catering': 'catering',
+            'agro-rental': 'agrorental',
+            'dhaba': 'dhaba',
+            'agro-input': 'agroinput',
+            'spare-parts': 'spareparts',
+            'printing': 'printing',
+            'cold-storage': 'coldstorage',
+            'welding': 'welding',
+            'bicycle-repair': 'bicycle',
+            'paint-shop': 'paint',
+            'transformer': 'transformer',
+            'warehouse': 'warehouse',
+            'food-delivery': 'food-delivery',
+            'motorcycle-repair': 'motorcycle-repair',
+            'vehicle-repair': 'vehicle-repair',
+            'barber': 'barber',
+            'computer-training': 'computer-training',
+            'dental': 'dental',
+            'ayurveda': 'ayurveda',
+            'vehicle-showroom': 'vehicle-showroom',
+            'petrol-pump': 'petrol-pump',
+            'transport': 'transport',
+            'auto-rental': 'auto-rental',
+            'wedding-service': 'wedding-service',
+            'real-estate': 'real-estate',
+            'agriculture': 'agriculture',
+            'tailoring': 'tailoring'
+        };
 
         function calculateInvestment() {
             const business = document.getElementById('business').value;
-            const timeline = parseInt(document.getElementById('timeline').value);
-            const budget = parseInt(document.getElementById('investment').value);
+            const location = document.getElementById('location').value;
+            const area = parseFloat(document.getElementById('area').value);
+            const employees = parseInt(document.getElementById('employees').value);
+            const additional = parseFloat(document.getElementById('additional').value) || 0;
 
-            if (!business) {
-                alert('Please select a business type');
+            if (!business || !location || !area || isNaN(employees)) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            if (area <= 0 || employees < 0) {
+                alert('Please enter valid values');
                 return;
             }
 
             const data = businessData[business];
-            const totalCost = data.setup + (data.monthly * timeline);
-            const affordability = totalCost <= budget ? 'Affordable' : 'Budget Exceeded';
+            const landPrice = landPrices[location];
 
-            document.getElementById('totalInvestment').textContent = `₹${totalCost.toLocaleString()}`;
-            document.getElementById('monthlyCost').textContent = `₹${data.monthly.toLocaleString()}`;
+            const landCost = area * landPrice;
+            const setupCost = data.setup;
+            const stockCost = data.stock;
+            const equipmentCost = data.equipment;
+            const salaryCost = data.salaryPerPerson * employees;
+            const operatingCost = data.operatingCosts;
+            const totalCost = landCost + setupCost + stockCost + equipmentCost + salaryCost + operatingCost + additional;
 
-            const breakdown = `
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Setup Cost</span>
-                    <span class="breakdown-amount">₹${data.setup.toLocaleString()}</span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Monthly Operating Cost</span>
-                    <span class="breakdown-amount">₹${data.monthly.toLocaleString()}</span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Timeline (Months)</span>
-                    <span class="breakdown-amount">${timeline}</span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Total Operating Cost (${timeline} months)</span>
-                    <span class="breakdown-amount">₹${(data.monthly * timeline).toLocaleString()}</span>
-                </div>
-                <div class="breakdown-item" style="background: rgba(8, 145, 178, 0.1); padding: 0.75rem; border-radius: 6px; margin-top: 1rem;">
-                    <span class="breakdown-label">Status</span>
-                    <span class="breakdown-amount">${affordability}</span>
-                </div>
-            `;
+            document.getElementById('landCost').textContent = formatCurrency(landCost);
+            document.getElementById('setupCost').textContent = formatCurrency(setupCost);
+            document.getElementById('stockCost').textContent = formatCurrency(stockCost);
+            document.getElementById('equipmentCost').textContent = formatCurrency(equipmentCost);
+            document.getElementById('salaryCost').textContent = formatCurrency(salaryCost);
+            document.getElementById('operatingCost').textContent = formatCurrency(operatingCost);
+            document.getElementById('totalCost').textContent = formatCurrency(totalCost);
 
-            document.getElementById('breakdownList').innerHTML = breakdown;
-            document.getElementById('results').classList.add('show');
+            lastCalculation = {
+                business_type: business,
+                location: location,
+                area: area,
+                employees: employees,
+                additional: additional,
+                landCost: landCost,
+                setupCost: setupCost,
+                stockCost: stockCost,
+                equipmentCost: equipmentCost,
+                salaryCost: salaryCost,
+                operatingCost: operatingCost,
+                totalCost: totalCost,
+                timestamp: new Date().toISOString()
+            };
 
-            updateChart(data, timeline);
+            document.getElementById('results').classList.add('active');
+            document.getElementById('successMsg').classList.remove('show');
+
+            // Generate default 12-month timeline
+            generateTimeline(12);
+
+            // Save to localStorage
+            localStorage.setItem('lastCalculation', JSON.stringify(lastCalculation));
+
+            setTimeout(() => document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
         }
 
-        function updateChart(data, timeline) {
-            const ctx = document.getElementById('investmentChart').getContext('2d');
+        function generateTimeline(months) {
+            if (!lastCalculation) return;
 
-            if (chart) chart.destroy();
+            // Update active button
+            document.querySelectorAll('.timeline-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
 
-            chart = new Chart(ctx, {
-                type: 'doughnut',
+            const monthlyNetProfit = parseFloat(document.getElementById('monthlyNetProfit').value) || 0;
+            const avgInvestment = lastCalculation.totalCost / months;
+
+            const monthLabels = [];
+            const investmentData = [];
+            const profitLossData = [];
+
+            for (let i = 1; i <= months; i++) {
+                monthLabels.push(`Month ${i}`);
+
+                // Investment per month - add realistic variation (70-130% of average)
+                const investmentVariation = 0.7 + (Math.random() * 0.6); // 0.7 to 1.3
+                investmentData.push(avgInvestment * investmentVariation);
+
+                // Net profit/loss per month - add seasonal variation
+                let profitVariation = monthlyNetProfit;
+
+                // Add seasonality: months 1-2 lower, 3-6 better, 7-8 spike, 9-12 moderate
+                if (i <= 2) {
+                    profitVariation = monthlyNetProfit * (0.6 + Math.random() * 0.2); // 60-80%
+                } else if (i <= 6) {
+                    profitVariation = monthlyNetProfit * (0.9 + Math.random() * 0.3); // 90-120%
+                } else if (i <= 8) {
+                    profitVariation = monthlyNetProfit * (1.1 + Math.random() * 0.4); // 110-150% (peak)
+                } else {
+                    profitVariation = monthlyNetProfit * (0.85 + Math.random() * 0.25); // 85-110%
+                }
+
+                profitLossData.push(profitVariation);
+            }
+
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+
+            if (timelineChart) {
+                timelineChart.destroy();
+            }
+
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+                           (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.documentElement.getAttribute('data-theme'));
+
+            const textColor = isDark ? '#f1f5f9' : '#0c2340';
+            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+
+            timelineChart = new Chart(ctx, {
+                type: 'line',
                 data: {
-                    labels: ['Setup Cost', `Operating (${timeline}m)`],
-                    datasets: [{
-                        data: [data.setup, data.monthly * timeline],
-                        backgroundColor: ['#0891b2', '#a855f7'],
-                        borderColor: ['#0891b2', '#a855f7'],
-                        borderWidth: 2
-                    }]
+                    labels: monthLabels,
+                    datasets: [
+                        {
+                            label: 'Investment per Month',
+                            data: investmentData,
+                            borderColor: '#0891b2',
+                            backgroundColor: 'rgba(8, 145, 178, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: '#0891b2'
+                        },
+                        {
+                            label: 'Net Profit/Loss per Month',
+                            data: profitLossData,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: '#10b981'
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            labels: { color: 'var(--text-primary)' }
+                            labels: {
+                                color: textColor,
+                                font: {
+                                    weight: '600',
+                                    size: 12
+                                },
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: textColor,
+                                callback: function(value) {
+                                    if (value >= 100000) return '₹' + (value / 100000).toFixed(0) + 'L';
+                                    return '₹' + Math.round(value).toLocaleString('en-IN');
+                                }
+                            },
+                            grid: {
+                                color: gridColor
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: textColor
+                            },
+                            grid: {
+                                color: gridColor
+                            }
                         }
                     }
                 }
             });
         }
 
-        function updateCalculator() {
-            // Real-time update
+        async function saveAndNotify() {
+            if (!lastCalculation) {
+                alert('Please calculate first');
+                return;
+            }
+
+            // Get user from sessionStorage (new auth system)
+            const userId = sessionStorage.getItem('userId') || 'guest_' + Date.now();
+            const userEmail = sessionStorage.getItem('userEmail') || 'guest@bizcalc.com';
+            const userName = sessionStorage.getItem('userName') || 'Guest User';
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Processing...';
+
+            try {
+                // Step 1: Save to backend
+                const saveResponse = await fetch('https://business-flowchart.onrender.com/api/calculations/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        business_type: lastCalculation.business_type,
+                        investment_amount: lastCalculation.totalCost,
+                        timeline_months: 12,
+                        calculation_data: lastCalculation
+                    })
+                });
+
+                // Step 2: Send email via FormSubmit
+                const formData = new FormData();
+                formData.append('_to', 'harshjaju07@gmail.com');
+                formData.append('_subject', '🎉 BizCalc: ' + businessData[lastCalculation.business_type].name);
+                formData.append('_captcha', 'false');
+                formData.append('Business Type', businessData[lastCalculation.business_type].name);
+                formData.append('Location', lastCalculation.location);
+                formData.append('Area (sq ft)', lastCalculation.area);
+                formData.append('Employees', lastCalculation.employees);
+                formData.append('Land Cost', formatCurrency(lastCalculation.landCost));
+                formData.append('Setup Cost', formatCurrency(lastCalculation.setupCost));
+                formData.append('Stock Cost', formatCurrency(lastCalculation.stockCost));
+                formData.append('Equipment Cost', formatCurrency(lastCalculation.equipmentCost));
+                formData.append('Salary Cost', formatCurrency(lastCalculation.salaryCost));
+                formData.append('Operating Cost', formatCurrency(lastCalculation.operatingCost));
+                formData.append('Total Investment', formatCurrency(lastCalculation.totalCost));
+                formData.append('User Email', userEmail);
+                formData.append('User Name', user.name || 'Guest User');
+
+                const emailResponse = await fetch('https://formsubmit.co/harshjaju07@gmail.com', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (saveResponse.ok && emailResponse.ok) {
+                    document.getElementById('successMsg').classList.add('show');
+                    btn.textContent = '✅ Saved!';
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.textContent = '💾 Save & Send Email';
+                    }, 3000);
+                } else {
+                    throw new Error('Save or email failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+                btn.disabled = false;
+                btn.textContent = '💾 Save & Send Email';
+            }
         }
 
-        function toggleTheme() {
-            const root = document.documentElement;
-            const currentTheme = root.getAttribute('data-theme');
-            root.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+        function formatCurrency(amount) {
+            if (amount >= 10000000) return '₹' + (amount / 10000000).toFixed(1) + 'Cr';
+            if (amount >= 100000) return '₹' + (amount / 100000).toFixed(1) + 'L';
+            return '₹' + Math.round(amount).toLocaleString('en-IN');
         }
 
-        // Pre-fill from URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const businessType = urlParams.get('businessType');
-        if (businessType && businessData[businessType]) {
-            document.getElementById('business').value = businessType;
+        // Additional initialization after auth-check.js verifies user
+        window.addEventListener('load', () => {
+            // auth-check.js already verified authentication, just proceed with initialization
+
+            // Check URL parameters for pre-selected business type
+            const urlParams = new URLSearchParams(window.location.search);
+            const businessTypeParam = urlParams.get('businessType');
+
+            if (businessTypeParam) {
+                // Map URL parameter to business code
+                const businessCode = urlParamMapping[businessTypeParam] || businessTypeParam;
+                const businessSelect = document.getElementById('business');
+
+                // Check if the business code exists in our data
+                if (businessCode in businessData) {
+                    businessSelect.value = businessCode;
+                }
+            }
+
+            // Load last calculation if exists
+            const saved = localStorage.getItem('lastCalculation');
+            if (saved) {
+                lastCalculation = JSON.parse(saved);
+                // Auto-populate form if needed
+            }
+        });
+
+        // Dark Mode
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
         }
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+
+            // Redraw chart if it exists
+            if (lastCalculation && timelineChart) {
+                setTimeout(() => generateTimeline(12), 100);
+            }
+        });
+
+        // Redraw chart when monthly profit/loss changes
+        document.getElementById('monthlyNetProfit').addEventListener('change', () => {
+            if (lastCalculation && timelineChart) {
+                generateTimeline(12);
+            }
+        });
     </script>
+    <!-- Navbar Manager -->
+    <script src="navbar-manager.js"></script>
+
+    <!-- Chatbot Widget -->
+    <script src="chatbot.js"></script>
+
 </body>
 </html>
