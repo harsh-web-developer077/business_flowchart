@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <!-- Home Page -->
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/index.html</loc>
+        <loc>https://business-flowchart.onrender.com/index.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
@@ -10,14 +10,14 @@
 
     <!-- Calculator Pages -->
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/calculator.html</loc>
+        <loc>https://business-flowchart.onrender.com/calculator.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
 
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/loan-calculator.html</loc>
+        <loc>https://business-flowchart.onrender.com/loan-calculator.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
@@ -25,7 +25,7 @@
 
     <!-- Features Page -->
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/features.html</loc>
+        <loc>https://business-flowchart.onrender.com/features.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
@@ -33,7 +33,7 @@
 
     <!-- Dashboard -->
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/dashboard.html</loc>
+        <loc>https://business-flowchart.onrender.com/dashboard.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
@@ -41,14 +41,14 @@
 
     <!-- Information Pages -->
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/about.html</loc>
+        <loc>https://business-flowchart.onrender.com/about.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
 
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/contact.html</loc>
+        <loc>https://business-flowchart.onrender.com/contact.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
@@ -56,14 +56,14 @@
 
     <!-- Legal Pages -->
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/privacy-policy.html</loc>
+        <loc>https://business-flowchart.onrender.com/privacy-policy.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
 
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/terms-conditions.html</loc>
+        <loc>https://business-flowchart.onrender.com/terms-conditions.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
@@ -71,7 +71,7 @@
 
     <!-- Admin Pages -->
     <url>
-        <loc>https://business-flowchart.onrender.com/frontend/admin-users.html</loc>
+        <loc>https://business-flowchart.onrender.com/admin-users.html</loc>
         <lastmod>2026-10-03</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.4</priority>
