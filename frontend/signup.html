@@ -88,6 +88,43 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fbbf24;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
         .theme-toggle {
             background: rgba(255,255,255,0.2);
             border: 2px solid white;
@@ -414,6 +451,28 @@
                 font-size: 1.5em;
             }
 
+            .nav-links {
+                display: none !important;
+            }
+
+            .nav-links.active {
+                display: flex !important;
+                position: absolute;
+                flex-direction: column;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
+                padding: 1rem 2rem;
+                gap: 1rem;
+                justify-content: flex-start;
+                z-index: 99;
+            }
+
+            .nav-links li {
+                margin-bottom: 0.8rem;
+            }
+
             .hamburger {
                 display: flex;
             }
@@ -571,7 +630,14 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">💼 BizCalc</a>
-            <div style="flex: 1;"></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="loan-calculator.html">Loan Calculator</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
             <button class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -725,8 +791,18 @@
     <script>
         // Hamburger menu toggle
         const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
         });
 
         // Theme toggle
@@ -787,46 +863,95 @@
                 return;
             }
 
-            // Collect form data
+            // Collect form data for API
             const formData = {
-                name: document.getElementById('name').value,
+                full_name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                businessType: document.getElementById('businessType').value,
+                whatsapp: document.getElementById('phone').value,
+                business_type: document.getElementById('businessType').value,
                 password: password,
-                whatsappNotif: document.getElementById('whatsappNotif').checked,
-                emailNotif: document.getElementById('emailNotif').checked,
-                timestamp: new Date().toISOString()
+                password_confirm: confirmPassword
             };
 
             try {
-                // TODO: Replace with your backend API endpoint
-                // const response = await fetch('/api/auth/signup', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify(formData)
-                // });
+                // Send to backend API
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
 
-                // For now, show success and store in localStorage (development)
-                localStorage.setItem('user', JSON.stringify(formData));
+                const result = await response.json();
 
-                // Track user signup
-                if (typeof trackUserSignup === 'function') {
-                    trackUserSignup(formData.email, formData.name);
+                if (!response.ok || !result.success) {
+                    errorMsg.textContent = '❌ Error: ' + (result.message || 'Signup failed');
+                    errorMsg.classList.add('show');
+                    return;
                 }
 
-                successMsg.textContent = '✅ Account बन गया! अब आप sign in कर सकते हैं।';
+                // Success! Load and display users
+                successMsg.textContent = '✅ Account बन गया! Users को देख रहे हैं...';
                 successMsg.classList.add('show');
 
-                setTimeout(() => {
-                    window.location.href = 'signin.html';
-                }, 2000);
+                // Load users from backend
+                setTimeout(loadAllUsers, 1000);
 
             } catch (error) {
                 errorMsg.textContent = '❌ Error: ' + error.message;
                 errorMsg.classList.add('show');
             }
         });
+
+        // Function to load and display all registered users
+        async function loadAllUsers() {
+            try {
+                const response = await fetch('/api/admin/users');
+                const data = await response.json();
+
+                if (data.success) {
+                    // Create users display section
+                    let usersDisplay = '<div style="margin-top: 2rem; padding: 2rem; background: var(--bg-card); border-radius: 8px; border: 2px solid var(--border);">';
+                    usersDisplay += '<h2 style="margin-bottom: 1rem; color: var(--primary);">📋 सभी Registered Users</h2>';
+
+                    if (data.users.length > 0) {
+                        usersDisplay += '<table style="width: 100%; border-collapse: collapse;">';
+                        usersDisplay += '<thead><tr style="background: var(--primary); color: white;"><th style="padding: 0.8rem; text-align: left;">Name</th><th style="padding: 0.8rem; text-align: left;">Email</th><th style="padding: 0.8rem; text-align: left;">Business Type</th><th style="padding: 0.8rem; text-align: left;">Date</th></tr></thead>';
+                        usersDisplay += '<tbody>';
+
+                        data.users.forEach(user => {
+                            const date = new Date(user.created_at).toLocaleDateString();
+                            usersDisplay += `<tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 0.8rem;">${user.full_name}</td>
+                                <td style="padding: 0.8rem;">${user.email}</td>
+                                <td style="padding: 0.8rem;">${user.business_type}</td>
+                                <td style="padding: 0.8rem;">${date}</td>
+                            </tr>`;
+                        });
+
+                        usersDisplay += '</tbody></table>';
+                    } else {
+                        usersDisplay += '<p style="color: var(--text-secondary);">कोई users नहीं है अभी।</p>';
+                    }
+
+                    usersDisplay += '</div>';
+
+                    // Insert users display after form
+                    const formContainer = form.parentElement;
+                    const existingDisplay = document.getElementById('usersDisplay');
+                    if (existingDisplay) existingDisplay.remove();
+
+                    const newDisplay = document.createElement('div');
+                    newDisplay.id = 'usersDisplay';
+                    newDisplay.innerHTML = usersDisplay;
+                    formContainer.appendChild(newDisplay);
+
+                    // Scroll to users
+                    newDisplay.scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
     </script>
 
     <!-- Navbar Manager -->
