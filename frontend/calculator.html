@@ -3,24 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Business Investment Calculator - Calculate your startup investment for 13+ business types in Sri Dungargarh">
-    <title>Calculator - BizCalc</title>
+    <meta name="description" content="BizCalc - Business Investment Calculator for Sri Dungargarh entrepreneurs. Calculate startup investment costs for 53+ business types instantly with real market data.">
+    <meta name="keywords" content="business investment calculator, startup investment estimator, business cost calculator, Sri Dungargarh business, entrepreneur investment, small business calculator, agricultural business investment, cafe business cost, pharmacy investment">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="BizCalc">
+    <meta property="og:title" content="BizCalc - Business Investment Calculator">
+    <meta property="og:description" content="Calculate your startup investment for 53+ business types in Sri Dungargarh">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://business-flowchart.onrender.com/">
+    <meta name="google-site-verification" content="N8AmEtEYhFrZ2k5LQ23PRbLysdrwqu4XaakUvlP6T_Q" />
+    <title>BizCalc - Business Investment Calculator for Entrepreneurs | Sri Dungargarh</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
-    <script src="auth-check.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "BizCalc - Business Investment Calculator",
+      "description": "Calculate startup investment for 53+ business types in Sri Dungargarh",
+      "url": "https://business-flowchart.onrender.com",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR",
+        "description": "Free business investment calculator"
+      }
+    }
+    </script>
+    <script>
+        // Authentication check - redirect to signin if not logged in
+        if (!sessionStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'signin.html';
+        }
+    </script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ===== PREMIUM COLORFUL DESIGN SYSTEM ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         :root {
+            /* Vibrant Colors */
             --primary: #0891b2;
+            --primary-dark: #0e7490;
             --secondary: #f97316;
             --accent: #a855f7;
+            --accent-2: #ec4899;
+            --accent-3: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+
             --bg: #f0f9ff;
             --bg-card: #ffffff;
             --text-primary: #0c2340;
             --text-secondary: #475569;
             --border: #e0f2fe;
+
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
             --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             color-scheme: light;
         }
@@ -35,7 +80,10 @@
                 --text-primary: #f1f5f9;
                 --text-secondary: #cbd5e1;
                 --border: #0e7490;
+                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
                 --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+                --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
                 color-scheme: dark;
             }
         }
@@ -49,7 +97,15 @@
             --text-primary: #f1f5f9;
             --text-secondary: #cbd5e1;
             --border: #0e7490;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
             color-scheme: dark;
+        }
+
+        html, body {
+            height: 100%;
         }
 
         body {
@@ -57,15 +113,18 @@
             color: var(--text-primary);
             background: var(--bg);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* ===== NAVIGATION ===== */
         nav {
             position: sticky;
             top: 0;
             z-index: 100;
             background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
+            backdrop-filter: blur(12px);
             padding: 1rem 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            box-shadow: var(--shadow-md);
         }
 
         .nav-container {
@@ -81,8 +140,11 @@
             font-size: 1.8em;
             font-weight: 700;
             color: white;
-            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-decoration: none;
         }
 
         .nav-links {
@@ -100,6 +162,11 @@
             font-size: 0.95rem;
             transition: all 0.3s;
             position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
         }
 
         .nav-links a::after {
@@ -129,8 +196,8 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2em;
-            font-weight: 700;
             transition: all 0.3s;
+            font-weight: 700;
         }
 
         .theme-toggle:hover {
@@ -138,284 +205,418 @@
             transform: scale(1.1);
         }
 
-        .page-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.9) 0%, rgba(168, 85, 247, 0.8) 50%, rgba(249, 115, 22, 0.9) 100%);
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(8, 145, 178, 0) 0%, rgba(8, 145, 178, 0.4) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            display: flex;
+        }
+
+        .hero-text {
+            flex: 0 0 45%;
             padding: 4rem 2rem;
-            text-align: left;
+            color: white;
+            animation: slideInLeft 0.8s ease;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fbbf24;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.6s ease 0.2s backwards;
+        }
+
+        .hero h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.6s ease 0.3s backwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.6s ease 0.4s backwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 1.5rem;
+            animation: fadeInUp 0.6s ease 0.5s backwards;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #0c2340;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(251, 191, 36, 0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(251, 191, 36, 0.4);
+        }
+
+        .cta-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid white;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== STATISTICS SECTION ===== */
+        .stats-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 5rem 2rem;
             position: relative;
             overflow: hidden;
         }
 
-        .page-header::before {
+        .stats-section::before {
             content: '';
             position: absolute;
             top: 0;
+            left: 0;
             right: 0;
-            width: 50%;
-            height: 100%;
-            background: radial-gradient(circle at 100% 0%, rgba(255,255,255,0.1) 0%, transparent 70%);
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(8, 145, 178, 0.2) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(249, 115, 22, 0.2) 0%, transparent 50%);
+            z-index: 0;
         }
 
-        .page-header-content {
+        .stats-container {
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
-            z-index: 2;
-            flex: 0 0 50%;
+            z-index: 1;
         }
 
-        .page-header h1 {
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            animation: fadeInUp 0.6s ease backwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            transform: scaleX(0);
+            animation: scaleInX 0.6s ease 0.3s forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-number {
             font-family: 'Sora', sans-serif;
             font-size: 2.8rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .page-header p {
-            font-size: 1.1rem;
-            opacity: 0.95;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .calculator-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-
-        .calculator-form {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .form-group {
-            margin-bottom: 1.8rem;
-        }
-
-        .form-group label {
-            display: block;
             font-weight: 700;
-            margin-bottom: 0.6rem;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.9rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s;
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1);
-        }
-
-        .calculate-btn {
-            width: 100%;
-            padding: 1.1rem;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 8px 20px rgba(8, 145, 178, 0.3);
-        }
-
-        .calculate-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(8, 145, 178, 0.4);
-        }
-
-        .results-container {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: var(--shadow-lg);
-            display: none;
-        }
-
-        .results-container.active {
-            display: block;
-            animation: slideInDown 0.5s ease;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem;
-            border-bottom: 2px solid var(--border);
-            margin-bottom: 1rem;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05), rgba(249, 115, 22, 0.05));
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 1rem;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .result-label {
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .result-value {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .timeline-section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 2px solid var(--border);
-        }
-
-        .timeline-options {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .timeline-btn {
-            padding: 0.7rem 1.2rem;
-            background: var(--border);
-            color: var(--text-primary);
-            border: 2px solid var(--border);
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .timeline-btn:hover, .timeline-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .timeline-input-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .timeline-input-group label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-        }
-
-        .timeline-input-group input {
-            width: 100%;
-            padding: 0.9rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s;
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        .timeline-input-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1);
-        }
-
-        .graph-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            margin-top: 1.5rem;
-            display: none;
-        }
-
-        .graph-container.active {
-            display: block;
-        }
-
-        .save-section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 2px solid var(--border);
-        }
-
-        .save-btn {
-            width: 100%;
-            padding: 1rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.5rem;
         }
 
-        .save-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        .success-msg {
-            color: #10b981;
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
             font-weight: 600;
-            margin-top: 1rem;
-            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes scaleInX {
+            to { transform: scaleX(1); }
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05) 0%, rgba(168, 85, 247, 0.05) 50%, rgba(249, 115, 22, 0.05) 100%);
+            padding: 5rem 2rem;
+        }
+
+        .section-header {
             text-align: center;
-            padding: 1rem;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 6px;
-            display: none;
+            margin-bottom: 4rem;
         }
 
-        .success-msg.show {
-            display: block;
+        .section-header h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-md);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; background: linear-gradient(135deg, rgba(8, 145, 178, 0.05), rgba(8, 145, 178, 0.02)); }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(249, 115, 22, 0.02)); }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(168, 85, 247, 0.02)); }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ===== TESTIMONIALS SECTION ===== */
+        .testimonials-section {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+            padding: 5rem 2rem;
+        }
+
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+            border-top: 4px solid var(--primary);
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .testimonial-card:nth-child(2) {
+            border-top-color: var(--secondary);
+            animation-delay: 0.1s;
+        }
+
+        .testimonial-card:nth-child(3) {
+            border-top-color: var(--accent);
+            animation-delay: 0.2s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-role {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* ===== FOOTER ===== */
         footer {
             background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 50%, #0e7490 100%);
             color: white;
             padding: 4rem 2rem 2rem;
             position: relative;
             overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 20% 0%, rgba(249, 115, 22, 0.15) 0%, transparent 50%), radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+            z-index: 0;
         }
 
         .footer-content {
@@ -433,6 +634,7 @@
         }
 
         .footer-section h4 {
+            font-family: 'Sora', sans-serif;
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
             color: #fbbf24;
@@ -457,11 +659,153 @@
             transform: translateX(4px);
         }
 
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
         .footer-bottom {
             border-top: 2px solid rgba(255, 255, 255, 0.2);
             padding-top: 2rem;
             text-align: center;
             color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-credit {
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .footer-credit a {
+            color: #fbbf24;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-credit a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* ===== CAROUSEL SECTION ===== */
+        .carousel-container {
+            position: relative;
+            z-index: 1;
+            padding: 0 2rem;
+            animation: fadeInUp 0.6s ease 0.6s backwards;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 2rem;
+            animation: scroll 15s linear infinite;
+            width: fit-content;
+        }
+
+        .carousel-item {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            white-space: nowrap;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(251, 191, 36, 0.3);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .carousel-wrapper {
+            overflow: hidden;
+            background: #0a1428;
+            border-radius: 0;
+            padding: 2rem 0;
+            margin-top: 0;
+            border-top: 3px solid #06b6d4;
+            border-bottom: 3px solid #0891b2;
+            position: relative;
+        }
+
+        .carousel-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(8, 145, 178, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .carousel-track-duplicate {
+            display: flex;
+            gap: 2rem;
+            animation: scroll 15s linear infinite;
+        }
+
+        /* ===== HERO VIDEO ===== */
+        .hero-video-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .hero-video-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1;
+        }
+
+        .hero-video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(8, 145, 178, 0.2));
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 2rem;
         }
 
         /* ===== HAMBURGER MENU ===== */
@@ -494,6 +838,7 @@
             transform: rotate(-45deg) translate(7px, -7px);
         }
 
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .nav-container {
                 padding: 1rem;
@@ -543,73 +888,82 @@
                 gap: 0.5rem;
             }
 
-            .calculator-grid {
-                grid-template-columns: 1fr;
-                padding: 0 1rem;
+            .hero-text {
+                flex: 0 0 100%;
+                padding: 2rem 1.5rem;
             }
 
-            .page-header {
-                padding: 2rem 1rem;
+            .hero h1 {
+                font-size: 2rem;
+                line-height: 1.2;
             }
 
-            .page-header h1 {
+            .hero p {
+                font-size: 0.95rem;
+                margin: 1rem 0;
+            }
+
+            .hero-overlay {
+                display: none;
+            }
+
+            .hero-video-wrapper {
+                display: none;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+
+            .carousel-container {
+                padding: 0 0.5rem;
+            }
+
+            .carousel-item {
+                padding: 1rem 1.2rem;
+                font-size: 0.9rem;
+                min-width: auto;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 1.5rem 1rem;
+            }
+
+            .stat-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .stat-number {
                 font-size: 1.8rem;
             }
 
-            .form-group {
-                margin-bottom: 1.2rem;
+            .stat-label {
+                font-size: 0.85rem;
             }
 
-            .form-group label {
+            .section-header h2 {
+                font-size: 1.8rem;
+                padding: 0 1rem;
+            }
+
+            .section-header p {
                 font-size: 0.95rem;
-                margin-bottom: 0.5rem;
+                padding: 0 1rem;
             }
 
-            .form-group input,
-            .form-group select {
-                padding: 0.8rem;
-                font-size: 1rem;
-            }
-
-            .calculate-btn {
-                padding: 0.9rem;
-                font-size: 1rem;
-                width: 100%;
-            }
-
-            .timeline-options {
-                gap: 0.5rem;
-                flex-wrap: wrap;
-            }
-
-            .timeline-btn {
-                padding: 0.7rem 1rem;
-                font-size: 0.9rem;
-                flex: 1;
-                min-width: 80px;
-            }
-
-            .graph-container {
-                height: 300px;
-            }
-
-            .result-item {
-                padding: 1rem;
-                margin-bottom: 0.8rem;
-            }
-
-            .result-label {
-                font-size: 0.9rem;
-            }
-
-            .result-value {
-                font-size: 1.3rem;
-            }
-
-            .save-btn {
-                padding: 0.9rem;
-                font-size: 1rem;
-                width: 100%;
+            .testimonials-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -636,138 +990,116 @@
                 font-size: 0.9rem;
             }
 
-            .container {
+            .hero {
+                min-height: 380px;
                 padding: 1rem 0;
             }
 
-            .calculator-grid {
-                padding: 0 0.8rem;
+            .hero-text {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.6rem;
+                line-height: 1.2;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-eyebrow {
+                font-size: 0.85rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin: 0.8rem 0;
+            }
+
+            .cta-primary, .cta-secondary {
+                padding: 0.9rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .carousel-item {
+                padding: 0.8rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+                padding: 1rem;
+            }
+
+            .stat-card {
+                padding: 1.2rem 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.6rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+                margin-top: 0.3rem;
+            }
+
+            .section-header {
+                padding: 2rem 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.5rem;
+                padding: 0;
+                margin-bottom: 0.5rem;
+            }
+
+            .section-header p {
+                font-size: 0.9rem;
+                padding: 0;
             }
 
             .page-header {
-                padding: 1.5rem 1rem;
+                padding: 2rem 1rem;
             }
 
             .page-header h1 {
                 font-size: 1.5rem;
-                margin-bottom: 0.3rem;
             }
 
             .page-header p {
                 font-size: 0.9rem;
             }
 
-            .calculator-form {
-                padding: 1rem 0;
-            }
-
-            .form-group {
+            .footer-section h4 {
+                font-size: 1rem;
                 margin-bottom: 1rem;
             }
 
-            .form-group label {
-                font-size: 0.9rem;
-                margin-bottom: 0.4rem;
-                font-weight: 600;
-            }
-
-            .form-group input,
-            .form-group select {
-                padding: 0.75rem;
-                font-size: 1rem;
-                border-radius: 6px;
-            }
-
-            .calculate-btn {
-                padding: 0.8rem;
-                font-size: 0.95rem;
-                width: 100%;
-                margin-top: 0.5rem;
-            }
-
-            .results-container {
-                padding: 1rem 0;
-            }
-
-            .timeline-options {
-                gap: 0.4rem;
-            }
-
-            .timeline-btn {
-                padding: 0.6rem 0.8rem;
-                font-size: 0.8rem;
-                flex: 1;
-                min-width: 70px;
-            }
-
-            .timeline-btn.active {
-                font-weight: 700;
-            }
-
-            .graph-container {
-                height: 280px;
-                margin: 1rem 0;
-            }
-
-            .result-item {
-                padding: 0.8rem;
-                margin-bottom: 0.6rem;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .result-label {
-                font-size: 0.85rem;
-                flex: 1;
-            }
-
-            .result-value {
-                font-size: 1.1rem;
-                font-weight: 700;
-                text-align: right;
-            }
-
-            .save-btn {
-                padding: 0.8rem;
-                font-size: 0.95rem;
-                width: 100%;
-            }
-
-            footer {
-                padding: 2rem 1rem 1rem;
-            }
-
-            .footer-grid {
-                gap: 1.5rem;
-            }
-
-            .footer-section h4 {
-                font-size: 1rem;
-                margin-bottom: 0.8rem;
-            }
-
             .footer-section ul li {
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.6rem;
                 font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">💼 BizCalc</a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="calculator.html" class="active">Calculator</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
                 <li><a href="loan-calculator.html">Loan Calculator</a></li>
                 <li><a href="features.html">Features</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
             <div data-auth-container style="display: flex; gap: 1rem; align-items: center;">
-                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <a href="signin.html" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1rem;">Sign In</a>
+                <a href="signup.html" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border-radius: 6px;">Sign Up</a>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
             </div>
             <div class="hamburger" id="hamburger">
                 <span></span>
@@ -777,195 +1109,169 @@
         </div>
     </nav>
 
-    <div class="page-header">
-        <div class="page-header-content">
-            <h1>Investment Calculator</h1>
-            <p>Calculate your exact business investment requirement in seconds</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-video-wrapper">
+            <video class="hero-video" autoplay muted loop playsinline>
+                <source src="hero-video.mp4" type="video/mp4">
+                <div class="hero-video-placeholder">
+                    📹 Business Growth Video Coming Soon
+                </div>
+            </video>
         </div>
-    </div>
-
-    <div class="container">
-        <div class="calculator-grid">
-            <div class="calculator-form">
-                <div class="form-group">
-                    <label for="business">Select Business Type *</label>
-                    <select id="business" required>
-                        <option value="">-- Choose Business Type --</option>
-
-                        <!-- Retail & Shopping -->
-                        <optgroup label="🛍️ Retail & Shopping">
-                            <option value="building">Building Materials Shop</option>
-                            <option value="kirana">Kirana General Shop</option>
-                            <option value="clothing">Clothing Store</option>
-                            <option value="electronics">Electronics Store</option>
-                            <option value="hardware">Hardware Store</option>
-                            <option value="pharmacy">Pharmacy/Medical Store</option>
-                            <option value="furniture">Furniture Store</option>
-                            <option value="jewelry">Jewelry Store</option>
-                            <option value="cosmetics">Cosmetics/Beauty Store</option>
-                            <option value="bookstore">Bookstore/Stationery</option>
-                            <option value="mobile">Mobile/Phone Shop</option>
-                            <option value="grocery">Grocery Store (Modern)</option>
-                            <option value="vegetable">Vegetable/Fruit Shop</option>
-                        </optgroup>
-
-                        <!-- Food & Beverage -->
-                        <optgroup label="🍽️ Food & Beverage">
-                            <option value="cafe">Cafe/Restaurant</option>
-                            <option value="tea-stall">Tea Stall/Chai Shop</option>
-                            <option value="food-delivery">Food Delivery Service</option>
-                            <option value="bakery">Bakery/Pastry Shop</option>
-                        </optgroup>
-
-                        <!-- Repair & Maintenance -->
-                        <optgroup label="🔧 Repair & Maintenance">
-                            <option value="bicycle-repair">Bicycle Repair Shop</option>
-                            <option value="motorcycle-repair">Motorcycle/Scooter Repair</option>
-                            <option value="vehicle-repair">Vehicle/Car Repair Shop</option>
-                            <option value="laundry">Laundry Service</option>
-                        </optgroup>
-
-                        <!-- Personal Care -->
-                        <optgroup label="💇 Personal Care & Grooming">
-                            <option value="barber">Barber Shop/Salon</option>
-                            <option value="beauty-salon">Beauty & Nail Salon</option>
-                            <option value="tailoring">Tailoring Shop</option>
-                        </optgroup>
-
-                        <!-- Education & Fitness -->
-                        <optgroup label="📚 Education & Fitness">
-                            <option value="gym">Fitness Center/Gym</option>
-                            <option value="school">School/Coaching Center</option>
-                            <option value="computer-training">Computer Training Center</option>
-                        </optgroup>
-
-                        <!-- Healthcare & Wellness -->
-                        <optgroup label="🏥 Healthcare & Wellness">
-                            <option value="hospital">Clinic/Diagnostic Center</option>
-                            <option value="dental">Dental Clinic</option>
-                            <option value="ayurveda">Ayurveda/Wellness Center</option>
-                        </optgroup>
-
-                        <!-- Transportation & Auto -->
-                        <optgroup label="🚗 Transportation & Auto">
-                            <option value="car-rental">Car Rental Service</option>
-                            <option value="vehicle-showroom">Vehicle Showroom</option>
-                            <option value="petrol-pump">Petrol Pump/Gas Station</option>
-                            <option value="transport">Transport/Logistics Business</option>
-                            <option value="auto-rental">Auto Rental Service</option>
-                        </optgroup>
-
-                        <!-- Other Services -->
-                        <optgroup label="✨ Other Services">
-                            <option value="photography">Photography Studio</option>
-                            <option value="petshop">Pet Shop & Grooming</option>
-                            <option value="dairy">Dairy/Milk Parlor</option>
-                            <option value="wedding-service">Wedding Decoration Service</option>
-                            <option value="real-estate">Real Estate/Property</option>
-                            <option value="agriculture">Agricultural Business</option>
-                        </optgroup>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="location">Location Type *</label>
-                    <select id="location" required>
-                        <option value="">-- Choose Location --</option>
-                        <option value="highway">Highway Area (₹6,000/sq ft)</option>
-                        <option value="market">Market Area (₹10,000/sq ft)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="area">Land Area (sq ft) *</label>
-                    <input type="number" id="area" placeholder="Enter area in square feet" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="employees">Number of Employees *</label>
-                    <input type="number" id="employees" placeholder="How many employees?" min="0" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="additional">Additional Capital (₹)</label>
-                    <input type="number" id="additional" placeholder="Optional additional investment" min="0">
-                </div>
-
-                <button class="calculate-btn" onclick="calculateInvestment()">Calculate Investment</button>
-            </div>
-
-            <div class="results-container" id="results">
-                <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Investment Breakdown</h3>
-                <div class="result-item">
-                    <span class="result-label">Land Cost</span>
-                    <span class="result-value" id="landCost">₹0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">Business Setup</span>
-                    <span class="result-value" id="setupCost">₹0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">Initial Stock</span>
-                    <span class="result-value" id="stockCost">₹0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">Equipment</span>
-                    <span class="result-value" id="equipmentCost">₹0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">Monthly Salary (1 month)</span>
-                    <span class="result-value" id="salaryCost">₹0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">Operating Costs</span>
-                    <span class="result-value" id="operatingCost">₹0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label">✨ Total Investment Required</span>
-                    <span class="result-value" id="totalCost">₹0</span>
-                </div>
-
-                <div class="timeline-section">
-                    <h4 style="margin-bottom: 1rem; color: var(--primary);">📈 Investment Timeline</h4>
-
-                    <div class="timeline-input-group">
-                        <label for="monthlyNetProfit">Your Expected Monthly Net Profit/Loss (₹)</label>
-                        <input type="number" id="monthlyNetProfit" placeholder="Enter monthly net profit or loss" value="0">
-                    </div>
-
-                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">Select timeline to see monthly breakdown:</p>
-                    <div class="timeline-options">
-                        <button class="timeline-btn" onclick="generateTimeline(3)">3 Months</button>
-                        <button class="timeline-btn" onclick="generateTimeline(6)">6 Months</button>
-                        <button class="timeline-btn active" onclick="generateTimeline(12)">12 Months</button>
-                    </div>
-                    <div class="graph-container active" id="graphContainer">
-                        <canvas id="timelineChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="save-section">
-                    <button class="save-btn" onclick="saveAndNotify()">💾 Save & Send Email</button>
-                    <div class="success-msg" id="successMsg">✅ Calculation saved! Email sent to harshjaju07@gmail.com</div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-eyebrow">Welcome to BizCalc</div>
+                <h1>Build Your Business Empire</h1>
+                <p>Calculate precise investment requirements for 13+ business types in Sri Dungargarh with real market data.</p>
+                <div class="hero-cta">
+                    <a href="calculator.html" class="cta-primary">Start Calculator →</a>
+                    <a href="features.html" class="cta-secondary">Learn More</a>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
+    <!-- Carousel Section -->
+    <section class="carousel-wrapper">
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <div class="carousel-item">✨ Sparsh Portfolio</div>
+                <div class="carousel-item">💪 Titan Gym</div>
+                <div class="carousel-item">🏆 Ravi Shankar Pandia</div>
+                <div class="carousel-item">⭐ Mohit Prajapat</div>
+                <div class="carousel-item">👨‍💼 Devram Givaria</div>
+                <div class="carousel-item">🎯 Raghvendra Sharma</div>
+                <div class="carousel-item">📱 Vivek sir</div>
+                <div class="carousel-item">💎 Priya ojha</div>
+                <div class="carousel-item">✨ Sparsh Portfolio</div>
+                <div class="carousel-item">💪 Titan Gym</div>
+                <div class="carousel-item">🏆 Ravi Shankar Pandia</div>
+                <div class="carousel-item">⭐ Mohit Prajapat</div>
+                <div class="carousel-item">👨‍💼 Devram Givaria</div>
+                <div class="carousel-item">🎯 Raghvendra Sharma</div>
+                <div class="carousel-item">📱 Vivek sir</div>
+                <div class="carousel-item">💎 Priya ojha</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Businesses Calculated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹50Cr+</div>
+                    <div class="stat-label">Investments Estimated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.8/5</div>
+                    <div class="stat-label">Customer Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">13+</div>
+                    <div class="stat-label">Business Types</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Preview Section -->
+    <section class="features-section">
+        <div class="section-header">
+            <h2>Powerful Features</h2>
+            <p>Everything you need to plan your business investment accurately</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h3>Land Price Calculator</h3>
+                <p>Real-time highway and market area pricing for Sri Dungargarh with accurate sq ft calculations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>13+ Business Types</h3>
+                <p>Pre-configured templates for diverse businesses from retail to restaurants with industry-specific costs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Detailed Breakdown</h3>
+                <p>Comprehensive cost analysis including land, setup, stock, equipment, labor, and operating expenses.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="section-header">
+                <h2>Success Stories</h2>
+                <p>What entrepreneurs in Sri Dungargarh are saying about BizCalc</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"BizCalc ने मेरे बिल्डिंग मैटेरियल बिजनेस की सटीक कैलकुलेशन दी। शानदार टूल!"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RK</div>
+                        <div class="author-info">
+                            <h4>Raj Kumar</h4>
+                            <div class="author-role">Builder & Contractor</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"मेरी कैफे के लिए सही इन्वेस्टमेंट प्लान बनाने में BizCalc बहुत मदद किया।"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PS</div>
+                        <div class="author-info">
+                            <h4>Priya Sharma</h4>
+                            <div class="author-role">Entrepreneur</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"इस टूल की मदद से मेरी रेस्टोरेंट की सारी कॉस्ट डिटेल्स साफ़ हो गईं।"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AV</div>
+                        <div class="author-info">
+                            <h4>Amit Verma</h4>
+                            <div class="author-role">Restaurant Owner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-grid">
                 <div class="footer-section">
                     <h4>💼 BizCalc</h4>
-                    <p style="color: rgba(255,255,255,0.75); line-height: 1.8;">Professional calculator for Sri Dungargarh entrepreneurs.</p>
+                    <p class="footer-desc">Professional business investment calculator for Sri Dungargarh entrepreneurs. Plan your startup with real market data.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="calculator.html">Calculator</a></li>
-                        <li><a href="loan-calculator.html">Loan Calculator</a></li>
                         <li><a href="features.html">Features</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Business Types</h4>
+                    <ul>
+                        <li><a href="calculator.html">Retail Shops</a></li>
+                        <li><a href="calculator.html">Restaurants</a></li>
+                        <li><a href="calculator.html">Service Centers</a></li>
+                        <li><a href="calculator.html">Specialty Stores</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -974,472 +1280,70 @@
                         <li><a href="contact.html">Contact Us</a></li>
                         <li><a href="contact.html">FAQ</a></li>
                         <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© 2026 BizCalc. All rights reserved.</p>
-                <p style="margin: 0.5rem 0;">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank" style="color: #fbbf24; text-decoration: none;">Sparsh Portfolio</a></p>
+                <p>© 2026 BizCalc - Business Investment Calculator. All rights reserved.</p>
+                <p class="footer-credit">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank">Sparsh Portfolio</a></p>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem;">Made for entrepreneurs in Sri Dungargarh, India 🇮🇳</p>
             </div>
         </div>
     </footer>
 
     <script>
-        const businessData = {
-            // Research-based data from Google (Tier-2 Indian cities like Sri Dungargarh)
-            'building': { name: 'Building Materials Shop', setup: 2000000, stock: 8000000, equipment: 450000, salaryPerPerson: 70000, operatingCosts: 150000 },
-            'kirana': { name: 'Kirana General Shop', setup: 300000, stock: 400000, equipment: 100000, salaryPerPerson: 50000, operatingCosts: 50000 },
-            'cafe': { name: 'Cafe/Restaurant', setup: 800000, stock: 500000, equipment: 850000, salaryPerPerson: 20000, operatingCosts: 200000 },
-            // Clothing: Updated from Google research - ₹3-12 lakh typical
-            'clothing': { name: 'Clothing Store', setup: 500000, stock: 1200000, equipment: 150000, salaryPerPerson: 18000, operatingCosts: 70000 },
-            // Electronics: Updated from Google - ₹40-100 lakh for proper store, adjusted mid-range
-            'electronics': { name: 'Electronics Store', setup: 1500000, stock: 2500000, equipment: 350000, salaryPerPerson: 22000, operatingCosts: 140000 },
-            'hardware': { name: 'Hardware Store', setup: 600000, stock: 1000000, equipment: 120000, salaryPerPerson: 18000, operatingCosts: 80000 },
-            'pharmacy': { name: 'Pharmacy/Medical Store', setup: 500000, stock: 1000000, equipment: 400000, salaryPerPerson: 20000, operatingCosts: 90000 },
-            'furniture': { name: 'Furniture Store', setup: 1500000, stock: 2500000, equipment: 500000, salaryPerPerson: 19000, operatingCosts: 180000 },
-            'jewelry': { name: 'Jewelry Store', setup: 800000, stock: 3000000, equipment: 250000, salaryPerPerson: 25000, operatingCosts: 130000 },
-            'cosmetics': { name: 'Cosmetics/Beauty Store', setup: 400000, stock: 600000, equipment: 150000, salaryPerPerson: 16000, operatingCosts: 70000 },
-            'bookstore': { name: 'Bookstore/Stationery', setup: 350000, stock: 800000, equipment: 100000, salaryPerPerson: 14000, operatingCosts: 60000 },
-            'mobile': { name: 'Mobile/Phone Shop', setup: 700000, stock: 1500000, equipment: 200000, salaryPerPerson: 20000, operatingCosts: 85000 },
-            'grocery': { name: 'Grocery Store (Modern)', setup: 1200000, stock: 1800000, equipment: 350000, salaryPerPerson: 18000, operatingCosts: 140000 },
-            // Gym: Updated from Google research - ₹15-25 lakh mid-range
-            'gym': { name: 'Fitness Center/Gym', setup: 2000000, stock: 300000, equipment: 1200000, salaryPerPerson: 25000, operatingCosts: 250000 },
-            'school': { name: 'School/Coaching Center', setup: 1800000, stock: 200000, equipment: 500000, salaryPerPerson: 22000, operatingCosts: 180000 },
-            // Clinic: Updated from Google research - ₹10-50 lakh, using small clinic mid-range
-            'hospital': { name: 'Clinic/Diagnostic Center', setup: 1500000, stock: 800000, equipment: 2000000, salaryPerPerson: 27000, operatingCosts: 220000 },
-            'laundry': { name: 'Laundry Service', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 15000, operatingCosts: 120000 },
-            'petshop': { name: 'Pet Shop & Grooming', setup: 600000, stock: 400000, equipment: 300000, salaryPerPerson: 18000, operatingCosts: 100000 },
-            'photography': { name: 'Photography Studio', setup: 700000, stock: 100000, equipment: 1500000, salaryPerPerson: 20000, operatingCosts: 90000 },
-            'car-rental': { name: 'Car Rental Service', setup: 500000, stock: 0, equipment: 0, salaryPerPerson: 12000, operatingCosts: 150000 },
-            // Additional businesses for Tier-2 cities
-            'teashop': { name: 'Tea Shop/Chai Stand', setup: 150000, stock: 80000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 40000 },
-            'bakery': { name: 'Bakery/Bread Shop', setup: 400000, stock: 200000, equipment: 600000, salaryPerPerson: 15000, operatingCosts: 90000 },
-            'ricemill': { name: 'Rice Mill/Grain Processing', setup: 2500000, stock: 500000, equipment: 3500000, salaryPerPerson: 18000, operatingCosts: 200000 },
-            'dairy': { name: 'Dairy/Milk Booth', setup: 250000, stock: 150000, equipment: 300000, salaryPerPerson: 13000, operatingCosts: 60000 },
-            'tailor': { name: 'Tailor Shop/Stitching', setup: 200000, stock: 250000, equipment: 150000, salaryPerPerson: 12000, operatingCosts: 35000 },
-            'salon': { name: 'Salon/Barber Shop', setup: 300000, stock: 100000, equipment: 200000, salaryPerPerson: 10000, operatingCosts: 50000 },
-            'vegetable': { name: 'Vegetable Market Stall', setup: 100000, stock: 50000, equipment: 80000, salaryPerPerson: 8000, operatingCosts: 25000 },
-            'catering': { name: 'Wedding Catering Service', setup: 600000, stock: 200000, equipment: 400000, salaryPerPerson: 18000, operatingCosts: 100000 },
-            'agrorental': { name: 'Agricultural Equipment Rental', setup: 1500000, stock: 100000, equipment: 800000, salaryPerPerson: 15000, operatingCosts: 80000 },
-            'dhaba': { name: 'Small Hotel/Dhaba', setup: 700000, stock: 400000, equipment: 600000, salaryPerPerson: 15000, operatingCosts: 150000 },
-            'agroinput': { name: 'Agro-input Store (Seeds/Fertilizer)', setup: 400000, stock: 1000000, equipment: 100000, salaryPerPerson: 13000, operatingCosts: 60000 },
-            'spareparts': { name: 'Spare Parts Shop', setup: 500000, stock: 1200000, equipment: 150000, salaryPerPerson: 15000, operatingCosts: 70000 },
-            'printing': { name: 'Printing Press', setup: 800000, stock: 300000, equipment: 1200000, salaryPerPerson: 16000, operatingCosts: 110000 },
-            'coldstorage': { name: 'Cold Storage Facility', setup: 3000000, stock: 500000, equipment: 2500000, salaryPerPerson: 18000, operatingCosts: 300000 },
-            'welding': { name: 'Welding/Metal Work Shop', setup: 600000, stock: 400000, equipment: 800000, salaryPerPerson: 14000, operatingCosts: 90000 },
-            'bicycle': { name: 'Bicycle/Auto Repair Shop', setup: 400000, stock: 500000, equipment: 400000, salaryPerPerson: 12000, operatingCosts: 60000 },
-            'paint': { name: 'Paint/Construction Materials', setup: 600000, stock: 2000000, equipment: 150000, salaryPerPerson: 16000, operatingCosts: 80000 },
-            'transformer': { name: 'Electrical Transformer Shop', setup: 800000, stock: 1500000, equipment: 200000, salaryPerPerson: 15000, operatingCosts: 100000 },
-            'warehouse': { name: 'Warehouse/Storage Space', setup: 1000000, stock: 100000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 120000 },
-            // Additional options from dropdown that need data
-            'tea-stall': { name: 'Tea Stall/Chai Shop', setup: 150000, stock: 80000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 40000 },
-            'food-delivery': { name: 'Food Delivery Service', setup: 500000, stock: 100000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 80000 },
-            'motorcycle-repair': { name: 'Motorcycle/Scooter Repair', setup: 400000, stock: 600000, equipment: 500000, salaryPerPerson: 14000, operatingCosts: 70000 },
-            'vehicle-repair': { name: 'Vehicle/Car Repair Shop', setup: 1000000, stock: 800000, equipment: 1200000, salaryPerPerson: 16000, operatingCosts: 120000 },
-            'barber': { name: 'Barber Shop', setup: 250000, stock: 80000, equipment: 150000, salaryPerPerson: 10000, operatingCosts: 40000 },
-            'beauty-salon': { name: 'Beauty & Nail Salon', setup: 400000, stock: 150000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 60000 },
-            'computer-training': { name: 'Computer Training Center', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 18000, operatingCosts: 100000 },
-            'dental': { name: 'Dental Clinic', setup: 1200000, stock: 400000, equipment: 1500000, salaryPerPerson: 25000, operatingCosts: 150000 },
-            'ayurveda': { name: 'Ayurveda/Wellness Center', setup: 800000, stock: 300000, equipment: 400000, salaryPerPerson: 18000, operatingCosts: 100000 },
-            'vehicle-showroom': { name: 'Vehicle Showroom', setup: 2000000, stock: 100000, equipment: 300000, salaryPerPerson: 18000, operatingCosts: 150000 },
-            'petrol-pump': { name: 'Petrol Pump/Gas Station', setup: 5000000, stock: 500000, equipment: 1000000, salaryPerPerson: 16000, operatingCosts: 300000 },
-            'transport': { name: 'Transport/Logistics Business', setup: 2000000, stock: 200000, equipment: 1500000, salaryPerPerson: 15000, operatingCosts: 200000 },
-            'auto-rental': { name: 'Auto Rickshaw Rental', setup: 800000, stock: 100000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 100000 },
-            'wedding-service': { name: 'Wedding Decoration/Event Service', setup: 600000, stock: 300000, equipment: 200000, salaryPerPerson: 14000, operatingCosts: 80000 },
-            'real-estate': { name: 'Real Estate/Property Business', setup: 1500000, stock: 200000, equipment: 300000, salaryPerPerson: 15000, operatingCosts: 100000 },
-            'agriculture': { name: 'Agricultural Business', setup: 3000000, stock: 500000, equipment: 2000000, salaryPerPerson: 15000, operatingCosts: 150000 },
-            'tailoring': { name: 'Tailoring Shop', setup: 200000, stock: 250000, equipment: 150000, salaryPerPerson: 12000, operatingCosts: 35000 }
-        };
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
 
-        const landPrices = { 'highway': 6000, 'market': 10000 };
-        let lastCalculation = null;
-        let timelineChart = null;
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
 
-        // URL parameter to business code mapping
-        const urlParamMapping = {
-            'building-materials': 'building',
-            'kirana-shop': 'kirana',
-            'cafe-restaurant': 'cafe',
-            'clothing-store': 'clothing',
-            'electronics-store': 'electronics',
-            'hardware-store': 'hardware',
-            'pharmacy': 'pharmacy',
-            'furniture-store': 'furniture',
-            'jewelry-store': 'jewelry',
-            'beauty-salon': 'cosmetics',
-            'bookstore': 'bookstore',
-            'mobile-shop': 'mobile',
-            'grocery-store': 'grocery',
-            'gym': 'gym',
-            'school': 'school',
-            'hospital-clinic': 'hospital',
-            'laundry': 'laundry',
-            'petshop': 'petshop',
-            'photography': 'photography',
-            'car-rental': 'car-rental',
-            'tea-shop': 'teashop',
-            'bakery': 'bakery',
-            'rice-mill': 'ricemill',
-            'dairy': 'dairy',
-            'tailor': 'tailor',
-            'salon': 'salon',
-            'vegetable-stall': 'vegetable',
-            'catering': 'catering',
-            'agro-rental': 'agrorental',
-            'dhaba': 'dhaba',
-            'agro-input': 'agroinput',
-            'spare-parts': 'spareparts',
-            'printing': 'printing',
-            'cold-storage': 'coldstorage',
-            'welding': 'welding',
-            'bicycle-repair': 'bicycle',
-            'paint-shop': 'paint',
-            'transformer': 'transformer',
-            'warehouse': 'warehouse',
-            'food-delivery': 'food-delivery',
-            'motorcycle-repair': 'motorcycle-repair',
-            'vehicle-repair': 'vehicle-repair',
-            'barber': 'barber',
-            'computer-training': 'computer-training',
-            'dental': 'dental',
-            'ayurveda': 'ayurveda',
-            'vehicle-showroom': 'vehicle-showroom',
-            'petrol-pump': 'petrol-pump',
-            'transport': 'transport',
-            'auto-rental': 'auto-rental',
-            'wedding-service': 'wedding-service',
-            'real-estate': 'real-estate',
-            'agriculture': 'agriculture',
-            'tailoring': 'tailoring'
-        };
-
-        function calculateInvestment() {
-            const business = document.getElementById('business').value;
-            const location = document.getElementById('location').value;
-            const area = parseFloat(document.getElementById('area').value);
-            const employees = parseInt(document.getElementById('employees').value);
-            const additional = parseFloat(document.getElementById('additional').value) || 0;
-
-            if (!business || !location || !area || isNaN(employees)) {
-                alert('Please fill all required fields');
-                return;
-            }
-
-            if (area <= 0 || employees < 0) {
-                alert('Please enter valid values');
-                return;
-            }
-
-            const data = businessData[business];
-            const landPrice = landPrices[location];
-
-            const landCost = area * landPrice;
-            const setupCost = data.setup;
-            const stockCost = data.stock;
-            const equipmentCost = data.equipment;
-            const salaryCost = data.salaryPerPerson * employees;
-            const operatingCost = data.operatingCosts;
-            const totalCost = landCost + setupCost + stockCost + equipmentCost + salaryCost + operatingCost + additional;
-
-            document.getElementById('landCost').textContent = formatCurrency(landCost);
-            document.getElementById('setupCost').textContent = formatCurrency(setupCost);
-            document.getElementById('stockCost').textContent = formatCurrency(stockCost);
-            document.getElementById('equipmentCost').textContent = formatCurrency(equipmentCost);
-            document.getElementById('salaryCost').textContent = formatCurrency(salaryCost);
-            document.getElementById('operatingCost').textContent = formatCurrency(operatingCost);
-            document.getElementById('totalCost').textContent = formatCurrency(totalCost);
-
-            lastCalculation = {
-                business_type: business,
-                location: location,
-                area: area,
-                employees: employees,
-                additional: additional,
-                landCost: landCost,
-                setupCost: setupCost,
-                stockCost: stockCost,
-                equipmentCost: equipmentCost,
-                salaryCost: salaryCost,
-                operatingCost: operatingCost,
-                totalCost: totalCost,
-                timestamp: new Date().toISOString()
-            };
-
-            document.getElementById('results').classList.add('active');
-            document.getElementById('successMsg').classList.remove('show');
-
-            // Generate default 12-month timeline
-            generateTimeline(12);
-
-            // Save to localStorage
-            localStorage.setItem('lastCalculation', JSON.stringify(lastCalculation));
-
-            setTimeout(() => document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-        }
-
-        function generateTimeline(months) {
-            if (!lastCalculation) return;
-
-            // Update active button
-            document.querySelectorAll('.timeline-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            const monthlyNetProfit = parseFloat(document.getElementById('monthlyNetProfit').value) || 0;
-            const avgInvestment = lastCalculation.totalCost / months;
-
-            const monthLabels = [];
-            const investmentData = [];
-            const profitLossData = [];
-
-            for (let i = 1; i <= months; i++) {
-                monthLabels.push(`Month ${i}`);
-
-                // Investment per month - add realistic variation (70-130% of average)
-                const investmentVariation = 0.7 + (Math.random() * 0.6); // 0.7 to 1.3
-                investmentData.push(avgInvestment * investmentVariation);
-
-                // Net profit/loss per month - add seasonal variation
-                let profitVariation = monthlyNetProfit;
-
-                // Add seasonality: months 1-2 lower, 3-6 better, 7-8 spike, 9-12 moderate
-                if (i <= 2) {
-                    profitVariation = monthlyNetProfit * (0.6 + Math.random() * 0.2); // 60-80%
-                } else if (i <= 6) {
-                    profitVariation = monthlyNetProfit * (0.9 + Math.random() * 0.3); // 90-120%
-                } else if (i <= 8) {
-                    profitVariation = monthlyNetProfit * (1.1 + Math.random() * 0.4); // 110-150% (peak)
-                } else {
-                    profitVariation = monthlyNetProfit * (0.85 + Math.random() * 0.25); // 85-110%
-                }
-
-                profitLossData.push(profitVariation);
-            }
-
-            const ctx = document.getElementById('timelineChart').getContext('2d');
-
-            if (timelineChart) {
-                timelineChart.destroy();
-            }
-
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
-                           (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.documentElement.getAttribute('data-theme'));
-
-            const textColor = isDark ? '#f1f5f9' : '#0c2340';
-            const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-
-            timelineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: monthLabels,
-                    datasets: [
-                        {
-                            label: 'Investment per Month',
-                            data: investmentData,
-                            borderColor: '#0891b2',
-                            backgroundColor: 'rgba(8, 145, 178, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.4,
-                            fill: true,
-                            pointRadius: 5,
-                            pointHoverRadius: 7,
-                            pointBackgroundColor: '#0891b2'
-                        },
-                        {
-                            label: 'Net Profit/Loss per Month',
-                            data: profitLossData,
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderWidth: 3,
-                            tension: 0.4,
-                            fill: false,
-                            pointRadius: 5,
-                            pointHoverRadius: 7,
-                            pointBackgroundColor: '#10b981'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: textColor,
-                                font: {
-                                    weight: '600',
-                                    size: 12
-                                },
-                                padding: 20
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: textColor,
-                                callback: function(value) {
-                                    if (value >= 100000) return '₹' + (value / 100000).toFixed(0) + 'L';
-                                    return '₹' + Math.round(value).toLocaleString('en-IN');
-                                }
-                            },
-                            grid: {
-                                color: gridColor
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                color: textColor
-                            },
-                            grid: {
-                                color: gridColor
-                            }
-                        }
-                    }
-                }
+        // Close menu when link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
             });
-        }
+        });
 
-        async function saveAndNotify() {
-            if (!lastCalculation) {
-                alert('Please calculate first');
-                return;
-            }
-
-            // Get user from sessionStorage (new auth system)
-            const userId = sessionStorage.getItem('userId') || 'guest_' + Date.now();
-            const userEmail = sessionStorage.getItem('userEmail') || 'guest@bizcalc.com';
-            const userName = sessionStorage.getItem('userName') || 'Guest User';
-
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '⏳ Processing...';
-
-            try {
-                // Step 1: Save to backend
-                const saveResponse = await fetch('https://business-flowchart.onrender.com/api/calculations/save', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        user_id: userId,
-                        business_type: lastCalculation.business_type,
-                        investment_amount: lastCalculation.totalCost,
-                        timeline_months: 12,
-                        calculation_data: lastCalculation
-                    })
-                });
-
-                // Step 2: Send email via FormSubmit
-                const formData = new FormData();
-                formData.append('_to', 'harshjaju07@gmail.com');
-                formData.append('_subject', '🎉 BizCalc: ' + businessData[lastCalculation.business_type].name);
-                formData.append('_captcha', 'false');
-                formData.append('Business Type', businessData[lastCalculation.business_type].name);
-                formData.append('Location', lastCalculation.location);
-                formData.append('Area (sq ft)', lastCalculation.area);
-                formData.append('Employees', lastCalculation.employees);
-                formData.append('Land Cost', formatCurrency(lastCalculation.landCost));
-                formData.append('Setup Cost', formatCurrency(lastCalculation.setupCost));
-                formData.append('Stock Cost', formatCurrency(lastCalculation.stockCost));
-                formData.append('Equipment Cost', formatCurrency(lastCalculation.equipmentCost));
-                formData.append('Salary Cost', formatCurrency(lastCalculation.salaryCost));
-                formData.append('Operating Cost', formatCurrency(lastCalculation.operatingCost));
-                formData.append('Total Investment', formatCurrency(lastCalculation.totalCost));
-                formData.append('User Email', userEmail);
-                formData.append('User Name', user.name || 'Guest User');
-
-                const emailResponse = await fetch('https://formsubmit.co/harshjaju07@gmail.com', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (saveResponse.ok && emailResponse.ok) {
-                    document.getElementById('successMsg').classList.add('show');
-                    btn.textContent = '✅ Saved!';
-                    setTimeout(() => {
-                        btn.disabled = false;
-                        btn.textContent = '💾 Save & Send Email';
-                    }, 3000);
-                } else {
-                    throw new Error('Save or email failed');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error: ' + error.message);
-                btn.disabled = false;
-                btn.textContent = '💾 Save & Send Email';
-            }
-        }
-
-        function formatCurrency(amount) {
-            if (amount >= 10000000) return '₹' + (amount / 10000000).toFixed(1) + 'Cr';
-            if (amount >= 100000) return '₹' + (amount / 100000).toFixed(1) + 'L';
-            return '₹' + Math.round(amount).toLocaleString('en-IN');
-        }
-
-        // Additional initialization after auth-check.js verifies user
-        window.addEventListener('load', () => {
-            // auth-check.js already verified authentication, just proceed with initialization
-
-            // Check URL parameters for pre-selected business type
-            const urlParams = new URLSearchParams(window.location.search);
-            const businessTypeParam = urlParams.get('businessType');
-
-            if (businessTypeParam) {
-                // Map URL parameter to business code
-                const businessCode = urlParamMapping[businessTypeParam] || businessTypeParam;
-                const businessSelect = document.getElementById('business');
-
-                // Check if the business code exists in our data
-                if (businessCode in businessData) {
-                    businessSelect.value = businessCode;
-                }
-            }
-
-            // Load last calculation if exists
-            const saved = localStorage.getItem('lastCalculation');
-            if (saved) {
-                lastCalculation = JSON.parse(saved);
-                // Auto-populate form if needed
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
             }
         });
 
-        // Dark Mode
+        // Dark Mode Toggle (local)
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
         if (savedTheme) {
             document.documentElement.setAttribute('data-theme', savedTheme);
             themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        } else if (prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
         }
 
-        themeToggle.addEventListener('click', () => {
-            let currentTheme = document.documentElement.getAttribute('data-theme');
-            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-
-            // Redraw chart if it exists
-            if (lastCalculation && timelineChart) {
-                setTimeout(() => generateTimeline(12), 100);
-            }
-        });
-
-        // Redraw chart when monthly profit/loss changes
-        document.getElementById('monthlyNetProfit').addEventListener('change', () => {
-            if (lastCalculation && timelineChart) {
-                generateTimeline(12);
+        // Active nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
             }
         });
     </script>
+
     <!-- Navbar Manager -->
     <script src="navbar-manager.js"></script>
 
     <!-- Chatbot Widget -->
     <script src="chatbot.js"></script>
-
 </body>
 </html>
