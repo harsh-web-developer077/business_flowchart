@@ -988,69 +988,26 @@
 
     <script>
         const businessData = {
-            // Research-based data from Google (Tier-2 Indian cities like Sri Dungargarh)
             'building': { name: 'Building Materials Shop', setup: 2000000, stock: 8000000, equipment: 450000, salaryPerPerson: 70000, operatingCosts: 150000 },
             'kirana': { name: 'Kirana General Shop', setup: 300000, stock: 400000, equipment: 100000, salaryPerPerson: 50000, operatingCosts: 50000 },
-            'cafe': { name: 'Cafe/Restaurant', setup: 800000, stock: 500000, equipment: 850000, salaryPerPerson: 20000, operatingCosts: 200000 },
-            // Clothing: Updated from Google research - ₹3-12 lakh typical
-            'clothing': { name: 'Clothing Store', setup: 500000, stock: 1200000, equipment: 150000, salaryPerPerson: 18000, operatingCosts: 70000 },
-            // Electronics: Updated from Google - ₹40-100 lakh for proper store, adjusted mid-range
-            'electronics': { name: 'Electronics Store', setup: 1500000, stock: 2500000, equipment: 350000, salaryPerPerson: 22000, operatingCosts: 140000 },
-            'hardware': { name: 'Hardware Store', setup: 600000, stock: 1000000, equipment: 120000, salaryPerPerson: 18000, operatingCosts: 80000 },
-            'pharmacy': { name: 'Pharmacy/Medical Store', setup: 500000, stock: 1000000, equipment: 400000, salaryPerPerson: 20000, operatingCosts: 90000 },
-            'furniture': { name: 'Furniture Store', setup: 1500000, stock: 2500000, equipment: 500000, salaryPerPerson: 19000, operatingCosts: 180000 },
-            'jewelry': { name: 'Jewelry Store', setup: 800000, stock: 3000000, equipment: 250000, salaryPerPerson: 25000, operatingCosts: 130000 },
-            'cosmetics': { name: 'Cosmetics/Beauty Store', setup: 400000, stock: 600000, equipment: 150000, salaryPerPerson: 16000, operatingCosts: 70000 },
-            'bookstore': { name: 'Bookstore/Stationery', setup: 350000, stock: 800000, equipment: 100000, salaryPerPerson: 14000, operatingCosts: 60000 },
-            'mobile': { name: 'Mobile/Phone Shop', setup: 700000, stock: 1500000, equipment: 200000, salaryPerPerson: 20000, operatingCosts: 85000 },
-            'grocery': { name: 'Grocery Store (Modern)', setup: 1200000, stock: 1800000, equipment: 350000, salaryPerPerson: 18000, operatingCosts: 140000 },
-            // Gym: Updated from Google research - ₹15-25 lakh mid-range
-            'gym': { name: 'Fitness Center/Gym', setup: 2000000, stock: 300000, equipment: 1200000, salaryPerPerson: 25000, operatingCosts: 250000 },
-            'school': { name: 'School/Coaching Center', setup: 1800000, stock: 200000, equipment: 500000, salaryPerPerson: 22000, operatingCosts: 180000 },
-            // Clinic: Updated from Google research - ₹10-50 lakh, using small clinic mid-range
-            'hospital': { name: 'Clinic/Diagnostic Center', setup: 1500000, stock: 800000, equipment: 2000000, salaryPerPerson: 27000, operatingCosts: 220000 },
-            'laundry': { name: 'Laundry Service', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 15000, operatingCosts: 120000 },
-            'petshop': { name: 'Pet Shop & Grooming', setup: 600000, stock: 400000, equipment: 300000, salaryPerPerson: 18000, operatingCosts: 100000 },
-            'photography': { name: 'Photography Studio', setup: 700000, stock: 100000, equipment: 1500000, salaryPerPerson: 20000, operatingCosts: 90000 },
-            'car-rental': { name: 'Car Rental Service', setup: 500000, stock: 0, equipment: 0, salaryPerPerson: 12000, operatingCosts: 150000 },
-            // Additional businesses for Tier-2 cities
-            'teashop': { name: 'Tea Shop/Chai Stand', setup: 150000, stock: 80000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 40000 },
-            'bakery': { name: 'Bakery/Bread Shop', setup: 400000, stock: 200000, equipment: 600000, salaryPerPerson: 15000, operatingCosts: 90000 },
-            'ricemill': { name: 'Rice Mill/Grain Processing', setup: 2500000, stock: 500000, equipment: 3500000, salaryPerPerson: 18000, operatingCosts: 200000 },
-            'dairy': { name: 'Dairy/Milk Booth', setup: 250000, stock: 150000, equipment: 300000, salaryPerPerson: 13000, operatingCosts: 60000 },
-            'tailor': { name: 'Tailor Shop/Stitching', setup: 200000, stock: 250000, equipment: 150000, salaryPerPerson: 12000, operatingCosts: 35000 },
-            'salon': { name: 'Salon/Barber Shop', setup: 300000, stock: 100000, equipment: 200000, salaryPerPerson: 10000, operatingCosts: 50000 },
-            'vegetable': { name: 'Vegetable Market Stall', setup: 100000, stock: 50000, equipment: 80000, salaryPerPerson: 8000, operatingCosts: 25000 },
-            'catering': { name: 'Wedding Catering Service', setup: 600000, stock: 200000, equipment: 400000, salaryPerPerson: 18000, operatingCosts: 100000 },
-            'agrorental': { name: 'Agricultural Equipment Rental', setup: 1500000, stock: 100000, equipment: 800000, salaryPerPerson: 15000, operatingCosts: 80000 },
-            'dhaba': { name: 'Small Hotel/Dhaba', setup: 700000, stock: 400000, equipment: 600000, salaryPerPerson: 15000, operatingCosts: 150000 },
-            'agroinput': { name: 'Agro-input Store (Seeds/Fertilizer)', setup: 400000, stock: 1000000, equipment: 100000, salaryPerPerson: 13000, operatingCosts: 60000 },
-            'spareparts': { name: 'Spare Parts Shop', setup: 500000, stock: 1200000, equipment: 150000, salaryPerPerson: 15000, operatingCosts: 70000 },
-            'printing': { name: 'Printing Press', setup: 800000, stock: 300000, equipment: 1200000, salaryPerPerson: 16000, operatingCosts: 110000 },
-            'coldstorage': { name: 'Cold Storage Facility', setup: 3000000, stock: 500000, equipment: 2500000, salaryPerPerson: 18000, operatingCosts: 300000 },
-            'welding': { name: 'Welding/Metal Work Shop', setup: 600000, stock: 400000, equipment: 800000, salaryPerPerson: 14000, operatingCosts: 90000 },
-            'bicycle': { name: 'Bicycle/Auto Repair Shop', setup: 400000, stock: 500000, equipment: 400000, salaryPerPerson: 12000, operatingCosts: 60000 },
-            'paint': { name: 'Paint/Construction Materials', setup: 600000, stock: 2000000, equipment: 150000, salaryPerPerson: 16000, operatingCosts: 80000 },
-            'transformer': { name: 'Electrical Transformer Shop', setup: 800000, stock: 1500000, equipment: 200000, salaryPerPerson: 15000, operatingCosts: 100000 },
-            'warehouse': { name: 'Warehouse/Storage Space', setup: 1000000, stock: 100000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 120000 },
-            // Additional options from dropdown that need data
-            'tea-stall': { name: 'Tea Stall/Chai Shop', setup: 150000, stock: 80000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 40000 },
-            'food-delivery': { name: 'Food Delivery Service', setup: 500000, stock: 100000, equipment: 200000, salaryPerPerson: 12000, operatingCosts: 80000 },
-            'motorcycle-repair': { name: 'Motorcycle/Scooter Repair', setup: 400000, stock: 600000, equipment: 500000, salaryPerPerson: 14000, operatingCosts: 70000 },
-            'vehicle-repair': { name: 'Vehicle/Car Repair Shop', setup: 1000000, stock: 800000, equipment: 1200000, salaryPerPerson: 16000, operatingCosts: 120000 },
-            'barber': { name: 'Barber Shop', setup: 250000, stock: 80000, equipment: 150000, salaryPerPerson: 10000, operatingCosts: 40000 },
-            'beauty-salon': { name: 'Beauty & Nail Salon', setup: 400000, stock: 150000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 60000 },
-            'computer-training': { name: 'Computer Training Center', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 18000, operatingCosts: 100000 },
-            'dental': { name: 'Dental Clinic', setup: 1200000, stock: 400000, equipment: 1500000, salaryPerPerson: 25000, operatingCosts: 150000 },
-            'ayurveda': { name: 'Ayurveda/Wellness Center', setup: 800000, stock: 300000, equipment: 400000, salaryPerPerson: 18000, operatingCosts: 100000 },
-            'vehicle-showroom': { name: 'Vehicle Showroom', setup: 2000000, stock: 100000, equipment: 300000, salaryPerPerson: 18000, operatingCosts: 150000 },
-            'petrol-pump': { name: 'Petrol Pump/Gas Station', setup: 5000000, stock: 500000, equipment: 1000000, salaryPerPerson: 16000, operatingCosts: 300000 },
-            'transport': { name: 'Transport/Logistics Business', setup: 2000000, stock: 200000, equipment: 1500000, salaryPerPerson: 15000, operatingCosts: 200000 },
-            'auto-rental': { name: 'Auto Rickshaw Rental', setup: 800000, stock: 100000, equipment: 300000, salaryPerPerson: 12000, operatingCosts: 100000 },
-            'wedding-service': { name: 'Wedding Decoration/Event Service', setup: 600000, stock: 300000, equipment: 200000, salaryPerPerson: 14000, operatingCosts: 80000 },
-            'real-estate': { name: 'Real Estate/Property Business', setup: 1500000, stock: 200000, equipment: 300000, salaryPerPerson: 15000, operatingCosts: 100000 },
-            'agriculture': { name: 'Agricultural Business', setup: 3000000, stock: 500000, equipment: 2000000, salaryPerPerson: 15000, operatingCosts: 150000 },
-            'tailoring': { name: 'Tailoring Shop', setup: 200000, stock: 250000, equipment: 150000, salaryPerPerson: 12000, operatingCosts: 35000 }
+            'cafe': { name: 'Cafe/Restaurant', setup: 1000000, stock: 500000, equipment: 850000, salaryPerPerson: 80000, operatingCosts: 200000 },
+            'clothing': { name: 'Clothing Store', setup: 600000, stock: 1500000, equipment: 200000, salaryPerPerson: 60000, operatingCosts: 80000 },
+            'electronics': { name: 'Electronics Store', setup: 1200000, stock: 2000000, equipment: 300000, salaryPerPerson: 75000, operatingCosts: 120000 },
+            'hardware': { name: 'Hardware Store', setup: 700000, stock: 1200000, equipment: 150000, salaryPerPerson: 65000, operatingCosts: 100000 },
+            'pharmacy': { name: 'Pharmacy/Medical Store', setup: 500000, stock: 1000000, equipment: 400000, salaryPerPerson: 70000, operatingCosts: 90000 },
+            'furniture': { name: 'Furniture Store', setup: 1500000, stock: 2500000, equipment: 500000, salaryPerPerson: 65000, operatingCosts: 180000 },
+            'jewelry': { name: 'Jewelry Store', setup: 800000, stock: 3000000, equipment: 250000, salaryPerPerson: 90000, operatingCosts: 130000 },
+            'cosmetics': { name: 'Cosmetics/Beauty Store', setup: 400000, stock: 600000, equipment: 150000, salaryPerPerson: 55000, operatingCosts: 70000 },
+            'bookstore': { name: 'Bookstore/Stationery', setup: 350000, stock: 800000, equipment: 100000, salaryPerPerson: 45000, operatingCosts: 60000 },
+            'mobile': { name: 'Mobile/Phone Shop', setup: 700000, stock: 1500000, equipment: 200000, salaryPerPerson: 65000, operatingCosts: 85000 },
+            'grocery': { name: 'Grocery Store (Modern)', setup: 1200000, stock: 1800000, equipment: 350000, salaryPerPerson: 60000, operatingCosts: 140000 },
+            'gym': { name: 'Fitness Center/Gym', setup: 2500000, stock: 300000, equipment: 1200000, salaryPerPerson: 85000, operatingCosts: 250000 },
+            'school': { name: 'School/Coaching Center', setup: 1800000, stock: 200000, equipment: 500000, salaryPerPerson: 75000, operatingCosts: 180000 },
+            'hospital': { name: 'Clinic/Diagnostic Center', setup: 1500000, stock: 800000, equipment: 2000000, salaryPerPerson: 90000, operatingCosts: 220000 },
+            'laundry': { name: 'Laundry Service', setup: 1200000, stock: 150000, equipment: 800000, salaryPerPerson: 50000, operatingCosts: 120000 },
+            'petshop': { name: 'Pet Shop & Grooming', setup: 600000, stock: 400000, equipment: 300000, salaryPerPerson: 65000, operatingCosts: 100000 },
+            'photography': { name: 'Photography Studio', setup: 700000, stock: 100000, equipment: 1500000, salaryPerPerson: 70000, operatingCosts: 90000 },
+            'car-rental': { name: 'Car Rental Service', setup: 500000, stock: 0, equipment: 0, salaryPerPerson: 40000, operatingCosts: 150000 }
         };
 
         const landPrices = { 'highway': 6000, 'market': 10000 };
@@ -1078,41 +1035,7 @@
             'laundry': 'laundry',
             'petshop': 'petshop',
             'photography': 'photography',
-            'car-rental': 'car-rental',
-            'tea-shop': 'teashop',
-            'bakery': 'bakery',
-            'rice-mill': 'ricemill',
-            'dairy': 'dairy',
-            'tailor': 'tailor',
-            'salon': 'salon',
-            'vegetable-stall': 'vegetable',
-            'catering': 'catering',
-            'agro-rental': 'agrorental',
-            'dhaba': 'dhaba',
-            'agro-input': 'agroinput',
-            'spare-parts': 'spareparts',
-            'printing': 'printing',
-            'cold-storage': 'coldstorage',
-            'welding': 'welding',
-            'bicycle-repair': 'bicycle',
-            'paint-shop': 'paint',
-            'transformer': 'transformer',
-            'warehouse': 'warehouse',
-            'food-delivery': 'food-delivery',
-            'motorcycle-repair': 'motorcycle-repair',
-            'vehicle-repair': 'vehicle-repair',
-            'barber': 'barber',
-            'computer-training': 'computer-training',
-            'dental': 'dental',
-            'ayurveda': 'ayurveda',
-            'vehicle-showroom': 'vehicle-showroom',
-            'petrol-pump': 'petrol-pump',
-            'transport': 'transport',
-            'auto-rental': 'auto-rental',
-            'wedding-service': 'wedding-service',
-            'real-estate': 'real-estate',
-            'agriculture': 'agriculture',
-            'tailoring': 'tailoring'
+            'car-rental': 'car-rental'
         };
 
         function calculateInvestment() {
@@ -1379,9 +1302,15 @@
             return '₹' + Math.round(amount).toLocaleString('en-IN');
         }
 
-        // Additional initialization after auth-check.js verifies user
+        // Authentication Check (secondary - auth-check.js handles primary check)
         window.addEventListener('load', () => {
-            // auth-check.js already verified authentication, just proceed with initialization
+            // Check if user is authenticated via sessionStorage
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+            if (!isLoggedIn || isLoggedIn !== 'true') {
+                // auth-check.js should have already redirected, but this is a fallback
+                window.location.href = 'signin.html';
+            }
 
             // Check URL parameters for pre-selected business type
             const urlParams = new URLSearchParams(window.location.search);
