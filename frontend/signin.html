@@ -528,31 +528,25 @@
                 const result = await response.json();
 
                 if (result.success) {
-                    // Store auth state in sessionStorage
+                    // Store auth state in BOTH sessionStorage AND localStorage (redundancy)
+                    const authToken = 'auth_' + Date.now() + '_' + Math.random();
+
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('userId', result.user_id);
                     sessionStorage.setItem('userName', result.user_name);
                     sessionStorage.setItem('userEmail', result.email);
+                    sessionStorage.setItem('authToken', authToken);
+
+                    // Backup in localStorage too (for redundancy)
+                    localStorage.setItem('lastAuthToken', authToken);
 
                     showMessage('✓ Sign in successful! Redirecting...', 'success');
 
-                    // Redirect to dashboard after ensuring sessionStorage is persisted
+                    // Immediate redirect to calculator (don't wait, avoid race condition)
+                    // Calculator page has auth-check which will verify
                     setTimeout(() => {
-                        // Verify sessionStorage has the data before redirecting
-                        if (sessionStorage.getItem('isLoggedIn') === 'true' && sessionStorage.getItem('userId')) {
-                            window.location.href = 'dashboard.html';
-                        } else {
-                            // Data not found in sessionStorage, retry
-                            showMessage('⚠️ Auth data not persisted. Retrying...', 'error');
-                            setTimeout(() => {
-                                if (sessionStorage.getItem('isLoggedIn') === 'true') {
-                                    window.location.href = 'dashboard.html';
-                                } else {
-                                    window.location.href = 'signin.html';
-                                }
-                            }, 1500);
-                        }
-                    }, 800);
+                        window.location.href = 'calculator.html';
+                    }, 500);
                 } else {
                     showMessage(result.message || 'Invalid email or password', 'error');
                     signinBtn.disabled = false;
