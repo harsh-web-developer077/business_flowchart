@@ -3,23 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sign Up for BizCalc - Create your account to save calculations and get personalized updates">
+    <meta name="description" content="Sign Up for BizCalc - Create your account to calculate business investments">
     <title>Sign Up - BizCalc</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         :root {
             --primary: #0891b2;
+            --primary-dark: #0e7490;
             --secondary: #f97316;
             --accent: #a855f7;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
             --bg: #f0f9ff;
+            --bg-secondary: #e0f2fe;
             --bg-card: #ffffff;
             --text-primary: #0c2340;
             --text-secondary: #475569;
-            --border: #e0f2fe;
-            --success: #10b981;
-            --error: #ef4444;
+            --border: #cbd5e1;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
             color-scheme: light;
         }
 
@@ -29,12 +40,15 @@
                 --secondary: #fb923c;
                 --accent: #d946ef;
                 --bg: #0f172a;
+                --bg-secondary: #1e293b;
                 --bg-card: #1e293b;
                 --text-primary: #f1f5f9;
                 --text-secondary: #cbd5e1;
-                --border: #0e7490;
-                --success: #34d399;
-                --error: #f87171;
+                --border: #475569;
+                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+                --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+                --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
                 color-scheme: dark;
             }
         }
@@ -44,124 +58,355 @@
             --secondary: #fb923c;
             --accent: #d946ef;
             --bg: #0f172a;
+            --bg-secondary: #1e293b;
             --bg-card: #1e293b;
             --text-primary: #f1f5f9;
             --text-secondary: #cbd5e1;
-            --border: #0e7490;
-            --success: #34d399;
-            --error: #f87171;
+            --border: #475569;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
             color-scheme: dark;
+        }
+
+        html, body {
+            height: 100%;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-primary);
             background: var(--bg);
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-        }
-
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
-            padding: 1rem 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-brand {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            flex: 1;
             justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+            overflow-x: hidden;
         }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
+        /* ===== HIDE NAVBAR ===== */
+        nav {
+            display: none;
+        }
+
+        /* ===== BACKGROUND EFFECTS ===== */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05) 0%, rgba(168, 85, 247, 0.05) 50%, rgba(249, 115, 22, 0.05) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+            z-index: 0;
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 2s;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            animation: slideInDown 0.6s ease;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .header p {
             font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ===== FORM CARD ===== */
+        .form-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            animation: slideInUp 0.6s ease 0.2s backwards;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        /* ===== FORM INPUTS ===== */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem 0.9rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: var(--bg);
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* ===== FORM ROW ===== */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        /* ===== SUBMIT BUTTON ===== */
+        .btn-signup {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--secondary), var(--warning));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(249, 115, 22, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 1.5rem;
+        }
+
+        .btn-signup:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-signup:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-signup:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* ===== PASSWORD MATCH CHECK ===== */
+        .password-match {
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+            display: none;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .password-match.show {
+            display: block;
+        }
+
+        .password-match.match {
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .password-match.nomatch {
+            color: var(--error);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* ===== SIGNIN LINK ===== */
+        .signin-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .signin-link p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .signin-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
             transition: all 0.3s;
             position: relative;
         }
 
-        .nav-links a:hover, .nav-links a.active {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
+        .signin-link a:hover {
+            color: var(--secondary);
         }
 
-        .nav-links a::after {
+        .signin-link a::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: -2px;
             left: 0;
             width: 0;
             height: 2px;
-            background: #fbbf24;
+            background: var(--secondary);
             transition: width 0.3s;
         }
 
-        .nav-links a:hover::after, .nav-links a.active::after {
+        .signin-link a:hover::after {
             width: 100%;
         }
 
-        .theme-toggle {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid white;
-            color: white;
+        /* ===== MESSAGE DISPLAY ===== */
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+            animation: slideInDown 0.3s ease;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2em;
-            font-weight: 700;
+            font-size: 1.2rem;
             transition: all 0.3s;
+            box-shadow: var(--shadow-md);
+            z-index: 20;
         }
 
-        .theme-toggle:hover {
-            background: rgba(255,255,255,0.3);
+        .theme-toggle-btn:hover {
             transform: scale(1.1);
+            background: var(--bg-secondary);
         }
 
-        .auth-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .auth-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 3rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
-            animation: slideInUp 0.5s ease;
+        /* ===== ANIMATIONS ===== */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes slideInUp {
@@ -175,790 +420,322 @@
             }
         }
 
-        .auth-header {
-            text-align: center;
-            margin-bottom: 2rem;
+        /* ===== LOADING STATE ===== */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.6s linear infinite;
+            margin-right: 0.5rem;
         }
 
-        .auth-header h1 {
-            font-family: 'Sora', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .auth-header p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
-        }
-
-        .password-toggle {
-            position: relative;
-        }
-
-        .password-toggle-btn {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-top: 0.25rem;
-            cursor: pointer;
-            accent-color: var(--primary);
-        }
-
-        .checkbox-group label {
-            flex: 1;
-            margin: 0;
-            font-weight: 400;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-        }
-
-        .checkbox-group a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .checkbox-group a:hover {
-            text-decoration: underline;
-        }
-
-        .notification-preferences {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05) 0%, rgba(249, 115, 22, 0.05) 100%);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .notification-preferences h3 {
-            font-size: 0.95rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .notification-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .notification-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .notification-option input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: var(--secondary);
-        }
-
-        .notification-option label {
-            flex: 1;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            margin: 0;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 1rem;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(8, 145, 178, 0.3);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .auth-footer p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .auth-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--error);
-            color: var(--error);
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            margin-bottom: 1.5rem;
-            display: none;
-            animation: slideInDown 0.3s ease;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .success-message {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--success);
-            color: var(--success);
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            margin-bottom: 1.5rem;
-            display: none;
-            animation: slideInDown 0.3s ease;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 6px;
-            background: none;
-            border: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem;
-            }
-
-            .nav-container {
-                gap: 1rem;
-            }
-
-            .nav-brand {
-                font-size: 1.5em;
-            }
-
-            .nav-links {
-                display: none !important;
-            }
-
-            .nav-links.active {
-                display: flex !important;
-                position: absolute;
-                flex-direction: column;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
-                padding: 1rem 2rem;
-                gap: 1rem;
-                justify-content: flex-start;
-                z-index: 99;
-            }
-
-            .nav-links li {
-                margin-bottom: 0.8rem;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .auth-card {
-                padding: 1.5rem;
-                margin: 1rem;
-                max-width: 95%;
-            }
-
-            .auth-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .form-group label {
-                font-size: 0.9rem;
-            }
-
-            .form-group input,
-            .form-group select {
-                padding: 0.8rem;
-                font-size: 1rem;
-            }
-
-            .submit-btn {
-                padding: 0.9rem;
-                font-size: 1rem;
-            }
-
-            .auth-container {
-                padding: 1rem;
-            }
-
-            .checkbox-group {
-                gap: 0.5rem;
-            }
-
-            .notification-preferences {
-                padding: 0.75rem;
-            }
-        }
-
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
-            nav {
-                padding: 0.75rem;
+            .form-card {
+                padding: 1.5rem 1.2rem;
             }
 
-            .nav-brand {
-                font-size: 1.2em;
+            .header h1 {
+                font-size: 1.8rem;
             }
 
-            .theme-toggle {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1em;
+            .theme-toggle-btn {
+                top: 1.5rem;
+                right: 1.5rem;
             }
 
-            .auth-card {
-                padding: 1.25rem;
-                margin: 0.5rem;
-                border-radius: 12px;
-                max-width: 98%;
-            }
-
-            .auth-header {
-                margin-bottom: 1.5rem;
-            }
-
-            .auth-header h1 {
-                font-size: 1.3rem;
-            }
-
-            .auth-header p {
-                font-size: 0.85rem;
-            }
-
-            .form-group {
-                margin-bottom: 1rem;
-            }
-
-            .form-group label {
-                font-size: 0.85rem;
-                margin-bottom: 0.35rem;
-            }
-
-            .form-group input,
-            .form-group select {
-                padding: 0.75rem;
-                font-size: 16px;
-            }
-
-            .submit-btn {
-                padding: 0.8rem;
-                font-size: 0.95rem;
-                margin-top: 0.75rem;
-            }
-
-            .checkbox-group {
-                gap: 0.5rem;
-                margin-bottom: 1rem;
-            }
-
-            .checkbox-group input[type="checkbox"] {
-                width: 18px;
-                height: 18px;
-                margin-top: 0.15rem;
-            }
-
-            .checkbox-group label {
-                font-size: 0.8rem;
-            }
-
-            .notification-preferences {
-                padding: 0.75rem;
-                margin-bottom: 1rem;
-            }
-
-            .notification-preferences h3 {
-                font-size: 0.85rem;
-                margin-bottom: 0.5rem;
-            }
-
-            .notification-option {
-                gap: 0.4rem;
-            }
-
-            .notification-option input[type="checkbox"] {
-                width: 16px;
-                height: 16px;
-                flex-shrink: 0;
-            }
-
-            .notification-option label {
-                font-size: 0.8rem;
-            }
-
-            .error-message,
-            .success-message {
-                padding: 0.6rem 0.8rem;
-                font-size: 0.85rem;
-                margin-bottom: 1rem;
-            }
-
-            .auth-footer p {
-                font-size: 0.85rem;
-            }
-
-            .auth-container {
-                padding: 0.5rem;
+            .blob-1, .blob-2 {
+                filter: blur(60px);
             }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="nav-brand">💼 BizCalc</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="calculator.html">Calculator</a></li>
-                <li><a href="loan-calculator.html">Loan Calculator</a></li>
-                <li><a href="features.html">Features</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <button class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <button class="theme-toggle" id="themeToggle">🌙</button>
+    <!-- Background Effects -->
+    <div class="bg-gradient"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle-btn" id="themeToggle" title="Toggle Dark Mode">🌙</button>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">💼</div>
+            <h1>Get Started</h1>
+            <p>Create your BizCalc account in seconds</p>
         </div>
-    </nav>
 
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <h1>Create Account</h1>
-                <p>Join 500+ entrepreneurs using BizCalc</p>
-            </div>
+        <!-- Form Card -->
+        <div class="form-card">
+            <!-- Message Display -->
+            <div id="message" class="message"></div>
 
-            <div class="error-message" id="errorMessage"></div>
-            <div class="success-message" id="successMessage"></div>
-
+            <!-- Sign Up Form -->
             <form id="signupForm">
+                <!-- Full Name -->
                 <div class="form-group">
-                    <label for="name">Full Name *</label>
-                    <input type="text" id="name" name="name" required placeholder="आपका नाम">
+                    <label for="name">Full Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Your name"
+                        required
+                    >
                 </div>
 
+                <!-- Email -->
                 <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input type="email" id="email" name="email" required placeholder="email@example.com">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="your@email.com"
+                        required
+                    >
                 </div>
 
+                <!-- Phone (WhatsApp) -->
                 <div class="form-group">
-                    <label for="phone">WhatsApp Number *</label>
-                    <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
+                    <label for="phone">WhatsApp Number</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="+91 XXXX XXXX XX"
+                    >
                 </div>
 
+                <!-- Business Type -->
                 <div class="form-group">
-                    <label for="businessType">Business Type *</label>
-                    <select id="businessType" name="businessType" required>
-                        <option value="">चुनें - Select one</option>
-
-                        <!-- Retail & Shopping -->
-                        <optgroup label="🛍️ Retail & Shopping">
-                            <option value="building-materials">Building Materials Shop</option>
-                            <option value="kirana">Kirana Shop</option>
-                            <option value="clothing">Clothing Store</option>
-                            <option value="electronics">Electronics Store</option>
-                            <option value="hardware">Hardware Shop</option>
-                            <option value="pharmacy">Pharmacy</option>
-                            <option value="furniture">Furniture Store</option>
-                            <option value="jewelry">Jewelry Store</option>
-                            <option value="cosmetics">Cosmetics Shop</option>
-                            <option value="bookstore">Book Store</option>
-                            <option value="mobile">Mobile Shop</option>
-                            <option value="grocery">Grocery Store</option>
-                            <option value="vegetable">Vegetable/Fruit Shop</option>
+                    <label for="business">Business Type</label>
+                    <select id="business" name="business" required>
+                        <option value="">-- Select Business Type --</option>
+                        <optgroup label="Food & Beverage">
+                            <option value="Restaurant">Restaurant</option>
+                            <option value="Cafe">Cafe</option>
+                            <option value="Cloud Kitchen">Cloud Kitchen</option>
+                            <option value="Bakery">Bakery</option>
+                            <option value="Sweet Shop">Sweet Shop</option>
                         </optgroup>
-
-                        <!-- Food & Beverage -->
-                        <optgroup label="🍽️ Food & Beverage">
-                            <option value="cafe">Cafe/Restaurant</option>
-                            <option value="tea-stall">Tea Stall/Chai Shop</option>
-                            <option value="food-delivery">Food Delivery Service</option>
-                            <option value="bakery">Bakery/Pastry Shop</option>
+                        <optgroup label="Retail">
+                            <option value="General Store">General Store</option>
+                            <option value="Clothing Shop">Clothing Shop</option>
+                            <option value="Electronics Shop">Electronics Shop</option>
+                            <option value="Pharmacy">Pharmacy</option>
+                            <option value="Book Store">Book Store</option>
                         </optgroup>
-
-                        <!-- Services -->
-                        <optgroup label="🔧 Repair & Maintenance">
-                            <option value="bicycle-repair">Bicycle Repair Shop</option>
-                            <option value="motorcycle-repair">Motorcycle/Scooter Repair</option>
-                            <option value="vehicle-repair">Vehicle/Car Repair Shop</option>
-                            <option value="laundry">Laundry Service</option>
+                        <optgroup label="Services">
+                            <option value="Salon">Salon</option>
+                            <option value="Gym">Gym</option>
+                            <option value="Tuition Center">Tuition Center</option>
+                            <option value="Laundry">Laundry</option>
+                            <option value="Car Wash">Car Wash</option>
                         </optgroup>
-
-                        <!-- Personal Care -->
-                        <optgroup label="💇 Personal Care & Grooming">
-                            <option value="barber">Barber Shop/Salon</option>
-                            <option value="beauty-salon">Beauty & Nail Salon</option>
-                            <option value="tailoring">Tailoring Shop</option>
+                        <optgroup label="Manufacturing">
+                            <option value="Printing Press">Printing Press</option>
+                            <option value="Welding Shop">Welding Shop</option>
+                            <option value="Textile Unit">Textile Unit</option>
+                            <option value="Carpentry">Carpentry</option>
                         </optgroup>
-
-                        <!-- Education & Fitness -->
-                        <optgroup label="📚 Education & Fitness">
-                            <option value="tuition">Tuition Center/Coaching Class</option>
-                            <option value="gym">Gym/Fitness Center</option>
-                            <option value="computer-training">Computer Training Center</option>
+                        <optgroup label="Education">
+                            <option value="Online Coaching">Online Coaching</option>
+                            <option value="School">School</option>
+                            <option value="Coaching Institute">Coaching Institute</option>
                         </optgroup>
-
-                        <!-- Transportation & Auto -->
-                        <optgroup label="🚗 Transportation & Auto">
-                            <option value="vehicle-showroom">Vehicle Showroom</option>
-                            <option value="petrol-pump">Petrol Pump/Gas Station</option>
-                            <option value="transport">Transport/Logistics Business</option>
-                            <option value="auto-rental">Auto Rental Service</option>
+                        <optgroup label="Health & Wellness">
+                            <option value="Clinic">Clinic</option>
+                            <option value="Diagnostic Center">Diagnostic Center</option>
+                            <option value="Spa">Spa</option>
+                            <option value="Fitness Studio">Fitness Studio</option>
                         </optgroup>
-
-                        <!-- Other Services -->
-                        <optgroup label="✨ Other Services">
-                            <option value="photography">Photography Studio</option>
-                            <option value="dairy">Dairy/Milk Parlor</option>
-                            <option value="wedding-service">Wedding Decoration Service</option>
-                            <option value="real-estate">Real Estate/Property</option>
-                            <option value="agriculture">Agricultural Business</option>
+                        <optgroup label="Technology">
+                            <option value="IT Services">IT Services</option>
+                            <option value="Web Design">Web Design</option>
+                            <option value="Mobile App Dev">Mobile App Dev</option>
+                            <option value="E-commerce">E-commerce</option>
+                        </optgroup>
+                        <optgroup label="Agriculture">
+                            <option value="Organic Farming">Organic Farming</option>
+                            <option value="Dairy Farm">Dairy Farm</option>
+                            <option value="Poultry Farm">Poultry Farm</option>
                         </optgroup>
                     </select>
                 </div>
 
+                <!-- Password -->
                 <div class="form-group">
-                    <label for="password">Password *</label>
-                    <div class="password-toggle">
-                        <input type="password" id="password" name="password" required placeholder="कम से कम 8 अक्षर">
-                        <button type="button" class="password-toggle-btn" id="togglePassword">👁️</button>
-                    </div>
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="••••••••"
+                        required
+                    >
                 </div>
 
+                <!-- Confirm Password -->
                 <div class="form-group">
-                    <label for="confirmPassword">Confirm Password *</label>
-                    <div class="password-toggle">
-                        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="दोबारा पासवर्ड">
-                        <button type="button" class="password-toggle-btn" id="toggleConfirmPassword">👁️</button>
-                    </div>
+                    <label for="password_confirm">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="password_confirm"
+                        name="password_confirm"
+                        placeholder="••••••••"
+                        required
+                    >
+                    <div id="passwordMatch" class="password-match"></div>
                 </div>
 
-                <div class="notification-preferences">
-                    <h3>📢 Updates कैसे चाहिए?</h3>
-                    <div class="notification-options">
-                        <div class="notification-option">
-                            <input type="checkbox" id="whatsappNotif" name="whatsappNotif" checked>
-                            <label for="whatsappNotif">WhatsApp पर updates (सलाह देते हैं)</label>
-                        </div>
-                        <div class="notification-option">
-                            <input type="checkbox" id="emailNotif" name="emailNotif" checked>
-                            <label for="emailNotif">Email पर important updates</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">मैं <a href="#">Terms of Service</a> और <a href="privacy-policy.html">Privacy Policy</a> से सहमत हूँ</label>
-                </div>
-
-                <button type="submit" class="submit-btn">अब Sign Up करें</button>
+                <!-- Sign Up Button -->
+                <button type="submit" class="btn-signup" id="signupBtn">Create Account</button>
             </form>
 
-            <div class="auth-footer">
-                <p>पहले से account है? <a href="signin.html">Sign In करें</a></p>
+            <!-- Sign In Link -->
+            <div class="signin-link">
+                <p>Already have an account? <a href="signin.html">Sign in here</a></p>
             </div>
         </div>
     </div>
 
+    <!-- Script -->
     <script>
-        // Hamburger menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu when a link is clicked
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Theme toggle
+        // ===== THEME TOGGLE =====
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
         if (savedTheme) {
             document.documentElement.setAttribute('data-theme', savedTheme);
             themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        } else if (prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
         }
 
         themeToggle.addEventListener('click', () => {
-            let currentTheme = document.documentElement.getAttribute('data-theme');
-            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
         });
 
-        // Password visibility toggle
-        document.getElementById('togglePassword').addEventListener('click', (e) => {
+        // ===== PASSWORD MATCH CHECKER =====
+        const password = document.getElementById('password');
+        const passwordConfirm = document.getElementById('password_confirm');
+        const passwordMatch = document.getElementById('passwordMatch');
+
+        function checkPasswordMatch() {
+            if (!password.value || !passwordConfirm.value) {
+                passwordMatch.classList.remove('show');
+                return;
+            }
+
+            if (password.value === passwordConfirm.value) {
+                passwordMatch.classList.add('show', 'match');
+                passwordMatch.classList.remove('nomatch');
+                passwordMatch.textContent = '✓ Passwords match';
+            } else {
+                passwordMatch.classList.add('show', 'nomatch');
+                passwordMatch.classList.remove('match');
+                passwordMatch.textContent = '✗ Passwords do not match';
+            }
+        }
+
+        password.addEventListener('input', checkPasswordMatch);
+        passwordConfirm.addEventListener('input', checkPasswordMatch);
+
+        // ===== FORM SUBMISSION =====
+        const signupForm = document.getElementById('signupForm');
+        const messageDiv = document.getElementById('message');
+        const signupBtn = document.getElementById('signupBtn');
+
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const input = document.getElementById('password');
-            input.type = input.type === 'password' ? 'text' : 'password';
-        });
 
-        document.getElementById('toggleConfirmPassword').addEventListener('click', (e) => {
-            e.preventDefault();
-            const input = document.getElementById('confirmPassword');
-            input.type = input.type === 'password' ? 'text' : 'password';
-        });
-
-        // Form submission
-        const form = document.getElementById('signupForm');
-        const errorMsg = document.getElementById('errorMessage');
-        const successMsg = document.getElementById('successMessage');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            // Clear previous messages
-            errorMsg.classList.remove('show');
-            successMsg.classList.remove('show');
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const business = document.getElementById('business').value;
+            const pass = document.getElementById('password').value;
+            const passConfirm = document.getElementById('password_confirm').value;
 
             // Validation
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (password !== confirmPassword) {
-                errorMsg.textContent = '❌ Passwords match नहीं हो रहे हैं';
-                errorMsg.classList.add('show');
+            if (!name || !email || !business || !pass || !passConfirm) {
+                showMessage('Please fill in all required fields', 'error');
                 return;
             }
 
-            if (password.length < 8) {
-                errorMsg.textContent = '❌ Password कम से कम 8 अक्षर होना चाहिए';
-                errorMsg.classList.add('show');
+            if (pass !== passConfirm) {
+                showMessage('Passwords do not match', 'error');
                 return;
             }
 
-            // Collect form data for API
-            const formData = {
-                full_name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                whatsapp: document.getElementById('phone').value,
-                business_type: document.getElementById('businessType').value,
-                password: password,
-                password_confirm: confirmPassword
-            };
+            if (pass.length < 6) {
+                showMessage('Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            // Disable button and show loading
+            signupBtn.disabled = true;
+            const originalText = signupBtn.textContent;
+            signupBtn.innerHTML = '<span class="loading"></span>Creating account...';
 
             try {
-                // Send to backend API
                 const response = await fetch('/api/auth/signup', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        full_name: name,
+                        email,
+                        whatsapp: phone,
+                        business_type: business,
+                        password: pass,
+                        password_confirm: passConfirm
+                    })
                 });
 
                 const result = await response.json();
 
-                if (!response.ok || !result.success) {
-                    errorMsg.textContent = '❌ Error: ' + (result.message || 'Signup failed');
-                    errorMsg.classList.add('show');
-                    return;
+                if (result.success) {
+                    showMessage('✓ Account created successfully! Redirecting to sign in...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'signin.html';
+                    }, 2000);
+                } else {
+                    showMessage(result.message || 'Failed to create account', 'error');
+                    signupBtn.disabled = false;
+                    signupBtn.textContent = originalText;
                 }
-
-                // Success! Load and display users
-                successMsg.textContent = '✅ Account बन गया! Users को देख रहे हैं...';
-                successMsg.classList.add('show');
-
-                // Load users from backend
-                setTimeout(loadAllUsers, 1000);
-
             } catch (error) {
-                errorMsg.textContent = '❌ Error: ' + error.message;
-                errorMsg.classList.add('show');
+                console.error('Error:', error);
+                showMessage('Connection error. Please try again.', 'error');
+                signupBtn.disabled = false;
+                signupBtn.textContent = originalText;
             }
         });
 
-        // Function to load and display all registered users
-        async function loadAllUsers() {
-            try {
-                const response = await fetch('/api/admin/users');
-                const data = await response.json();
-
-                if (data.success) {
-                    // Create users display section
-                    let usersDisplay = '<div style="margin-top: 2rem; padding: 2rem; background: var(--bg-card); border-radius: 8px; border: 2px solid var(--border);">';
-                    usersDisplay += '<h2 style="margin-bottom: 1rem; color: var(--primary);">📋 सभी Registered Users</h2>';
-
-                    if (data.users.length > 0) {
-                        usersDisplay += '<table style="width: 100%; border-collapse: collapse;">';
-                        usersDisplay += '<thead><tr style="background: var(--primary); color: white;"><th style="padding: 0.8rem; text-align: left;">Name</th><th style="padding: 0.8rem; text-align: left;">Email</th><th style="padding: 0.8rem; text-align: left;">Business Type</th><th style="padding: 0.8rem; text-align: left;">Date</th></tr></thead>';
-                        usersDisplay += '<tbody>';
-
-                        data.users.forEach(user => {
-                            const date = new Date(user.created_at).toLocaleDateString();
-                            usersDisplay += `<tr style="border-bottom: 1px solid var(--border);">
-                                <td style="padding: 0.8rem;">${user.full_name}</td>
-                                <td style="padding: 0.8rem;">${user.email}</td>
-                                <td style="padding: 0.8rem;">${user.business_type}</td>
-                                <td style="padding: 0.8rem;">${date}</td>
-                            </tr>`;
-                        });
-
-                        usersDisplay += '</tbody></table>';
-                    } else {
-                        usersDisplay += '<p style="color: var(--text-secondary);">कोई users नहीं है अभी।</p>';
-                    }
-
-                    usersDisplay += '</div>';
-
-                    // Insert users display after form
-                    const formContainer = form.parentElement;
-                    const existingDisplay = document.getElementById('usersDisplay');
-                    if (existingDisplay) existingDisplay.remove();
-
-                    const newDisplay = document.createElement('div');
-                    newDisplay.id = 'usersDisplay';
-                    newDisplay.innerHTML = usersDisplay;
-                    formContainer.appendChild(newDisplay);
-
-                    // Scroll to users
-                    newDisplay.scrollIntoView({ behavior: 'smooth' });
-                }
-            } catch (error) {
-                console.error('Error loading users:', error);
-            }
+        // ===== HELPER FUNCTION =====
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message show ${type}`;
+            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     </script>
-
-    <!-- Navbar Manager -->
-    <script src="navbar-manager.js"></script>
-
-    <!-- Chatbot Widget -->
-    <script src="chatbot.js"></script>
-
 </body>
 </html>

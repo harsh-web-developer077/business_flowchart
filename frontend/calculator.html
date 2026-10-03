@@ -1231,7 +1231,11 @@
                 return;
             }
 
-            const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            // Get user from sessionStorage (new auth system)
+            const userId = sessionStorage.getItem('userId') || 'guest_' + Date.now();
+            const userEmail = sessionStorage.getItem('userEmail') || 'guest@bizcalc.com';
+            const userName = sessionStorage.getItem('userName') || 'Guest User';
+
             const btn = event.target;
             btn.disabled = true;
             btn.textContent = '⏳ Processing...';
@@ -1242,7 +1246,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        user_id: user.id || 'guest_' + Date.now(),
+                        user_id: userId,
                         business_type: lastCalculation.business_type,
                         investment_amount: lastCalculation.totalCost,
                         timeline_months: 12,
@@ -1266,7 +1270,7 @@
                 formData.append('Salary Cost', formatCurrency(lastCalculation.salaryCost));
                 formData.append('Operating Cost', formatCurrency(lastCalculation.operatingCost));
                 formData.append('Total Investment', formatCurrency(lastCalculation.totalCost));
-                formData.append('User Email', user.email || 'guest@bizcalc.com');
+                formData.append('User Email', userEmail);
                 formData.append('User Name', user.name || 'Guest User');
 
                 const emailResponse = await fetch('https://formsubmit.co/harshjaju07@gmail.com', {
@@ -1298,13 +1302,14 @@
             return '₹' + Math.round(amount).toLocaleString('en-IN');
         }
 
-        // Authentication Check
+        // Authentication Check (secondary - auth-check.js handles primary check)
         window.addEventListener('load', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const isGuest = localStorage.getItem('isGuest');
+            // Check if user is authenticated via sessionStorage
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
 
-            if (!isLoggedIn && !isGuest) {
-                window.location.href = 'auth-gate.html';
+            if (!isLoggedIn || isLoggedIn !== 'true') {
+                // auth-check.js should have already redirected, but this is a fallback
+                window.location.href = 'signin.html';
             }
 
             // Check URL parameters for pre-selected business type
