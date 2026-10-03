@@ -3,69 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BizCalc - Business Investment Calculator for Sri Dungargarh entrepreneurs. Calculate startup investment costs for 53+ business types instantly with real market data.">
-    <meta name="keywords" content="business investment calculator, startup investment estimator, business cost calculator, Sri Dungargarh business, entrepreneur investment, small business calculator, agricultural business investment, cafe business cost, pharmacy investment">
+    <meta name="description" content="Business Investment Calculator - Calculate exact startup investment for 53+ business types in Sri Dungargarh. Get detailed cost breakdown for agriculture, cafe, pharmacy, retail and more.">
+    <meta name="keywords" content="business investment calculator, startup cost calculator, business expense calculator, investment breakdown, agricultural business cost, cafe business investment, pharmacy startup cost, retail business investment, Sri Dungargarh business">
     <meta name="robots" content="index, follow">
-    <meta name="author" content="BizCalc">
-    <meta property="og:title" content="BizCalc - Business Investment Calculator">
-    <meta property="og:description" content="Calculate your startup investment for 53+ business types in Sri Dungargarh">
+    <meta property="og:title" content="Business Investment Calculator - Calculate Your Startup Costs">
+    <meta property="og:description" content="Get accurate startup investment estimates for 53+ business types">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://business-flowchart.onrender.com/">
-    <meta name="google-site-verification" content="N8AmEtEYhFrZ2k5LQ23PRbLysdrwqu4XaakUvlP6T_Q" />
-    <title>BizCalc - Business Investment Calculator for Entrepreneurs | Sri Dungargarh</title>
+    <meta property="og:url" content="https://business-flowchart.onrender.com/calculator.html">
+    <title>Business Investment Calculator - Startup Cost Estimator | BizCalc</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "BizCalc - Business Investment Calculator",
-      "description": "Calculate startup investment for 53+ business types in Sri Dungargarh",
-      "url": "https://business-flowchart.onrender.com",
-      "applicationCategory": "BusinessApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "INR",
-        "description": "Free business investment calculator"
-      }
+      "@type": "CalculatorWeb",
+      "name": "Business Investment Calculator",
+      "description": "Calculate startup investment costs for 53+ business types",
+      "url": "https://business-flowchart.onrender.com/calculator.html"
     }
     </script>
-    <script>
-        // Authentication check - redirect to signin if not logged in
-        if (!sessionStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.href = 'signin.html';
-        }
-    </script>
+    <script src="auth-check.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        /* ===== PREMIUM COLORFUL DESIGN SYSTEM ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            /* Vibrant Colors */
             --primary: #0891b2;
-            --primary-dark: #0e7490;
             --secondary: #f97316;
             --accent: #a855f7;
-            --accent-2: #ec4899;
-            --accent-3: #06b6d4;
-            --success: #10b981;
-            --warning: #f59e0b;
-
             --bg: #f0f9ff;
             --bg-card: #ffffff;
             --text-primary: #0c2340;
             --text-secondary: #475569;
             --border: #e0f2fe;
-
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
             --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
-            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
-
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             color-scheme: light;
         }
@@ -80,10 +50,7 @@
                 --text-primary: #f1f5f9;
                 --text-secondary: #cbd5e1;
                 --border: #0e7490;
-                --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-                --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
                 --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
-                --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
                 color-scheme: dark;
             }
         }
@@ -97,15 +64,7 @@
             --text-primary: #f1f5f9;
             --text-secondary: #cbd5e1;
             --border: #0e7490;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
-            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
             color-scheme: dark;
-        }
-
-        html, body {
-            height: 100%;
         }
 
         body {
@@ -113,18 +72,15 @@
             color: var(--text-primary);
             background: var(--bg);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        /* ===== NAVIGATION ===== */
         nav {
             position: sticky;
             top: 0;
             z-index: 100;
             background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
-            backdrop-filter: blur(12px);
             padding: 1rem 2rem;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
         .nav-container {
@@ -140,11 +96,8 @@
             font-size: 1.8em;
             font-weight: 700;
             color: white;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             text-decoration: none;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .nav-links {
@@ -164,9 +117,8 @@
             position: relative;
         }
 
-        .nav-links a:hover, .nav-links a.active {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
+        .nav-links a.active {
+            color: #fbbf24;
         }
 
         .nav-links a::after {
@@ -196,8 +148,8 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2em;
-            transition: all 0.3s;
             font-weight: 700;
+            transition: all 0.3s;
         }
 
         .theme-toggle:hover {
@@ -205,1145 +157,502 @@
             transform: scale(1.1);
         }
 
-        /* ===== HERO SECTION ===== */
-        .hero {
-            position: relative;
-            min-height: 600px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.9) 0%, rgba(168, 85, 247, 0.8) 50%, rgba(249, 115, 22, 0.9) 100%);
-            z-index: 0;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(8, 145, 178, 0) 0%, rgba(8, 145, 178, 0.4) 100%);
-            z-index: 2;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            width: 100%;
-            display: flex;
-        }
-
-        .hero-text {
-            flex: 0 0 45%;
-            padding: 4rem 2rem;
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
-            animation: slideInLeft 0.8s ease;
-        }
-
-        .hero-eyebrow {
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #fbbf24;
-            letter-spacing: 0.15em;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.6s ease 0.2s backwards;
-        }
-
-        .hero h1 {
-            font-family: 'Sora', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            animation: fadeInUp 0.6s ease 0.3s backwards;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-            animation: fadeInUp 0.6s ease 0.4s backwards;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            gap: 1.5rem;
-            animation: fadeInUp 0.6s ease 0.5s backwards;
-        }
-
-        .cta-primary {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: #0c2340;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-            box-shadow: 0 8px 24px rgba(251, 191, 36, 0.3);
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(251, 191, 36, 0.4);
-        }
-
-        .cta-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            border: 2px solid white;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-        }
-
-        .cta-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== STATISTICS SECTION ===== */
-        .stats-section {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            padding: 5rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(8, 145, 178, 0.2) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(249, 115, 22, 0.2) 0%, transparent 50%);
-            z-index: 0;
-        }
-
-        .stats-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
+            padding: 3rem 2rem;
             text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-            animation: fadeInUp 0.6s ease backwards;
             position: relative;
             overflow: hidden;
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            transform: scaleX(0);
-            animation: scaleInX 0.6s ease 0.3s forwards;
-        }
-
-        .stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.3s; }
-        .stat-card:nth-child(4) { animation-delay: 0.4s; }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .stat-number {
+        .page-header h1 {
             font-family: 'Sora', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
         }
 
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        @keyframes scaleInX {
-            to { transform: scaleX(1); }
-        }
-
-        /* ===== FEATURES SECTION ===== */
-        .features-section {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.05) 0%, rgba(168, 85, 247, 0.05) 50%, rgba(249, 115, 22, 0.05) 100%);
-            padding: 5rem 2rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-family: 'Sora', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s;
-            box-shadow: var(--shadow-md);
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.6s ease backwards;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:nth-child(1) { animation-delay: 0.1s; background: linear-gradient(135deg, rgba(8, 145, 178, 0.05), rgba(8, 145, 178, 0.02)); }
-        .feature-card:nth-child(2) { animation-delay: 0.2s; background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(249, 115, 22, 0.02)); }
-        .feature-card:nth-child(3) { animation-delay: 0.3s; background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(168, 85, 247, 0.02)); }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--text-primary);
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* ===== TESTIMONIALS SECTION ===== */
-        .testimonials-section {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
-            padding: 5rem 2rem;
-        }
-
-        .testimonials-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .testimonial-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s;
-            border-top: 4px solid var(--primary);
-            animation: fadeInUp 0.6s ease backwards;
-        }
-
-        .testimonial-card:nth-child(2) {
-            border-top-color: var(--secondary);
-            animation-delay: 0.1s;
-        }
-
-        .testimonial-card:nth-child(3) {
-            border-top-color: var(--accent);
-            animation-delay: 0.2s;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .testimonial-text {
-            color: var(--text-secondary);
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .author-info h4 {
-            color: var(--text-primary);
+        .page-header p {
             font-size: 1rem;
-            margin-bottom: 0.2rem;
+            opacity: 0.95;
         }
 
-        .author-role {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 50%, #0e7490 100%);
-            color: white;
-            padding: 4rem 2rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: radial-gradient(circle at 20% 0%, rgba(249, 115, 22, 0.15) 0%, transparent 50%), radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
-            z-index: 0;
-        }
-
-        .footer-content {
+        .container {
             max-width: 1400px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
+            padding: 3rem 2rem;
         }
 
-        .footer-grid {
+        .calculator-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h4 {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: #fbbf24;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: #fbbf24;
-            transform: translateX(4px);
-        }
-
-        .footer-desc {
-            color: rgba(255, 255, 255, 0.75);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .footer-bottom {
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
-            padding-top: 2rem;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .footer-credit {
-            margin: 1rem 0;
-            font-size: 0.95rem;
-        }
-
-        .footer-credit a {
-            color: #fbbf24;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .footer-credit a:hover {
-            color: white;
-            text-decoration: underline;
-        }
-
-        /* ===== CAROUSEL SECTION ===== */
-        .carousel-container {
-            position: relative;
-            z-index: 1;
-            padding: 0 2rem;
-            animation: fadeInUp 0.6s ease 0.6s backwards;
-        }
-
-        .carousel-track {
-            display: flex;
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            animation: scroll 15s linear infinite;
-            width: fit-content;
+            align-items: start;
         }
 
-        .carousel-item {
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            padding: 1rem 2rem;
-            white-space: nowrap;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: white;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .carousel-item:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.05);
-            box-shadow: 0 12px 40px rgba(251, 191, 36, 0.3);
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .carousel-wrapper {
-            overflow: hidden;
-            background: #0a1428;
-            border-radius: 0;
-            padding: 2rem 0;
-            margin-top: 0;
-            border-top: 3px solid #06b6d4;
-            border-bottom: 3px solid #0891b2;
-            position: relative;
-        }
-
-        .carousel-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(8, 145, 178, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .carousel-track-duplicate {
-            display: flex;
-            gap: 2rem;
-            animation: scroll 15s linear infinite;
-        }
-
-        /* ===== HERO VIDEO ===== */
-        .hero-video-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-        }
-
-        .hero-video-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.2) 100%);
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .hero-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 1;
-        }
-
-        .hero-video-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(8, 145, 178, 0.2));
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            text-align: center;
+        .calculator-form {
+            background: var(--bg-card);
+            border-radius: 12px;
             padding: 2rem;
+            box-shadow: var(--shadow-lg);
         }
 
-        /* ===== HAMBURGER MENU ===== */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 6px;
-            width: 28px;
-            height: 24px;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .hamburger span {
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-group select, .form-group input {
             width: 100%;
-            height: 3px;
-            background: white;
-            border-radius: 2px;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group select:focus, .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s;
+            margin-top: 1rem;
         }
 
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
+        .results-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            display: none;
         }
 
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
+        .results-section.show {
+            display: block;
         }
 
-        /* ===== RESPONSIVE ===== */
+        .result-card {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 0.5rem;
+        }
+
+        .breakdown-list {
+            margin-top: 1.5rem;
+            border-top: 2px solid var(--border);
+            padding-top: 1.5rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breakdown-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .breakdown-amount {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 2rem;
+        }
+
         @media (max-width: 768px) {
-            .nav-container {
-                padding: 1rem;
-                gap: 1rem;
-            }
-
-            .nav-brand {
-                font-size: 1.4em;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: linear-gradient(135deg, rgba(8, 145, 178, 0.98) 0%, rgba(249, 115, 22, 0.98) 100%);
-                flex-direction: column;
-                gap: 0;
-                z-index: 1000;
-                padding: 1rem 0;
-                border-bottom: 3px solid #fbbf24;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links li {
-                margin: 0;
-            }
-
-            .nav-links a {
-                display: block;
-                padding: 1rem 1.5rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                font-size: 0.95rem;
-            }
-
-            .hamburger {
-                display: flex;
-                order: 3;
-            }
-
-            [data-auth-container] {
-                order: 2;
-                gap: 0.5rem;
-            }
-
-            .hero-text {
-                flex: 0 0 100%;
-                padding: 2rem 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-                line-height: 1.2;
-            }
-
-            .hero p {
-                font-size: 0.95rem;
-                margin: 1rem 0;
-            }
-
-            .hero-overlay {
-                display: none;
-            }
-
-            .hero-video-wrapper {
-                display: none;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .cta-primary, .cta-secondary {
-                width: 100%;
-                padding: 1rem;
-                font-size: 1rem;
-                border-radius: 8px;
-            }
-
-            .carousel-container {
-                padding: 0 0.5rem;
-            }
-
-            .carousel-item {
-                padding: 1rem 1.2rem;
-                font-size: 0.9rem;
-                min-width: auto;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-                padding: 1.5rem 1rem;
-            }
-
-            .stat-card {
-                padding: 1.5rem 1rem;
-            }
-
-            .stat-number {
-                font-size: 1.8rem;
-            }
-
-            .stat-label {
-                font-size: 0.85rem;
-            }
-
-            .section-header h2 {
-                font-size: 1.8rem;
-                padding: 0 1rem;
-            }
-
-            .section-header p {
-                font-size: 0.95rem;
-                padding: 0 1rem;
-            }
-
-            .testimonials-grid,
-            .footer-grid {
+            .calculator-grid {
                 grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            nav {
-                padding: 0.8rem 0;
-            }
-
-            .nav-container {
-                padding: 0.8rem;
-                gap: 0.5rem;
-            }
-
-            .nav-brand {
-                font-size: 1.2em;
-            }
-
-            .nav-links {
-                top: 60px;
-            }
-
-            .nav-links a {
-                padding: 0.8rem 1rem;
-                font-size: 0.9rem;
-            }
-
-            .hero {
-                min-height: 380px;
-                padding: 1rem 0;
-            }
-
-            .hero-text {
-                padding: 1.5rem 1rem;
-            }
-
-            .hero h1 {
-                font-size: 1.6rem;
-                line-height: 1.2;
-                margin-bottom: 0.5rem;
-            }
-
-            .hero-eyebrow {
-                font-size: 0.85rem;
-                margin-bottom: 0.5rem;
-            }
-
-            .hero p {
-                font-size: 0.9rem;
-                margin: 0.8rem 0;
-            }
-
-            .cta-primary, .cta-secondary {
-                padding: 0.9rem 1rem;
-                font-size: 0.9rem;
-            }
-
-            .carousel-item {
-                padding: 0.8rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
-                padding: 1rem;
-            }
-
-            .stat-card {
-                padding: 1.2rem 1rem;
-            }
-
-            .stat-number {
-                font-size: 1.6rem;
-            }
-
-            .stat-label {
-                font-size: 0.8rem;
-                margin-top: 0.3rem;
-            }
-
-            .section-header {
-                padding: 2rem 1rem;
-            }
-
-            .section-header h2 {
-                font-size: 1.5rem;
-                padding: 0;
-                margin-bottom: 0.5rem;
-            }
-
-            .section-header p {
-                font-size: 0.9rem;
-                padding: 0;
-            }
-
-            .page-header {
-                padding: 2rem 1rem;
             }
 
             .page-header h1 {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
+        }
 
-            .page-header p {
-                font-size: 0.9rem;
-            }
-
-            .footer-section h4 {
-                font-size: 1rem;
-                margin-bottom: 1rem;
-            }
-
-            .footer-section ul li {
-                margin-bottom: 0.6rem;
-                font-size: 0.9rem;
-            }
+        footer {
+            background: #0c2340;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">💼 BizCalc</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="calculator.html">Calculator</a></li>
-                <li><a href="loan-calculator.html">Loan Calculator</a></li>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calculator.html" class="active">Calculator</a></li>
                 <li><a href="features.html">Features</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div data-auth-container style="display: flex; gap: 1rem; align-items: center;">
-                <a href="signin.html" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1rem;">Sign In</a>
-                <a href="signup.html" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border-radius: 6px;">Sign Up</a>
-                <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-background"></div>
-        <div class="hero-video-wrapper">
-            <video class="hero-video" autoplay muted loop playsinline>
-                <source src="hero-video.mp4" type="video/mp4">
-                <div class="hero-video-placeholder">
-                    📹 Business Growth Video Coming Soon
-                </div>
-            </video>
-        </div>
-        <div class="hero-content">
-            <div class="hero-text">
-                <div class="hero-eyebrow">Welcome to BizCalc</div>
-                <h1>Build Your Business Empire</h1>
-                <p>Calculate precise investment requirements for 13+ business types in Sri Dungargarh with real market data.</p>
-                <div class="hero-cta">
-                    <a href="calculator.html" class="cta-primary">Start Calculator →</a>
-                    <a href="features.html" class="cta-secondary">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="page-header">
+        <h1>💰 Investment Calculator</h1>
+        <p>Calculate your exact business investment requirement in seconds</p>
+    </div>
 
-    <!-- Carousel Section -->
-    <section class="carousel-wrapper">
-        <div class="carousel-container">
-            <div class="carousel-track">
-                <div class="carousel-item">✨ Sparsh Portfolio</div>
-                <div class="carousel-item">💪 Titan Gym</div>
-                <div class="carousel-item">🏆 Ravi Shankar Pandia</div>
-                <div class="carousel-item">⭐ Mohit Prajapat</div>
-                <div class="carousel-item">👨‍💼 Devram Givaria</div>
-                <div class="carousel-item">🎯 Raghvendra Sharma</div>
-                <div class="carousel-item">📱 Vivek sir</div>
-                <div class="carousel-item">💎 Priya ojha</div>
-                <div class="carousel-item">✨ Sparsh Portfolio</div>
-                <div class="carousel-item">💪 Titan Gym</div>
-                <div class="carousel-item">🏆 Ravi Shankar Pandia</div>
-                <div class="carousel-item">⭐ Mohit Prajapat</div>
-                <div class="carousel-item">👨‍💼 Devram Givaria</div>
-                <div class="carousel-item">🎯 Raghvendra Sharma</div>
-                <div class="carousel-item">📱 Vivek sir</div>
-                <div class="carousel-item">💎 Priya ojha</div>
-            </div>
-        </div>
-    </section>
+    <div class="container">
+        <div class="calculator-grid">
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="business">🏢 Select Business Type *</label>
+                    <select id="business" required onchange="updateCalculator()">
+                        <option value="">-- Choose Business Type --</option>
 
-    <!-- Statistics Section -->
-    <section class="stats-section">
-        <div class="stats-container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Businesses Calculated</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">₹50Cr+</div>
-                    <div class="stat-label">Investments Estimated</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">4.8/5</div>
-                    <div class="stat-label">Customer Rating</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">13+</div>
-                    <div class="stat-label">Business Types</div>
-                </div>
-            </div>
-        </div>
-    </section>
+                        <optgroup label="🌾 Agriculture & Farming">
+                            <option value="agriculture">Agriculture/Farming</option>
+                            <option value="dairy">Dairy Business</option>
+                            <option value="poultry">Poultry Farming</option>
+                            <option value="fishery">Fish Farming</option>
+                            <option value="greenhouse">Greenhouse Farming</option>
+                            <option value="beekeeping">Beekeeping</option>
+                            <option value="floriculture">Floriculture</option>
+                        </optgroup>
 
-    <!-- Features Preview Section -->
-    <section class="features-section">
-        <div class="section-header">
-            <h2>Powerful Features</h2>
-            <p>Everything you need to plan your business investment accurately</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📍</div>
-                <h3>Land Price Calculator</h3>
-                <p>Real-time highway and market area pricing for Sri Dungargarh with accurate sq ft calculations.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>13+ Business Types</h3>
-                <p>Pre-configured templates for diverse businesses from retail to restaurants with industry-specific costs.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📋</div>
-                <h3>Detailed Breakdown</h3>
-                <p>Comprehensive cost analysis including land, setup, stock, equipment, labor, and operating expenses.</p>
-            </div>
-        </div>
-    </section>
+                        <optgroup label="☕ Food & Beverage">
+                            <option value="cafe">Cafe/Coffee Shop</option>
+                            <option value="restaurant">Restaurant</option>
+                            <option value="bakery">Bakery</option>
+                            <option value="juice">Juice Bar</option>
+                            <option value="ice_cream">Ice Cream Parlor</option>
+                            <option value="sweet_shop">Sweet/Candy Shop</option>
+                            <option value="fast_food">Fast Food Corner</option>
+                            <option value="food_truck">Food Truck</option>
+                        </optgroup>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials-section">
-        <div class="testimonials-container">
-            <div class="section-header">
-                <h2>Success Stories</h2>
-                <p>What entrepreneurs in Sri Dungargarh are saying about BizCalc</p>
+                        <optgroup label="💊 Healthcare">
+                            <option value="pharmacy">Pharmacy</option>
+                            <option value="clinic">Medical Clinic</option>
+                            <option value="diagnostic">Diagnostic Center</option>
+                            <option value="dental">Dental Clinic</option>
+                            <option value="ayurveda">Ayurveda Center</option>
+                            <option value="physiotherapy">Physiotherapy Clinic</option>
+                        </optgroup>
+
+                        <optgroup label="🛍️ Retail & Shopping">
+                            <option value="kirana">Kirana General Shop</option>
+                            <option value="clothing">Clothing Store</option>
+                            <option value="electronics">Electronics Store</option>
+                            <option value="books">Book Store</option>
+                            <option value="footwear">Footwear Shop</option>
+                            <option value="jewelry">Jewelry Store</option>
+                            <option value="mobile">Mobile Phone Store</option>
+                            <option value="stationery">Stationery Shop</option>
+                            <option value="furniture">Furniture Store</option>
+                        </optgroup>
+
+                        <optgroup label="✂️ Services">
+                            <option value="salon">Beauty Salon</option>
+                            <option value="gym">Fitness Gym</option>
+                            <option value="tuition">Coaching/Tuition Center</option>
+                            <option value="tailoring">Tailoring Shop</option>
+                            <option value="laundry">Laundry Service</option>
+                            <option value="repair">Electronics Repair</option>
+                            <option value="pest_control">Pest Control Service</option>
+                            <option value="plumbing">Plumbing Service</option>
+                        </optgroup>
+
+                        <optgroup label="🏠 Real Estate & Construction">
+                            <option value="real_estate">Real Estate Agency</option>
+                            <option value="construction">Construction Company</option>
+                            <option value="interior_design">Interior Design Studio</option>
+                        </optgroup>
+
+                        <optgroup label="🚗 Transportation">
+                            <option value="cab">Cab/Auto Service</option>
+                            <option value="delivery">Delivery Service</option>
+                            <option value="car_rental">Car Rental Service</option>
+                            <option value="travel_agency">Travel Agency</option>
+                        </optgroup>
+
+                        <optgroup label="🎓 Education & Training">
+                            <option value="coding_class">Coding Classes</option>
+                            <option value="language_class">Language Classes</option>
+                            <option value="music_class">Music Classes</option>
+                            <option value="dance_class">Dance Classes</option>
+                        </optgroup>
+
+                        <optgroup label="🎨 Creative & Media">
+                            <option value="photography">Photography Studio</option>
+                            <option value="graphic_design">Graphic Design Studio</option>
+                            <option value="digital_marketing">Digital Marketing Agency</option>
+                            <option value="video_production">Video Production</option>
+                        </optgroup>
+
+                        <optgroup label="💼 Business Services">
+                            <option value="accounting">Accounting Firm</option>
+                            <option value="consulting">Consulting Services</option>
+                            <option value="legal">Legal Services</option>
+                            <option value="hr_recruitment">HR/Recruitment Agency</option>
+                        </optgroup>
+
+                        <optgroup label="🏋️ Fitness & Wellness">
+                            <option value="yoga_studio">Yoga Studio</option>
+                            <option value="spa">Spa/Wellness Center</option>
+                            <option value="swimming_pool">Swimming Pool</option>
+                        </optgroup>
+
+                        <optgroup label="🏪 Specialty Retail">
+                            <option value="gift_shop">Gift Shop</option>
+                            <option value="toy_store">Toy Store</option>
+                            <option value="pet_shop">Pet Shop</option>
+                            <option value="plants_nursery">Plants Nursery</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="timeline">📅 Timeline (Months) *</label>
+                    <input type="number" id="timeline" min="1" max="60" value="12" required onchange="updateCalculator()">
+                </div>
+
+                <div class="form-group">
+                    <label for="investment">💵 Initial Investment Budget *</label>
+                    <input type="number" id="investment" placeholder="Enter amount in INR" value="500000" required onchange="updateCalculator()">
+                </div>
+
+                <button class="calculate-btn" onclick="calculateInvestment()">📊 Calculate Investment</button>
             </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">"BizCalc ने मेरे बिल्डिंग मैटेरियल बिजनेस की सटीक कैलकुलेशन दी। शानदार टूल!"</div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">RK</div>
-                        <div class="author-info">
-                            <h4>Raj Kumar</h4>
-                            <div class="author-role">Builder & Contractor</div>
-                        </div>
-                    </div>
+
+            <div class="results-section" id="results">
+                <div class="result-card">
+                    <div class="result-label">Total Investment Required</div>
+                    <div class="result-value" id="totalInvestment">₹0</div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">"मेरी कैफे के लिए सही इन्वेस्टमेंट प्लान बनाने में BizCalc बहुत मदद किया।"</div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">PS</div>
-                        <div class="author-info">
-                            <h4>Priya Sharma</h4>
-                            <div class="author-role">Entrepreneur</div>
-                        </div>
-                    </div>
+
+                <div class="result-card">
+                    <div class="result-label">Monthly Operating Cost</div>
+                    <div class="result-value" id="monthlyCost">₹0</div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">"इस टूल की मदद से मेरी रेस्टोरेंट की सारी कॉस्ट डिटेल्स साफ़ हो गईं।"</div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">AV</div>
-                        <div class="author-info">
-                            <h4>Amit Verma</h4>
-                            <div class="author-role">Restaurant Owner</div>
-                        </div>
-                    </div>
+
+                <div class="breakdown-list" id="breakdownList"></div>
+
+                <div class="chart-container">
+                    <canvas id="investmentChart"></canvas>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4>💼 BizCalc</h4>
-                    <p class="footer-desc">Professional business investment calculator for Sri Dungargarh entrepreneurs. Plan your startup with real market data.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="calculator.html">Calculator</a></li>
-                        <li><a href="features.html">Features</a></li>
-                        <li><a href="about.html">About</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Business Types</h4>
-                    <ul>
-                        <li><a href="calculator.html">Retail Shops</a></li>
-                        <li><a href="calculator.html">Restaurants</a></li>
-                        <li><a href="calculator.html">Service Centers</a></li>
-                        <li><a href="calculator.html">Specialty Stores</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="contact.html">FAQ</a></li>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2026 BizCalc - Business Investment Calculator. All rights reserved.</p>
-                <p class="footer-credit">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank">Sparsh Portfolio</a></p>
-                <p style="margin-top: 0.5rem; font-size: 0.85rem;">Made for entrepreneurs in Sri Dungargarh, India 🇮🇳</p>
-            </div>
-        </div>
+        <p>&copy; 2026 BizCalc - Business Investment Calculator | Sri Dungargarh</p>
+        <p>Calculate startup investments for 53+ business types</p>
     </footer>
 
     <script>
-        // Hamburger Menu Toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
+        const businessData = {
+            agriculture: { setup: 800000, monthly: 50000, label: "Agriculture" },
+            dairy: { setup: 500000, monthly: 40000, label: "Dairy Business" },
+            poultry: { setup: 300000, monthly: 30000, label: "Poultry" },
+            fishery: { setup: 400000, monthly: 35000, label: "Fish Farming" },
+            greenhouse: { setup: 350000, monthly: 28000, label: "Greenhouse" },
+            beekeeping: { setup: 200000, monthly: 15000, label: "Beekeeping" },
+            floriculture: { setup: 250000, monthly: 20000, label: "Floriculture" },
+            cafe: { setup: 600000, monthly: 45000, label: "Cafe" },
+            restaurant: { setup: 1500000, monthly: 100000, label: "Restaurant" },
+            bakery: { setup: 400000, monthly: 35000, label: "Bakery" },
+            juice: { setup: 250000, monthly: 20000, label: "Juice Bar" },
+            ice_cream: { setup: 300000, monthly: 25000, label: "Ice Cream Parlor" },
+            sweet_shop: { setup: 200000, monthly: 18000, label: "Sweet Shop" },
+            fast_food: { setup: 500000, monthly: 40000, label: "Fast Food" },
+            food_truck: { setup: 350000, monthly: 28000, label: "Food Truck" },
+            pharmacy: { setup: 700000, monthly: 50000, label: "Pharmacy" },
+            clinic: { setup: 1000000, monthly: 60000, label: "Clinic" },
+            diagnostic: { setup: 2000000, monthly: 80000, label: "Diagnostic" },
+            dental: { setup: 800000, monthly: 55000, label: "Dental Clinic" },
+            ayurveda: { setup: 400000, monthly: 30000, label: "Ayurveda Center" },
+            physiotherapy: { setup: 500000, monthly: 40000, label: "Physiotherapy" },
+            kirana: { setup: 300000, monthly: 25000, label: "Kirana Store" },
+            clothing: { setup: 500000, monthly: 40000, label: "Clothing" },
+            electronics: { setup: 800000, monthly: 55000, label: "Electronics" },
+            books: { setup: 400000, monthly: 30000, label: "Book Store" },
+            footwear: { setup: 450000, monthly: 35000, label: "Footwear Shop" },
+            jewelry: { setup: 600000, monthly: 45000, label: "Jewelry Store" },
+            mobile: { setup: 500000, monthly: 38000, label: "Mobile Phone Store" },
+            stationery: { setup: 250000, monthly: 20000, label: "Stationery Shop" },
+            furniture: { setup: 1000000, monthly: 60000, label: "Furniture Store" },
+            salon: { setup: 300000, monthly: 25000, label: "Salon" },
+            gym: { setup: 1200000, monthly: 70000, label: "Gym" },
+            tuition: { setup: 250000, monthly: 20000, label: "Tuition Center" },
+            tailoring: { setup: 150000, monthly: 12000, label: "Tailoring Shop" },
+            laundry: { setup: 300000, monthly: 25000, label: "Laundry Service" },
+            repair: { setup: 200000, monthly: 18000, label: "Electronics Repair" },
+            pest_control: { setup: 250000, monthly: 20000, label: "Pest Control" },
+            plumbing: { setup: 100000, monthly: 10000, label: "Plumbing Service" },
+            real_estate: { setup: 500000, monthly: 35000, label: "Real Estate" },
+            construction: { setup: 2500000, monthly: 150000, label: "Construction" },
+            interior_design: { setup: 300000, monthly: 25000, label: "Interior Design" },
+            cab: { setup: 1000000, monthly: 60000, label: "Cab Service" },
+            delivery: { setup: 400000, monthly: 30000, label: "Delivery Service" },
+            car_rental: { setup: 1500000, monthly: 75000, label: "Car Rental" },
+            travel_agency: { setup: 350000, monthly: 28000, label: "Travel Agency" },
+            coding_class: { setup: 200000, monthly: 18000, label: "Coding Classes" },
+            language_class: { setup: 150000, monthly: 15000, label: "Language Classes" },
+            music_class: { setup: 200000, monthly: 18000, label: "Music Classes" },
+            dance_class: { setup: 150000, monthly: 12000, label: "Dance Classes" },
+            photography: { setup: 400000, monthly: 30000, label: "Photography Studio" },
+            graphic_design: { setup: 200000, monthly: 18000, label: "Graphic Design" },
+            digital_marketing: { setup: 300000, monthly: 25000, label: "Digital Marketing" },
+            video_production: { setup: 500000, monthly: 40000, label: "Video Production" },
+            accounting: { setup: 300000, monthly: 25000, label: "Accounting Firm" },
+            consulting: { setup: 250000, monthly: 20000, label: "Consulting" },
+            legal: { setup: 400000, monthly: 30000, label: "Legal Services" },
+            hr_recruitment: { setup: 350000, monthly: 28000, label: "HR/Recruitment" },
+            yoga_studio: { setup: 350000, monthly: 28000, label: "Yoga Studio" },
+            spa: { setup: 600000, monthly: 45000, label: "Spa/Wellness" },
+            swimming_pool: { setup: 2000000, monthly: 100000, label: "Swimming Pool" },
+            gift_shop: { setup: 250000, monthly: 20000, label: "Gift Shop" },
+            toy_store: { setup: 300000, monthly: 25000, label: "Toy Store" },
+            pet_shop: { setup: 350000, monthly: 28000, label: "Pet Shop" },
+            plants_nursery: { setup: 300000, monthly: 25000, label: "Plants Nursery" }
+        };
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+        let chart = null;
 
-        // Close menu when link is clicked
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
+        function calculateInvestment() {
+            const business = document.getElementById('business').value;
+            const timeline = parseInt(document.getElementById('timeline').value);
+            const budget = parseInt(document.getElementById('investment').value);
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('nav')) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
+            if (!business) {
+                alert('Please select a business type');
+                return;
             }
-        });
 
-        // Dark Mode Toggle (local)
-        const themeToggle = document.getElementById('themeToggle');
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const data = businessData[business];
+            const totalCost = data.setup + (data.monthly * timeline);
+            const affordability = totalCost <= budget ? 'Affordable' : 'Budget Exceeded';
 
-        if (savedTheme) {
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-        } else if (prefersDark) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
+            document.getElementById('totalInvestment').textContent = `₹${totalCost.toLocaleString()}`;
+            document.getElementById('monthlyCost').textContent = `₹${data.monthly.toLocaleString()}`;
+
+            const breakdown = `
+                <div class="breakdown-item">
+                    <span class="breakdown-label">Setup Cost</span>
+                    <span class="breakdown-amount">₹${data.setup.toLocaleString()}</span>
+                </div>
+                <div class="breakdown-item">
+                    <span class="breakdown-label">Monthly Operating Cost</span>
+                    <span class="breakdown-amount">₹${data.monthly.toLocaleString()}</span>
+                </div>
+                <div class="breakdown-item">
+                    <span class="breakdown-label">Timeline (Months)</span>
+                    <span class="breakdown-amount">${timeline}</span>
+                </div>
+                <div class="breakdown-item">
+                    <span class="breakdown-label">Total Operating Cost (${timeline} months)</span>
+                    <span class="breakdown-amount">₹${(data.monthly * timeline).toLocaleString()}</span>
+                </div>
+                <div class="breakdown-item" style="background: rgba(8, 145, 178, 0.1); padding: 0.75rem; border-radius: 6px; margin-top: 1rem;">
+                    <span class="breakdown-label">Status</span>
+                    <span class="breakdown-amount">${affordability}</span>
+                </div>
+            `;
+
+            document.getElementById('breakdownList').innerHTML = breakdown;
+            document.getElementById('results').classList.add('show');
+
+            updateChart(data, timeline);
         }
 
-        // Active nav link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            if (link.href === window.location.href) {
-                link.classList.add('active');
-            }
-        });
+        function updateChart(data, timeline) {
+            const ctx = document.getElementById('investmentChart').getContext('2d');
+
+            if (chart) chart.destroy();
+
+            chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Setup Cost', `Operating (${timeline}m)`],
+                    datasets: [{
+                        data: [data.setup, data.monthly * timeline],
+                        backgroundColor: ['#0891b2', '#a855f7'],
+                        borderColor: ['#0891b2', '#a855f7'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: 'var(--text-primary)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCalculator() {
+            // Real-time update
+        }
+
+        function toggleTheme() {
+            const root = document.documentElement;
+            const currentTheme = root.getAttribute('data-theme');
+            root.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+        }
+
+        // Pre-fill from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const businessType = urlParams.get('businessType');
+        if (businessType && businessData[businessType]) {
+            document.getElementById('business').value = businessType;
+        }
     </script>
-
-    <!-- Navbar Manager -->
-    <script src="navbar-manager.js"></script>
-
-    <!-- Chatbot Widget -->
-    <script src="chatbot.js"></script>
 </body>
 </html>
