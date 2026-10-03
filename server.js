@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -12,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Mock Database
+// Mock Database (In-Memory)
 let users = {};
 let calculations = {};
 
@@ -45,7 +44,7 @@ app.post('/api/auth/signup', (req, res) => {
   }
 
   const userId = `user_${Object.keys(users).length + 1}`;
-  users[email] = {
+  const userData = {
     userId,
     full_name,
     email,
@@ -54,6 +53,8 @@ app.post('/api/auth/signup', (req, res) => {
     password,
     created_at: new Date().toISOString()
   };
+
+  users[email] = userData;
 
   res.json({
     success: true,
@@ -123,24 +124,36 @@ app.get('/api/calculations/:user_id', (req, res) => {
   });
 });
 
-app.put('/api/users/preferences', (req, res) => {
-  const { user_id, whatsapp_notif, email_notif } = req.body;
+// ============ ADMIN ENDPOINTS ============
 
-  let found = false;
-  for (let email in users) {
-    if (users[email].userId === user_id) {
-      users[email].whatsapp_notif = whatsapp_notif;
-      users[email].email_notif = email_notif;
-      found = true;
-      break;
-    }
-  }
+// Get all users (for admin dashboard)
+app.get('/api/admin/users', (req, res) => {
+  const allUsers = Object.values(users).map(user => ({
+    userId: user.userId,
+    full_name: user.full_name,
+    email: user.email,
+    whatsapp: user.whatsapp,
+    business_type: user.business_type,
+    created_at: user.created_at,
+    registration_date: new Date(user.created_at).toLocaleDateString()
+  }));
 
-  if (!found) {
-    return res.status(404).json({ success: false, message: 'User not found' });
-  }
+  res.json({
+    success: true,
+    total_users: allUsers.length,
+    users: allUsers
+  });
+});
 
-  res.json({ success: true, message: 'Preferences updated' });
+// Get all calculations (for admin dashboard)
+app.get('/api/admin/calculations', (req, res) => {
+  const allCalcs = Object.values(calculations);
+
+  res.json({
+    success: true,
+    total_calculations: allCalcs.length,
+    calculations: allCalcs
+  });
 });
 
 // ============ SERVE FRONTEND ============
