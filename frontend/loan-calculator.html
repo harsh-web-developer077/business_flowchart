@@ -438,6 +438,7 @@
                 <li><a href="loan-calculator.html" class="active">Loan Calculator</a></li>
                 <li><a href="features.html">Features</a></li>
                 <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
             <button class="hamburger" id="hamburger">
                 <span></span>
@@ -461,25 +462,21 @@
                 <div class="form-group">
                     <label for="loanAmount">Loan Amount (₹) *</label>
                     <input type="number" id="loanAmount" placeholder="Enter loan amount" required>
-                    <div class="input-helper">Example: 1000000</div>
                 </div>
 
                 <div class="form-group">
                     <label for="interestRate">Annual Interest Rate (%) *</label>
                     <input type="number" id="interestRate" placeholder="Enter interest rate" step="0.01" required>
-                    <div class="input-helper">Example: 12 (for 12% per annum)</div>
                 </div>
 
                 <div class="form-group">
                     <label for="loanTenure">Loan Tenure (Months) *</label>
                     <input type="number" id="loanTenure" placeholder="Enter loan tenure" required>
-                    <div class="input-helper">Example: 12 (for 1 year), 60 (for 5 years)</div>
                 </div>
 
                 <div class="form-group">
                     <label for="monthlyProfit">Your Expected Monthly Net Sale (₹)</label>
                     <input type="number" id="monthlyProfit" placeholder="Optional - Enter for profit/loss analysis">
-                    <div class="input-helper">Optional: Leave blank or enter 0 to see only EMI</div>
                 </div>
 
                 <button class="calculate-btn" onclick="calculateEMI()">💹 Calculate EMI</button>
@@ -647,19 +644,8 @@
             return '₹' + Math.round(amount).toLocaleString('en-IN');
         }
 
-        // Load previous data on page load
+        // Authentication Check on page load
         window.addEventListener('load', () => {
-            const savedData = localStorage.getItem('lastLoanCalculation');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                document.getElementById('loanAmount').value = data.loanAmount;
-                document.getElementById('interestRate').value = data.interestRate;
-                document.getElementById('loanTenure').value = data.loanTenure;
-                document.getElementById('monthlyProfit').value = data.monthlyProfit || '';
-                calculateEMI();
-            }
-
-            // Authentication Check
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const isGuest = localStorage.getItem('isGuest');
 

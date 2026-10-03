@@ -461,6 +461,24 @@
                 display: none !important;
             }
 
+            .nav-links.active {
+                display: flex !important;
+                position: absolute;
+                flex-direction: column;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
+                padding: 1rem 2rem;
+                gap: 1rem;
+                justify-content: flex-start;
+                z-index: 99;
+            }
+
+            .nav-links li {
+                margin-bottom: 0.8rem;
+            }
+
             nav {
                 padding: 1rem;
             }
@@ -509,7 +527,14 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">💼 BizCalc</a>
-            <div style="flex: 1;"></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="loan-calculator.html">Loan Calculator</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
             <div class="user-menu">
                 <button class="hamburger" id="hamburger">
                     <span></span>
@@ -611,9 +636,21 @@
 
     <script>
         const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
         if (hamburger) {
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
+                if (navLinks) navLinks.classList.toggle('active');
+            });
+        }
+
+        // Close menu when a link is clicked
+        if (navLinks) {
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
             });
         }
 
