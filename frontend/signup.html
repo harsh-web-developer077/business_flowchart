@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Sign Up - BizCalc</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sign Up for BizCalc - Create your account to save calculations and get personalized updates">
-    <title>Sign Up - BizCalc</title>
+    <meta name="description" content="Business calculator for startup investment, loan EMI, and profit estimation. Free online tool for entrepreneurs in Sri Dungargarh.">
+    <meta name="keywords" content="business calculator, startup investment, loan calculator, EMI calculator, business plan, investment calculator">
+    <meta name="author" content="BizCalc">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="BizCalc - Business Investment Calculator">
+    <meta property="og:description" content="Calculate startup investment, loans, and business profitability">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0891b2">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -610,20 +617,129 @@
                 <div class="form-group">
                     <label for="businessType">Business Type *</label>
                     <select id="businessType" name="businessType" required>
+                        
                         <option value="">चुनें - Select one</option>
-                        <option value="building-materials">Building Materials Shop</option>
-                        <option value="kirana">Kirana Shop</option>
-                        <option value="cafe">Cafe/Restaurant</option>
-                        <option value="clothing">Clothing Store</option>
-                        <option value="electronics">Electronics Store</option>
-                        <option value="hardware">Hardware Shop</option>
-                        <option value="pharmacy">Pharmacy</option>
-                        <option value="furniture">Furniture Store</option>
-                        <option value="jewelry">Jewelry Store</option>
-                        <option value="cosmetics">Cosmetics Shop</option>
-                        <option value="bookstore">Book Store</option>
-                        <option value="mobile">Mobile Shop</option>
-                        <option value="grocery">Grocery Store</option>
+
+                        <!-- Retail & Shopping -->
+                        <optgroup label="🛍️ Retail & Shopping">
+                            <option value="building-materials">Building Materials Shop</option>
+                            <option value="kirana">Kirana Shop</option>
+                            <option value="clothing">Clothing Store</option>
+                            <option value="electronics">Electronics Store</option>
+                            <option value="hardware">Hardware Shop</option>
+                            <option value="pharmacy">Pharmacy</option>
+                            <option value="furniture">Furniture Store</option>
+                            <option value="jewelry">Jewelry Store</option>
+                            <option value="cosmetics">Cosmetics Shop</option>
+                            <option value="bookstore">Book Store</option>
+                            <option value="mobile">Mobile Shop</option>
+                            <option value="grocery">Grocery Store</option>
+                            <option value="vegetable">Vegetable/Fruit Shop</option>
+                        </optgroup>
+
+                        <!-- Food & Beverage -->
+                        <optgroup label="🍽️ Food & Beverage">
+                            <option value="cafe">Cafe/Restaurant</option>
+                            <option value="tea-stall">Tea Stall/Chai Shop</option>
+                            <option value="food-delivery">Food Delivery Service</option>
+                            <option value="bakery">Bakery/Pastry Shop</option>
+                        </optgroup>
+
+                        <!-- Repair & Maintenance -->
+                        <optgroup label="🔧 Repair & Maintenance">
+                            <option value="bicycle-repair">Bicycle Repair Shop</option>
+                            <option value="motorcycle-repair">Motorcycle/Scooter Repair</option>
+                            <option value="vehicle-repair">Vehicle/Car Repair Shop</option>
+                            <option value="laundry">Laundry Service</option>
+                        </optgroup>
+
+                        <!-- Personal Care & Grooming -->
+                        <optgroup label="💇 Personal Care & Grooming">
+                            <option value="barber">Barber Shop/Salon</option>
+                            <option value="beauty-salon">Beauty & Nail Salon</option>
+                            <option value="tailoring">Tailoring Shop</option>
+                        </optgroup>
+
+                        <!-- Education & Fitness -->
+                        <optgroup label="📚 Education & Fitness">
+                            <option value="tuition">Tuition Center/Coaching Class</option>
+                            <option value="gym">Gym/Fitness Center</option>
+                            <option value="computer-training">Computer Training Center</option>
+                        </optgroup>
+
+                        <!-- Healthcare & Wellness -->
+                        <optgroup label="🏥 Healthcare & Wellness">
+                            <option value="clinic">Clinic/Diagnostic Center</option>
+                            <option value="dental">Dental Clinic</option>
+                            <option value="ayurveda">Ayurveda/Wellness Center</option>
+                        </optgroup>
+
+                        <!-- Transportation & Auto -->
+                        <optgroup label="🚗 Transportation & Auto">
+                            <option value="vehicle-showroom">Vehicle Showroom</option>
+                            <option value="petrol-pump">Petrol Pump/Gas Station</option>
+                            <option value="transport">Transport/Logistics Business</option>
+                            <option value="auto-rental">Auto Rental Service</option>
+                            <option value="car-rental">Car Rental Service</option>
+                        </optgroup>
+
+                        <!-- Other Services -->
+                        <optgroup label="✨ Other Services">
+                            <option value="photography">Photography Studio</option>
+                            <option value="pet-shop">Pet Shop</option>
+                            <option value="dairy">Dairy/Milk Parlor</option>
+                            <option value="wedding-service">Wedding Decoration Service</option>
+                            <option value="real-estate">Real Estate/Property</option>
+                            <option value="agriculture">Agricultural Business</option>
+                        </optgroup>
+
+
+                        <!-- Food & Beverage -->
+                        <optgroup label="🍽️ Food & Beverage">
+                            <option value="cafe">Cafe/Restaurant</option>
+                            <option value="tea-stall">Tea Stall/Chai Shop</option>
+                            <option value="food-delivery">Food Delivery Service</option>
+                            <option value="bakery">Bakery/Pastry Shop</option>
+                        </optgroup>
+
+                        <!-- Services -->
+                        <optgroup label="🔧 Repair & Maintenance">
+                            <option value="bicycle-repair">Bicycle Repair Shop</option>
+                            <option value="motorcycle-repair">Motorcycle/Scooter Repair</option>
+                            <option value="vehicle-repair">Vehicle/Car Repair Shop</option>
+                            <option value="laundry">Laundry Service</option>
+                        </optgroup>
+
+                        <!-- Personal Care -->
+                        <optgroup label="💇 Personal Care & Grooming">
+                            <option value="barber">Barber Shop/Salon</option>
+                            <option value="beauty-salon">Beauty & Nail Salon</option>
+                            <option value="tailoring">Tailoring Shop</option>
+                        </optgroup>
+
+                        <!-- Education & Fitness -->
+                        <optgroup label="📚 Education & Fitness">
+                            <option value="tuition">Tuition Center/Coaching Class</option>
+                            <option value="gym">Gym/Fitness Center</option>
+                            <option value="computer-training">Computer Training Center</option>
+                        </optgroup>
+
+                        <!-- Transportation & Auto -->
+                        <optgroup label="🚗 Transportation & Auto">
+                            <option value="vehicle-showroom">Vehicle Showroom</option>
+                            <option value="petrol-pump">Petrol Pump/Gas Station</option>
+                            <option value="transport">Transport/Logistics Business</option>
+                            <option value="auto-rental">Auto Rental Service</option>
+                        </optgroup>
+
+                        <!-- Other Services -->
+                        <optgroup label="✨ Other Services">
+                            <option value="photography">Photography Studio</option>
+                            <option value="dairy">Dairy/Milk Parlor</option>
+                            <option value="wedding-service">Wedding Decoration Service</option>
+                            <option value="real-estate">Real Estate/Property</option>
+                            <option value="agriculture">Agricultural Business</option>
+                        </optgroup>
                     </select>
                 </div>
 

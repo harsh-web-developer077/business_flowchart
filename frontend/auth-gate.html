@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Welcome to BizCalc - Business Investment Calculator</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="About BizCalc - Professional business investment calculator trusted by Sri Dungargarh entrepreneurs">
-    <title>About - BizCalc</title>
+    <meta name="description" content="Business calculator for startup investment, loan EMI, and profit estimation. Free online tool for entrepreneurs in Sri Dungargarh.">
+    <meta name="keywords" content="business calculator, startup investment, loan calculator, EMI calculator, business plan, investment calculator">
+    <meta name="author" content="BizCalc">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="BizCalc - Business Investment Calculator">
+    <meta property="og:description" content="Calculate startup investment, loans, and business profitability">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0891b2">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,65 +58,31 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-primary);
             background: var(--bg);
-            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .navbar {
             background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(249, 115, 22, 0.95) 100%);
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
-        .nav-container {
+        .navbar-content {
             max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 2rem;
         }
 
-        .nav-brand {
-            font-size: 1.8em;
+        .logo {
+            font-size: 2em;
             font-weight: 700;
             color: white;
-            text-decoration: none;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #fbbf24;
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after, .nav-links a.active::after {
-            width: 100%;
         }
 
         .theme-toggle {
@@ -133,172 +106,269 @@
             transform: scale(1.1);
         }
 
-        .page-header {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
-            color: white;
+        .hero-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 4rem 2rem;
-            text-align: left;
             position: relative;
             overflow: hidden;
         }
 
-        .page-header::before {
+        .hero-section::before {
             content: '';
             position: absolute;
             top: 0;
+            left: 0;
             right: 0;
-            width: 50%;
-            height: 100%;
-            background: radial-gradient(circle at 100% 0%, rgba(255,255,255,0.1) 0%, transparent 70%);
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(8, 145, 178, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
+            z-index: 0;
         }
 
-        .page-header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-            flex: 0 0 50%;
-        }
-
-        .page-header h1 {
-            font-family: 'Sora', sans-serif;
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .page-header p {
-            font-size: 1.1rem;
-            opacity: 0.95;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .about-section {
-            margin-bottom: 4rem;
-        }
-
-        .about-section h2 {
-            font-family: 'Sora', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .about-section p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .values-grid {
+        .hero-content {
+            max-width: 1200px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .value-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-            border-top: 4px solid var(--primary);
-            transition: all 0.3s;
-        }
-
-        .value-card:nth-child(2) { border-top-color: var(--secondary); background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(249, 115, 22, 0.02)); }
-        .value-card:nth-child(3) { border-top-color: var(--accent); background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(168, 85, 247, 0.02)); }
-
-        .value-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .value-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .value-card h3 {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--text-primary);
-        }
-
-        .value-card p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            font-size: 0.95rem;
-        }
-
-        footer {
-            background: linear-gradient(135deg, #0c2340 0%, #1e3a8a 50%, #0e7490 100%);
-            color: white;
-            padding: 4rem 2rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
             position: relative;
             z-index: 1;
         }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+        .hero-text h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .footer-section h4 {
+        .hero-text p {
             font-size: 1.2rem;
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
-            color: #fbbf24;
+            line-height: 1.8;
         }
 
-        .footer-section ul {
-            list-style: none;
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
         }
 
-        .footer-section ul li {
-            margin-bottom: 0.8rem;
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.85);
+        .feature-icon {
+            font-size: 1.8rem;
+            min-width: 40px;
+        }
+
+        .feature-item span {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .auth-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+            animation: slideInRight 0.6s ease;
+        }
+
+        .auth-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .auth-card.signup {
+            border-color: var(--secondary);
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.02) 0%, rgba(168, 85, 247, 0.02) 100%);
+        }
+
+        .auth-card.signup:hover {
+            border-color: var(--secondary);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .auth-card h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-card.signin h2 {
+            color: var(--primary);
+        }
+
+        .auth-card.signup h2 {
+            color: var(--secondary);
+        }
+
+        .auth-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .auth-card .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .auth-card.signup .badge {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .auth-button.signin-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #0e7490 100%);
+            color: white;
+        }
+
+        .auth-button.signin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(8, 145, 178, 0.4);
+        }
+
+        .auth-button.signup-btn {
+            background: linear-gradient(135deg, var(--secondary) 0%, #ea580c 100%);
+            color: white;
+        }
+
+        .auth-button.signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .guest-option {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .guest-option p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .guest-option button {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
             transition: all 0.3s;
         }
 
-        .footer-section a:hover {
-            color: #fbbf24;
-            transform: translateX(4px);
+        .guest-option button:hover {
+            background: var(--primary);
+            color: white;
         }
 
-        .footer-bottom {
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
-            padding-top: 2rem;
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
             text-align: center;
-            color: rgba(255, 255, 255, 0.8);
         }
 
-        .footer-credit a {
-            color: #fbbf24;
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .stat-number {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.5rem;
             font-weight: 700;
-            text-decoration: none;
         }
 
-        .footer-credit a:hover {
-            text-decoration: underline;
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .auth-section {
+                grid-template-columns: 1fr;
+            }
         }
 
         .hamburger {
@@ -337,29 +407,51 @@
                 display: flex;
             }
 
-            .nav-links {
-                display: none !important;
-            }
-
-            nav {
+            .navbar {
                 padding: 1rem;
             }
 
-            .nav-container {
+            .navbar-content {
                 gap: 1rem;
             }
 
-            .nav-brand {
+            .logo {
                 font-size: 1.5em;
             }
 
-            .page-header h1 {
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            .auth-card {
+                padding: 2rem;
+            }
+
+            .auth-button {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .stat-number {
                 font-size: 2rem;
             }
         }
 
         @media (max-width: 480px) {
-            .nav-brand {
+            .logo {
                 font-size: 1.2em;
             }
 
@@ -372,16 +464,9 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="nav-brand">💼 BizCalc</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="calculator.html">Calculator</a></li>
-                <li><a href="features.html">Features</a></li>
-                <li><a href="about.html" class="active">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">💼 BizCalc</div>
             <button class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -391,84 +476,82 @@
         </div>
     </nav>
 
-    <div class="page-header">
-        <div class="page-header-content">
-            <h1>About BizCalc</h1>
-            <p>Empowering Sri Dungargarh entrepreneurs with accurate investment planning tools</p>
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>भारत का #1 Business Investment Calculator</h1>
+                <p>Sri Dungargarh के entrepreneurs के लिए बनाया गया - सटीक, तेज़, और बिल्कुल फ्री!</p>
+
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-icon">💡</span>
+                        <span><strong>13+ Business Types:</strong> Kirana से Restaurant तक सब कुछ</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📊</span>
+                        <span><strong>Real Market Data:</strong> Current prices और labor costs</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">⚡</span>
+                        <span><strong>Instant Calculations:</strong> Seconds में detailed breakdown</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🏦</span>
+                        <span><strong>Bank Ready:</strong> Loan applications के लिए perfect</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🔒</span>
+                        <span><strong>100% Private:</strong> आपका डेटा आपके पास ही रहता है</span>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stat">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Entrepreneurs</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">₹50Cr+</div>
+                        <div class="stat-label">Planned</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4.8/5</div>
+                        <div class="stat-label">Rating</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">13+</div>
+                        <div class="stat-label">Business Types</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="auth-section">
+                <!-- Sign In Card -->
+                <div class="auth-card signin">
+                    <h2>👋 पहले से हो?</h2>
+                    <p>अपने calculations और dashboard को access करें</p>
+                    <a href="signin.html" class="auth-button signin-btn">
+                        <span>🔑</span> Sign In करें
+                    </a>
+                </div>
+
+                <!-- Sign Up Card -->
+                <div class="auth-card signup">
+                    <div class="badge">✨ नया? यहाँ शुरू करो</div>
+                    <h2>Calculations करना शुरू करो</h2>
+                    <p>एक मिनट में account बनाओ और अपना पहला investment plan बनाओ - बिल्कुल फ्री!</p>
+                    <a href="signup.html" class="auth-button signup-btn">
+                        <span>🚀</span> अब Sign Up करो
+                    </a>
+
+                    <div class="guest-option">
+                        <p>पहले देखना चाहते हो?</p>
+                        <button onclick="continueAsGuest()">🔍 Guest Mode में देखो</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="container">
-        <div class="about-section">
-            <h2>Our Mission</h2>
-            <p>BizCalc is dedicated to helping entrepreneurs in Sri Dungargarh make informed business decisions by providing accurate, real-time investment calculations. We believe that access to quality financial planning tools should be free and easy for everyone.</p>
-            <p>Our platform combines years of local market expertise with modern technology to deliver precise investment estimates for 13+ business types. Whether you're planning a small retail shop or a large restaurant, BizCalc provides the detailed breakdown you need for successful business planning.</p>
-        </div>
-
-        <div class="about-section">
-            <h2>Our Values</h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon">💡</div>
-                    <h3>Empowerment</h3>
-                    <p>We empower entrepreneurs with the tools and knowledge they need to succeed. Every calculation is transparent, detailed, and actionable.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">📍</div>
-                    <h3>Local Expertise</h3>
-                    <p>Our data is built on deep knowledge of Sri Dungargarh's markets. Land prices, costs, and business data reflect real local conditions.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">✅</div>
-                    <h3>Transparency</h3>
-                    <p>No hidden charges, no complex formulas. You see exactly how your investment is calculated with clear, itemized breakdowns.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="about-section">
-            <h2>Why Choose BizCalc?</h2>
-            <p><strong>Real Market Data:</strong> Our land prices and cost estimates are updated regularly to reflect current market conditions in Sri Dungargarh.</p>
-            <p><strong>13+ Business Types:</strong> From retail shops to restaurants, we cover the most popular business categories with pre-configured investment templates.</p>
-            <p><strong>Instant Results:</strong> Get detailed investment breakdowns in seconds. No waiting, no complications.</p>
-            <p><strong>Bank-Ready Reports:</strong> Use your calculations directly in loan applications and business plans. Our detailed breakdowns are trusted by financial institutions.</p>
-            <p><strong>Completely Free:</strong> No subscriptions, no hidden fees. BizCalc is free for all entrepreneurs in Sri Dungargarh.</p>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4>💼 BizCalc</h4>
-                    <p style="color: rgba(255,255,255,0.75); line-height: 1.8;">Professional calculator for Sri Dungargarh entrepreneurs.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="calculator.html">Calculator</a></li>
-                        <li><a href="features.html">Features</a></li>
-                        <li><a href="about.html">About</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="contact.html">FAQ</a></li>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2026 BizCalc. All rights reserved.</p>
-                <p class="footer-credit" style="margin: 0.5rem 0;">Designed & Developed by <a href="https://sparsh-portfolio-ihrz.onrender.com/" target="_blank">Sparsh Portfolio</a></p>
-            </div>
-        </div>
-    </footer>
 
     <script>
         const hamburger = document.getElementById('hamburger');
@@ -478,16 +561,7 @@
             });
         }
 
-        // Authentication Check - Redirect unauthenticated users to auth-gate
-        window.addEventListener('load', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const isGuest = localStorage.getItem('isGuest');
-
-            if (!isLoggedIn && !isGuest) {
-                window.location.href = 'auth-gate.html';
-            }
-        });
-
+        // Theme toggle
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('theme');
 
@@ -503,9 +577,23 @@
             localStorage.setItem('theme', newTheme);
             themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
         });
+
+        // Check if user is already logged in
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Guest mode
+        function continueAsGuest() {
+            localStorage.setItem('isGuest', 'true');
+            window.location.href = 'calculator.html';
+        }
     </script>
+
     <!-- Chatbot Widget -->
     <script src="chatbot.js"></script>
-
 </body>
 </html>
