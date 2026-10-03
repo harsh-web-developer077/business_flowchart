@@ -1,35 +1,8 @@
-# BizCalc - Business Investment Calculator
-# robots.txt file for search engine crawlers
-
-# Allow all bots to crawl the site
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /admin-only/
-Disallow: /*.json$
-Disallow: /*.js$
-Disallow: /*.css$
-
-# Specific rules for Google Bot
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 1
-
-# Specific rules for Bing Bot
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 1
-
-# Block bad bots
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: SemrushBot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
+Disallow: /admin-users.html
+Disallow: /dashboard.html
 
 # Sitemap location
-Sitemap: https://business-flowchart.onrender.com/sitemap.xml
-Sitemap: http://localhost:8000/sitemap.xml
+Sitemap: https://business-flowchart.onrender.com/frontend/sitemap.xml
