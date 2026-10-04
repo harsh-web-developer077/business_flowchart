@@ -5,4 +5,4 @@ Disallow: /admin-users.html
 Disallow: /dashboard.html
 
 # Sitemap location
-Sitemap: https://business-flowchart.onrender.com/frontend/sitemap.xml
+Sitemap: https://business-flowchart.onrender.com/sitemap.xml
