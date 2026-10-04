@@ -926,21 +926,9 @@
                 </div>
 
                 <div class="timeline-section">
-                    <h4 style="margin-bottom: 1rem; color: var(--primary);">📈 Investment Timeline</h4>
-
-                    <div class="timeline-input-group">
-                        <label for="monthlyNetProfit">Your Expected Monthly Net Profit/Loss (₹)</label>
-                        <input type="number" id="monthlyNetProfit" placeholder="Enter monthly net profit or loss" value="0">
-                    </div>
-
-                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">Select timeline to see monthly breakdown:</p>
-                    <div class="timeline-options">
-                        <button class="timeline-btn" onclick="generateTimeline(3)">3 Months</button>
-                        <button class="timeline-btn" onclick="generateTimeline(6)">6 Months</button>
-                        <button class="timeline-btn active" onclick="generateTimeline(12)">12 Months</button>
-                    </div>
+                    <h4 style="margin-bottom: 1.5rem; color: var(--primary);">📊 Investment Breakdown</h4>
                     <div class="graph-container active" id="graphContainer">
-                        <canvas id="timelineChart"></canvas>
+                        <canvas id="breakdownChart"></canvas>
                     </div>
                 </div>
 
@@ -974,7 +962,7 @@
                         <li><a href="contact.html">Contact Us</a></li>
                         <li><a href="contact.html">FAQ</a></li>
                         <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
                     </ul>
                 </div>
             </div>
@@ -1056,6 +1044,7 @@
 
         const landPrices = { 'highway': 6000, 'market': 10000 };
         let lastCalculation = null;
+        let breakdownChart = null;
         let timelineChart = null;
 
         // URL parameter to business code mapping
@@ -1137,6 +1126,9 @@
             document.getElementById('results').classList.add('active');
             document.getElementById('successMsg').classList.remove('show');
 
+            // Create pie chart for investment breakdown
+            createBreakdownChart(lastCalculation);
+
             // Generate default 12-month timeline
             generateTimeline(12);
 
@@ -1144,6 +1136,102 @@
             localStorage.setItem('lastCalculation', JSON.stringify(lastCalculation));
 
             setTimeout(() => document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        }
+
+        function createBreakdownChart(calculation) {
+            if (!calculation) return;
+
+            const ctx = document.getElementById('breakdownChart').getContext('2d');
+
+            if (breakdownChart) {
+                breakdownChart.destroy();
+            }
+
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+                           (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.documentElement.getAttribute('data-theme'));
+
+            const textColor = isDark ? '#f1f5f9' : '#0c2340';
+
+            // Colors as per requirement: Setup (blue), Stock (orange), Equipment (green), Salary (red), Operations (purple)
+            const chartColors = [
+                '#3b82f6', // Setup - blue
+                '#f97316', // Stock - orange
+                '#10b981', // Equipment - green
+                '#ef4444', // Salary - red
+                '#a855f7'  // Operations - purple
+            ];
+
+            const breakdown = [
+                calculation.setupCost,
+                calculation.stockCost,
+                calculation.equipmentCost,
+                calculation.salaryCost,
+                calculation.operatingCost
+            ];
+
+            const total = breakdown.reduce((sum, val) => sum + val, 0);
+            const percentages = breakdown.map(val => ((val / total) * 100).toFixed(1));
+
+            const labels = breakdown.map((val, idx) => {
+                const labelNames = ['Setup', 'Stock', 'Equipment', 'Salary', 'Operations'];
+                return `${labelNames[idx]}: ${percentages[idx]}%`;
+            });
+
+            breakdownChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: breakdown,
+                        backgroundColor: chartColors,
+                        borderColor: isDark ? '#1e293b' : '#ffffff',
+                        borderWidth: 2,
+                        hoverBorderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor,
+                                font: {
+                                    weight: '600',
+                                    size: 12
+                                },
+                                padding: 20,
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    return data.labels.map((label, i) => ({
+                                        text: `${label}: ₹${breakdown[i].toLocaleString('en-IN')}`,
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                        strokeStyle: data.datasets[0].borderColor,
+                                        lineWidth: 2,
+                                        hidden: false,
+                                        index: i
+                                    }));
+                                }
+                            },
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = '₹' + context.parsed.toLocaleString('en-IN');
+                                    return label + ' ' + value;
+                                }
+                            },
+                            backgroundColor: isDark ? 'rgba(30, 41, 59, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+                            titleColor: textColor,
+                            bodyColor: textColor,
+                            borderColor: isDark ? '#64748b' : '#cbd5e1',
+                            borderWidth: 1
+                        }
+                    }
+                }
+            });
         }
 
         function generateTimeline(months) {
