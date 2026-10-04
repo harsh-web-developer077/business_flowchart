@@ -181,6 +181,8 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 4rem 2rem;
+            clear: both;
+            overflow: visible;
         }
 
         .calculator-grid {
@@ -254,11 +256,16 @@
             padding: 2.5rem;
             box-shadow: var(--shadow-lg);
             display: none;
+            overflow: visible;
+            clear: both;
         }
 
         .results-container.active {
             display: block;
             animation: slideInDown 0.5s ease;
+            width: 100%;
+            position: relative;
+            z-index: 10;
         }
 
         .result-item {
@@ -294,7 +301,10 @@
         .timeline-section {
             margin-top: 2rem;
             padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
             border-top: 2px solid var(--border);
+            clear: both;
+            width: 100%;
         }
 
         .timeline-options {
@@ -357,17 +367,27 @@
             width: 100%;
             height: 400px;
             margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
             display: none;
+            clear: both;
         }
 
         .graph-container.active {
             display: block;
         }
 
+        .graph-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
         .save-section {
             margin-top: 2rem;
             padding-top: 1.5rem;
+            padding-bottom: 2rem;
             border-top: 2px solid var(--border);
+            clear: both;
+            width: 100%;
         }
 
         .save-btn {
@@ -416,6 +436,9 @@
             padding: 4rem 2rem 2rem;
             position: relative;
             overflow: hidden;
+            clear: both;
+            width: 100%;
+            margin-top: 3rem;
         }
 
         .footer-content {
@@ -931,7 +954,14 @@
                         <canvas id="breakdownChart"></canvas>
                     </div>
                 </div>
+
+                <div class="save-section">
+                    <button class="save-btn" onclick="saveAndNotify()">💾 Save & Send Email</button>
+                    <div class="success-msg" id="successMsg">✅ Calculation saved! Email sent to harshjaju07@gmail.com</div>
+                </div>
             </div>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -1230,11 +1260,13 @@
         function generateTimeline(months) {
             if (!lastCalculation) return;
 
-            // Update active button
+            // Update active button - fixed to handle null event
             document.querySelectorAll('.timeline-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
 
-            const monthlyNetProfit = parseFloat(document.getElementById('monthlyNetProfit').value) || 0;
+            const monthlyNetProfit = 0; // Removed reference to non-existent input
             const avgInvestment = lastCalculation.totalCost / months;
 
             const monthLabels = [];
@@ -1482,12 +1514,12 @@
             }
         });
 
-        // Redraw chart when monthly profit/loss changes
-        document.getElementById('monthlyNetProfit').addEventListener('change', () => {
-            if (lastCalculation && timelineChart) {
-                generateTimeline(12);
-            }
-        });
+        // Commented out - monthlyNetProfit input doesn't exist in form
+        // document.getElementById('monthlyNetProfit').addEventListener('change', () => {
+        //     if (lastCalculation && timelineChart) {
+        //         generateTimeline(12);
+        //     }
+        // });
     </script>
     <!-- Navbar Manager -->
     <script src="navbar-manager.js"></script>
